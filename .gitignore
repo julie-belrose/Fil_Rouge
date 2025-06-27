@@ -24,6 +24,9 @@ yarn-error.log*
 .env.dev
 .env.test
 .env.prod
+.env.dev.local
+.env.test.local
+.env.prod.local
 
 # JetBrains IDEs (WebStorm, PhpStorm, etc.)
 .idea/
@@ -46,6 +49,7 @@ coverage/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
 
 # Docker (optional)
 docker-compose.override.yml

@@ -13,7 +13,6 @@ const userRoutes = require('./src/domains/user/user.routes');
 const agentRoutes = require('./src/domains/user/agent/agent.routes');
 const adminRoutes = require('./src/domains/user/admin/admin.routes');
 const reportRoutes = require('./src/domains/report/report.routes');
-const homeRoutes = require('./src/home.routes');
 
 // Initialisation of the Express application
 const app = express();
@@ -51,6 +50,11 @@ app.use('/api/reports', reportRoutes);
 app.use(notFoundHandler);
 
 // Middleware of errors
+app.use('/api/admin', adminRoutes);
+app.use('/api/reports', reportRoutes);
+
+// Error handling
+app.use(notFoundHandler);
 app.use(errorHandler);
 
 // Configuration of the port
@@ -73,5 +77,10 @@ const startServer = async () => {
 };
 
 startServer();
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
 
 module.exports = app;

@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const listItems = document.querySelectorAll("#waste-list li");
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get("name");
   
-  listItems.forEach(item => {
-    item.addEventListener("click", () => {
-      const wasteName = item.getAttribute("data-name");
-      window.location.href = `/details?name=${encodeURIComponent(wasteName)}`;
-    });
-  });
+    if (name) {
+      document.getElementById("waste-name").textContent = name;
+    } else {
+      document.getElementById("waste-name").textContent = "(non spécifié)";
+    }
   });
