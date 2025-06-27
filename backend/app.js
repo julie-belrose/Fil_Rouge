@@ -44,7 +44,7 @@ app.use('/', homeRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/agents', agentRoutes);
-app.use('/api/admin', adminRoutes);
+app.use('/api/admins', adminRoutes);
 app.use('/api/reports', reportRoutes);
 
 // Gestion of errors 404
@@ -58,6 +58,10 @@ const PORT = process.env.PORT || 3000;
 
 const startServer = async () => {
   try {
+    const { testConnectionMysql } = require('./src/database/mysql/mysql_connexion');
+    await testConnectionMysql();
+    console.log('Database connection established successfully');
+
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
       console.log(`Open http://localhost:${PORT} in your browser`);

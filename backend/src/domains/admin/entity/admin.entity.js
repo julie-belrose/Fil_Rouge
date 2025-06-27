@@ -1,6 +1,7 @@
 const adminEntity = (data = {}) => ({
     id: data.id || null,
-    name: data.name || '',
+    firstName: data.firstName || '',
+    lastName: data.lastName || '',
     email: data.email || '',
     role: 'admin',
     permissions: data.permissions || ['read', 'write', 'delete']
