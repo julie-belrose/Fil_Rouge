@@ -1,3 +1,5 @@
+const { createAdminDto } = require('../dto/admin.dto');
+
 // Get all admins
 const getAdmins = (req, res) => {
     res.json('GetAdmins Controller OK');
@@ -10,6 +12,8 @@ const getAdmin = (req, res) => {
 
 // Create admin
 const createAdmin = (req, res) => {
+    const adminData = createAdminDto(req.body);
+    console.log(adminData);
     res.status(201).json('CreateAdmin Controller OK');
 };
 

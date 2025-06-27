@@ -1,3 +1,5 @@
+const { createAgentDto } = require('../dto/agent.dto');
+
 // Get all agents
 const getAgents = (req, res) => {
     res.json('GetAgents Controller OK');
@@ -10,6 +12,8 @@ const getAgent = (req, res) => {
 
 // Create agent
 const createAgent = (req, res) => {
+    const agentData = createAgentDto(req.body);
+    console.log(agentData);
     res.status(201).json('CreateAgent Controller OK');
 };
 
