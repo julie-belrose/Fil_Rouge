@@ -7,8 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "commit": "cz",
     "start": "node backend/app.js",
-    "dev": "nodemon backend/app.js",
-    "build:frontend": "rm -rf frontend/dist && mkdir frontend/dist && cp -r frontend/public/* frontend/dist/ && cp -r frontend/src/* frontend/dist/"
+    "dev": "nodemon backend/app.js"
   },
   "keywords": [],
   "author": "",
