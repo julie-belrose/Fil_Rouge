@@ -1,32 +1,21 @@
-// Get all users
-const getUsers = (req, res) => {
-    res.json('GetUsers Controller OK');
+const { loginDto, registerDto } = require('../dto/auth.dto');
+
+// Login user
+const login = (req, res) => {
+    const credentials = loginDto(req.body);
+    console.log('Login attempt with:', credentials);
+    res.json(`Login Controller OK`);
 };
 
-// Get single user
-const getUser = (req, res) => {
-    res.json(`GetUser ${req.params.id} Controller OK`);
+// Register new user
+const register = (req, res) => {
+    const userData = registerDto(req.body);
+    console.log('New registration:', userData);
+    res.status(201).json('User registered successfully');
 };
 
-// Create user
-const createUser = (req, res) => {
-    res.status(201).json('CreateUser Controller OK');
-};
-
-// Update user
-const updateUser = (req, res) => {
-    res.json(`UpdateUser ${req.params.id} Controller OK`);
-};
-
-// Delete user
-const deleteUser = (req, res) => {
-    res.json(`DeleteUser ${req.params.id} Controller OK`);
-};
 
 module.exports = {
-    getUsers,
-    getUser,
-    createUser,
-    updateUser,
-    deleteUser
+    login,
+    register
 };
