@@ -1,1 +1,0 @@
-// Logique métier à implémenter
