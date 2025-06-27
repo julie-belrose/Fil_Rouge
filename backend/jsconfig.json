@@ -1,0 +1,35 @@
+{
+    "compilerOptions": {
+        "baseUrl": "..",
+        "paths": {
+            "#backend/*": [
+                "backend/src/*"
+            ],
+            "#config/*": [
+                "backend/src/config/*"
+            ],
+            "#utils/*": [
+                "backend/src/utils/*"
+            ],
+            "#scripts/*": [
+                "backend/src/scripts/*"
+            ],
+            "#middleware/*": [
+              "backend/src/middleware/*"
+            ],
+            "#domains/*": [
+                "backend/src/domains/*"
+            ],
+            "#database/*": [
+                "backend/src/database/*"
+            ],
+            "#loader/*": [
+                "backend/src/loader/*"
+            ]
+        }
+    },
+    "exclude": [
+    "../node_modules",
+    "dist"
+    ]
+}
