@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-// Test agents route
+// Route home
 router.get('/', (req, res) => {
-    res.json({ message: 'Agents route is working' });
+  res.json({
+    status: 'success',
+    message: 'Welcome to Fill_Rouge API',
+    version: '1.0.0',
+  });
 });
 
 module.exports = router;
