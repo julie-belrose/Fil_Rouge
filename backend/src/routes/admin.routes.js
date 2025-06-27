@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    getAdmins,
+    getAllAdmins,
     getAdmin,
     createAdmin,
     updateAdmin,
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', getAdmin);
-router.get('/', getAdmins);
+router.get('/', getAllAdmins);
 router.post('/', createAdmin);
 router.put('/:id', updateAdmin);
 router.delete('/:id', deleteAdmin);

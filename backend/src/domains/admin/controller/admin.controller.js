@@ -1,8 +1,8 @@
 const { createAdminDto } = require('../dto/admin.dto');
 
 // Get all admins
-const getAdmins = (req, res) => {
-    res.json('GetAdmins Controller OK');
+const getAllAdmins = (req, res) => {
+    res.json('Get AllAdmins Controller OK');
 };
 
 // Get single admin
@@ -11,12 +11,50 @@ const getAdmin = (req, res) => {
 };
 
 // Create admin
-const createAdmin = (req, res) => {
-    const adminData = createAdminDto(req.body);
-    const admin = adminEntity(adminData);
-    console.log(admin);
-    console.log(adminData);
-    res.status(201).json('CreateAdmin Controller OK');
+const createAdmin = async (req, res) => {
+    try {
+        // 1. Validate data with DTO
+        const adminData = createAdminDto(req.body);
+
+        // 2. Check if email already exists
+        const existingAdmin = await AdminModel.findByEmail(adminData.email);
+        if (existingAdmin) {
+            return res.status(400).json({
+                success: false,
+                message: 'This email is already used'
+            });
+        }
+
+        // 3. Create admin
+        const newAdmin = await AdminModel.create(adminData);
+
+        // 4. Response (without password)
+        const { password, ...adminWithoutPassword } = newAdmin;
+
+        res.status(201).json({
+            success: true,
+            data: adminWithoutPassword
+        });
+
+    } catch (error) {
+        console.error('Error creating admin:', error);
+
+        // Error handling specific
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid data',
+                errors: error.errors
+            });
+        }
+
+        // Error server generic
+        res.status(500).json({
+            success: false,
+            message: 'Error creating admin',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
+    }
 };
 
 // Update admin
@@ -30,7 +68,7 @@ const deleteAdmin = (req, res) => {
 };
 
 module.exports = {
-    getAdmins,
+    getAllAdmins,
     getAdmin,
     createAdmin,
     updateAdmin,
