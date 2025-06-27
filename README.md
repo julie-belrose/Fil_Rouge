@@ -21,9 +21,9 @@ config/                 # Fichiers de configuration
 ## Installation
 
 1. Cloner le dépôt
-2. Installer les dépendances : `npm install`
+2. Installer les dépendances : `pnpm install`
 3. Copier `.env.example` vers `.env` et configurer les variables d'environnement
-4. Lancer le serveur : `npm start`
+4. Lancer le serveur : `pnpm start`
 
 ## Variables d'environnement
 

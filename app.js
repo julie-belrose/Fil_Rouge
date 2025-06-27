@@ -3,15 +3,15 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const { errorHandler } = require('./middleware/error.middleware');
-const { notFoundHandler } = require('./middleware/not-found.middleware');
+const { errorHandler } = require('./src/middleware/error.middleware');
+const { notFoundHandler } = require('./src/middleware/not-found.middleware');
 
 // Import of routes
-const authRoutes = require('./routes/auth.routes');
-const userRoutes = require('./routes/user.routes');
-const agentRoutes = require('./routes/agent.routes');
-const adminRoutes = require('./routes/admin.routes');
-const reportRoutes = require('./routes/report.routes');
+const authRoutes = require('./src/routes/auth.routes');
+const userRoutes = require('./src/routes/user.routes');
+const agentRoutes = require('./src/routes/agent.routes');
+const adminRoutes = require('./src/routes/admin.routes');
+const reportRoutes = require('./src/routes/report.routes');
 
 // Initialisation of the Express application
 const app = express();
