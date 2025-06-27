@@ -1,6 +1,6 @@
-const { loginSchema, registerSchema, logoutSchema } = require('./auth.schema');
-const authEntity = require('./auth.entity');
-const validateAndTransform = require('../utils/parseDTO');
+import { loginSchema, registerSchema, logoutSchema, updateSchema } from '#domains/auth/auth.schema.js';
+import { authEntity } from '#domains/auth/auth.entity.js';
+import { validateAndTransform } from '#utils/parseDTO.js';
 
 /**
  * Validates and transforms login data
@@ -8,11 +8,9 @@ const validateAndTransform = require('../utils/parseDTO');
  * @returns {Object} Validated and transformed login data
  * @throws {Error} If validation fails
  */
-const loginDto = (data) => {
+export const loginDTO = (data) => {
     return validateAndTransform(data, loginSchema, authEntity);
 };
-
-
 
 /**
  * Validates and transforms register data
@@ -20,10 +18,9 @@ const loginDto = (data) => {
  * @returns {Object} Validated and transformed register data
  * @throws {Error} If validation fails
  */
-const registerDto = (data) => {
+export const registerDTO = (data) => {
     return validateAndTransform(data, registerSchema, authEntity);
 };
-
 
 /**
  * Validates and transforms logout data
@@ -31,8 +28,17 @@ const registerDto = (data) => {
  * @returns {Object} Validated and transformed logout data
  * @throws {Error} If validation fails
  */
-const logoutDto = (data) => {
+export const logoutDTO = (data) => {
     return validateAndTransform(data, logoutSchema, authEntity);
 };
 
-module.exports = { loginDto, registerDto, logoutDto };
+/**
+ * Validates and transforms update data
+ * @param {Object} data - Raw input data
+ * @returns {Object} Validated and transformed update data
+ * @throws {Error} If validation fails
+ */
+export const updateDTO = (data) => {
+    return validateAndTransform(data, updateSchema, authEntity);
+};
+

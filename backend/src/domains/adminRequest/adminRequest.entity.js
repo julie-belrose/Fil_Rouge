@@ -3,7 +3,7 @@
  * @param {Object} data - Raw adminRequest data
  * @returns {Object} Normalized adminRequest entity
  */
-const adminRequestEntity = (data = {}) => ({
+export const adminRequestEntity = (data = {}) => ({
     hashed_token: data.hashed_token || null,
     related_user_id: data.related_user_id || null,
     status: data.status || null,
@@ -14,5 +14,3 @@ const adminRequestEntity = (data = {}) => ({
         return this.hashed_token && this.related_user_id && this.status && this.created_at && this.expires_at;
     }
 });
-
-module.exports = adminRequestEntity;

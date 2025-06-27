@@ -4,7 +4,7 @@
  * @param {Object} data - Raw data of authentication
  * @returns {Object} Normalized authentication entity
  */
-const authEntity = (data = {}) => ({
+export const authEntity = (data = {}) => ({
     id: data.id || null,
     email: data.email || '',
     password_hash: data.password_hash || '',
@@ -17,5 +17,3 @@ const authEntity = (data = {}) => ({
         return this.id !== null && this.email !== '' && this.password_hash !== '' && this.role !== '' && this.is_active !== undefined && this.created_at !== null;
     }
 });
-
-module.exports = authEntity;

@@ -1,23 +1,12 @@
-const express = require('express');
+import express from 'express';
+import * as treatmentCenterController from '#domains/treatmentCenter/treatmentCenter.controller.js';
+
 const router = express.Router();
 
-const {
-    getAllTreatmentCenters,
-    getTreatmentCenter,
-    createTreatmentCenter,
-    updateTreatmentCenter,
-    deleteTreatmentCenter
-} = require('./treatmentCenter.controller');
+router.get('/:id', treatmentCenterController.getTreatmentCenter);
+router.get('/', treatmentCenterController.getAllTreatmentCenters);
+router.post('/', treatmentCenterController.createTreatmentCenter);
+router.put('/:id', treatmentCenterController.updateTreatmentCenter);
+router.delete('/:id', treatmentCenterController.deleteTreatmentCenter);
 
-// Test agents route
-router.get('/', (req, res) => {
-    res.json({ message: 'Treatment centers route is working' });
-}); 
-
-router.get('/:id', getTreatmentCenter);
-router.get('/', getAllTreatmentCenters);
-router.post('/', createTreatmentCenter);
-router.put('/:id', updateTreatmentCenter);
-router.delete('/:id', deleteTreatmentCenter);
-
-module.exports = router;
+export default router;

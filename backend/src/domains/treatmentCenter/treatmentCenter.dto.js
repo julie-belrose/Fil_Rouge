@@ -1,18 +1,16 @@
-const { createSchema, updateSchema } = require('./treatmentCenter.schema');
-const treatmentCenterEntity = require('./treatmentCenter.entity');
-const validateAndTransform = require('../utils/parseDTO');
+import { createSchema, updateSchema } from '#domains/treatmentCenter/treatmentCenter.schema.js';
+import { treatmentCenterEntity } from '#domains/treatmentCenter/treatmentCenter.entity.js';
+import { validateAndTransform } from '#utils/parseDTO.js';
 
 
-const createTreatmentCenterDto = (data) => {
+export const createTreatmentCenterDTO = (data) => {
     return validateAndTransform(data, createSchema, treatmentCenterEntity);
 };
 
-const updateTreatmentCenterDto = (data) => {
+export const updateTreatmentCenterDTO = (data) => {
     return validateAndTransform(data, updateSchema, treatmentCenterEntity);
 };
 
-const deleteTreatmentCenterDto = (data) => {
+export const deleteTreatmentCenterDTO = (data) => {
     //todo
 };
-
-module.exports = { createTreatmentCenterDto, updateTreatmentCenterDto, deleteTreatmentCenterDto };

@@ -1,23 +1,12 @@
-const express = require('express');
+import express from 'express';
+import * as adminRequestController from '#domains/adminRequest/adminRequest.controller.js';
+
 const router = express.Router();
 
-const {
-    getAdminRequests,
-    getAdminRequest,
-    createAdminRequest,
-    updateAdminRequest,
-    deleteAdminRequest
-} = require('./adminRequest.controller');
+router.post('/register', adminRequestController.createAdminRequest);
+router.get('/:id', adminRequestController.getAdminRequstById);
+router.get('/', adminRequestController.getAdminRequest);
+router.put('/:id', adminRequestController.updateAdminRequest);
+router.delete('/:id', adminRequestController.deleteAdminRequest);
 
-// Test agents route
-router.get('/', (req, res) => {
-    res.json({ message: 'AdminRequests route is working' });
-});
-
-router.get('/:id', getAdminRequest);
-router.get('/', getAdminRequests);
-router.post('/', createAdminRequest);
-router.put('/:id', updateAdminRequest);
-router.delete('/:id', deleteAdminRequest);
-
-module.exports = router;
+export default router;

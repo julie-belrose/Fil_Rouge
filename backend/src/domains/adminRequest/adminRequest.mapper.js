@@ -1,5 +1,3 @@
-const admin_requestEntity = require('./adminRequest.entity');
-
 class AdminRequestMapper {
     static toPersistence(admin_request) {
         return {
@@ -12,4 +10,4 @@ class AdminRequestMapper {
     }
 }
 
-module.exports = AdminRequestMapper;
+export const adminRequestMapper = new AdminRequestMapper();

@@ -1,5 +1,3 @@
-const treatmentCenterEntity = require('../entity/treatment-center.entity');
-
 class TreatmentCenterMapper {
     /**
      * Converts domain entity to persistence format
@@ -20,4 +18,4 @@ class TreatmentCenterMapper {
     }
 }
 
-module.exports = TreatmentCenterMapper;
+export const treatmentCenterMapper = new TreatmentCenterMapper();

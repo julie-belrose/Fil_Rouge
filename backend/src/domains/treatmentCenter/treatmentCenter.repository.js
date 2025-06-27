@@ -1,5 +1,5 @@
-const mongoUtils = require('../utils/mongoUtils');
-const utilsMapper = require('../utils/mapperUtils');
+import * as mongoUtils from '#utils/mongo.utils.js';
+import * as utilsMapper from '#utils/mapper.utils.js';
 
 /**
  * Handles database operations for treatment centers
@@ -28,4 +28,4 @@ class TreatmentCenterRepository {
     }
 }
 
-module.exports = new TreatmentCenterRepository();
+export const treatmentCenterRepository = new TreatmentCenterRepository();

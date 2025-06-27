@@ -1,25 +1,10 @@
-const express = require('express');
+import express from 'express';
+import * as authController from '#domains/auth/auth.controller.js';
+
 const router = express.Router();
 
-const {
-    getUsers,
-    getUser,
-    createUser,
-    updateUser,
-    deleteUser,
-    logout
-} = require('./auth.controller');
+router.post('/register', authController.register);
+router.post('/login', authController.login);
+router.post('/logout', authController.logout);
 
-// Test auth route
-router.get('/', (req, res) => {
-    res.json({ message: 'Auth route is working' });
-});
-
-router.get('/:id', getUser);
-router.get('/', getUsers);
-router.post('/', createUser);
-router.put('/:id', updateUser);
-router.delete('/:id', deleteUser);
-router.post('/logout', logout);
-
-module.exports = router;
+export default router;

@@ -1,23 +1,12 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const {
-    getAgents,
-    getAgent,
-    createAgent,
-    updateAgent,
-    deleteAgent
-} = require('./agent.controller');
+import * as agentController from '#domains/user/agent/agent.controller.js';
 
-// Test agents route
-router.get('/', (req, res) => {
-    res.json({ message: 'Agents route is working' });
-});
+router.get('/:id', agentController.getAgent);
+router.get('/', agentController.getAgents);
+router.post('/', agentController.createAgent);
+router.put('/:id', agentController.updateAgent);
+router.delete('/:id', agentController.deleteAgent);
 
-router.get('/:id', getAgent);
-router.get('/', getAgents);
-router.post('/', createAgent);
-router.put('/:id', updateAgent);
-router.delete('/:id', deleteAgent);
-
-module.exports = router;
+export default router;

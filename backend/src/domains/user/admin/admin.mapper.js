@@ -1,5 +1,3 @@
-const adminEntity = require('./admin.entity');
-
 /**
  * Mapper for the conversion between different layers of the application
  * Manages the transformation of data between database format and business format
@@ -20,4 +18,4 @@ class AdminMapper {
     }
 }
 
-module.exports = AdminMapper;
+export const adminMapper = new AdminMapper();

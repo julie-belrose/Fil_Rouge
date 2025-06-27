@@ -1,19 +1,12 @@
-const express = require('express');
+import express from 'express';
+import * as userController from '#domains/user/user.controller.js';
+
 const router = express.Router();
 
-const {
-    getUsers,
-    getUser,
-    createUser,
-    updateUser,
-    deleteUser
-} = require('./user.controller');
+router.get('/', userController.getUsers);
+router.get('/:id', userController.getUser);
+router.post('/', userController.createUser);
+router.put('/:id', userController.updateUser);
+router.delete('/:id', userController.deleteUser);
 
-// Test user route
-router.get('/', getUsers);
-router.get('/:id', getUser);
-router.post('/', createUser);
-router.put('/:id', updateUser);
-router.delete('/:id', deleteUser);
-
-module.exports = router;
+export default router;

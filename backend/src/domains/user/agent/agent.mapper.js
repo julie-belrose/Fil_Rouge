@@ -1,5 +1,3 @@
-const agentEntity = require('./agent.entity');
-
 class AgentMapper {
     static toPersistence(agent) {
         return {
@@ -13,4 +11,4 @@ class AgentMapper {
     }
 }
 
-module.exports = AgentMapper;
+export const agentMapper = new AgentMapper();
