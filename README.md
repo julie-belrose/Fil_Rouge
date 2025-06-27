@@ -4,30 +4,30 @@
 
 ```
 src/
-├── domains/            # Tous les domaines de l'application
-│   ├── auth/           # Authentification et autorisation
-│   ├── user/           # Fonctionnalités utilisateur
-│   ├── agent/          # Fonctionnalités agent
-│   ├── admin/          # Fonctionnalités administrateur
-│   └── report/         # Gestion des signalements
-├── routes/             # Fichiers de routes
-└── database/           # Connexions aux bases de données
+├── domains/            # All domains of the application
+│   ├── auth/           # Authentication and authorization
+│   ├── user/           # User features
+│   ├── agent/          # Agent features
+│   ├── admin/          # Admin features
+│   └── report/         # Report features
+├── routes/             # Routes
+└── database/           # Database connections
 
-config/                 # Fichiers de configuration
-├── mongodb/            # Configuration MongoDB
-└── mysql/              # Configuration MySQL
+config/                 # Configuration
+├── mongodb/            # MongoDB configuration
+└── mysql/              # MySQL configuration
 ``"
 
 ## Installation
 
-1. Cloner le dépôt
-2. Installer les dépendances : `pnpm install`
-3. Copier `.env.example` vers `.env` et configurer les variables d'environnement
-4. Lancer le serveur : `pnpm start`
+1. Clone the repository
+2. Install dependencies : `pnpm install`
+3. Copy `.env.example` to `.env` and configure the environment variables
+4. Launch the server : `pnpm start`
 
-## Variables d'environnement
+## Environment variables
 
-Créez un fichier `.env` à la racine du projet avec les variables suivantes :
+Create a file `.env` at the root of the project with the following variables :
 
 ```env
 NODE_ENV=development

@@ -12,6 +12,7 @@ const userRoutes = require('./src/routes/user.routes');
 const agentRoutes = require('./src/routes/agent.routes');
 const adminRoutes = require('./src/routes/admin.routes');
 const reportRoutes = require('./src/routes/report.routes');
+const homeRoutes = require('./src/routes/home.routes');
 
 // Initialisation of the Express application
 const app = express();
@@ -23,7 +24,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
-// Routes
+// Routes public
+app.use('/', homeRoutes);
+
+// Routes protected
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/agents', agentRoutes);
@@ -39,7 +43,7 @@ const PORT = process.env.PORT || 3000;
 
 // Start the server
 app.listen(PORT, () => {
-  console.log();
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 module.exports = app;

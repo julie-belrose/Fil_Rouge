@@ -1,10 +1,14 @@
-// Middleware de gestion des erreurs
+// Error handling middleware
 const errorHandler = (err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
+  // Log the error in development
+  console.error('Error:', err.message);
+
+  // Respond with error details
+  res.status(err.status || 500).json({
     success: false,
     message: err.message || 'Internal Server Error',
-    stack: process.env.NODE_ENV === 'production' ? '��' : err.stack,
+    // Include stack trace only in development
+    ...(process.env.NODE_ENV !== 'production' && { stack: err.stack })
   });
 };
 
