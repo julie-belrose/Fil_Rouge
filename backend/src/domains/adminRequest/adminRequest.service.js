@@ -1,5 +1,5 @@
-const adminRequestRepository = require('./repository/adminRequest.repository');
-const AdminRequestMapper = require('./mapper/adminRequest.mapper');
+import { adminRequestRepository } from '#domains/adminRequest/adminRequest.repository.js';
+import * as utilsMapper from '#utils/mapper.utils.js'; 
 
 class AdminRequestService {
     /**
@@ -16,10 +16,24 @@ class AdminRequestService {
             }
 
             const newAdminRequest = await adminRequestRepository.create(admin_requestData);
-            return AdminRequestMapper.toDTO(newAdminRequest);
+            return utilsMapper.toDTO(newAdminRequest);
         } catch (error) {
             console.error('Failed to create adminRequest:', error);
             throw new Error(`Failed to create admin_request: ${error.message}`);
+        }
+    }
+
+    /**
+     * Gets all adminRequests
+     * @returns {Promise<Array>} Array of adminRequests
+     */
+    async getAdminRequest() {
+        try {
+            const admin_requests = await adminRequestRepository.findAll();
+            return utilsMapper.toDTO(admin_requests);
+        } catch (error) {
+            console.error('Failed to get adminRequests:', error);
+            throw new Error(`Failed to get admin_requests: ${error.message}`);
         }
     }
 
@@ -34,7 +48,7 @@ class AdminRequestService {
             if (!admin_request) {
                 throw new Error('Admin_request not found');
             }
-            return AdminRequestMapper.toDTO(admin_request);
+            return utilsMapper.toDTO(admin_request);
         } catch (error) {
             console.error(`Failed to get admin_request ${id}:`, error);
             throw new Error(`Failed to get admin_request: ${error.message}`);
@@ -71,7 +85,7 @@ class AdminRequestService {
     async updateAdminRequest(id, admin_requestData) {
         try {
             const admin_request = await adminRequestRepository.update(id, admin_requestData);
-            return AdminRequestMapper.toDTO(admin_request);
+            return utilsMapper.toDTO(admin_request);
         } catch (error) {
             console.error(`Failed to update admin_request ${id}:`, error);
             throw new Error(`Failed to update admin_request: ${error.message}`);
@@ -86,7 +100,7 @@ class AdminRequestService {
     async deleteAdminRequest(id) {
         try {
             const admin_request = await adminRequestRepository.delete(id);
-            return AdminRequestMapper.toDTO(admin_request);
+            return utilsMapper.toDTO(admin_request);
         } catch (error) {
             console.error(`Failed to delete admin_request ${id}:`, error);
             throw new Error(`Failed to delete admin_request: ${error.message}`);
@@ -95,4 +109,4 @@ class AdminRequestService {
 
 }
 
-module.exports = new AdminRequestService();
+export const adminRequestService = new AdminRequestService();

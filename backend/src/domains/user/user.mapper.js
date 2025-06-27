@@ -1,5 +1,3 @@
-const userEntity = require('./user.entity');
-
 /**
  * Mapper for converting between different user data representations
  */
@@ -11,14 +9,12 @@ class UserMapper {
      */
     static toPersistence(user) {
         return {
-            auth_id: user.auth_id,
+            user_id: user.user_id,
             pseudo: user.pseudo,
-            first_name: user.first_name,
-            last_name: user.last_name,
             district: user.district,
             loyalty_points: user.loyalty_points
         };
     }
 }
 
-module.exports = UserMapper;
+export const userMapper = new UserMapper();

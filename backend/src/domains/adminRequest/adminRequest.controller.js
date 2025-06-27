@@ -1,43 +1,27 @@
-const { createAdminRequestDto, updateAdminRequestDto, deleteAdminRequestDto } = require('./adminRequest.dto');
-const adminRequestEntity = require('./adminRequest.entity');
-const adminRequestService = require('./adminRequest.service');
-const handlerRequest = require('../utils/handlerRequest');
-const handlerBody = require('../utils/handlerBody');
+import * as adminRequestDto from '#domains/adminRequest/adminRequest.dto.js';
+import { adminRequestEntity } from '#domains/adminRequest/adminRequest.entity.js';
+import { adminRequestService } from '#domains/adminRequest/adminRequest.service.js';
+import handlerRequest from '#utils/handlerRequest.js';
+import { handlerBody } from '#utils/handlerBody.js';
 
 // Get all admin_requests
-const getAdminRequests = handlerBody(async (req, res) => {
-    return await adminRequestService.getAdminRequests();
-});
+export const getAdminRequest = handlerBody(async (req, res) => adminRequestService.getAdminRequest());
 
 // Get single adminRequest
-const getAdminRequest = handlerBody(async (req, res) => {
-    const admin_request = adminRequestService.getAdminRequestById(req.params.id);
-    return admin_request;
-});
+export const getAdminRequstById = handlerBody((req, res) => adminRequestService.getAdminRequestById(req.params.id));
 
 
-const createAdminRequest = handlerRequest(createAdminRequestDto, adminRequestEntity, async (admin_request) => {
-    const newAdminRequest = await adminRequestService.createAdminRequest(admin_request);
-    return newAdminRequest;
+export const createAdminRequest = handlerRequest(adminRequestDto.createAdminRequestDTO, adminRequestEntity, async (admin_request) => {
+    return await adminRequestService.createAdminRequest(admin_request);
 });
 
 
 // Update adminRequest
-const updateAdminRequest = handlerRequest(updateAdminRequestDto, adminRequestEntity, async (admin_request) => {
-    const admin_request = adminRequestService.updateAdminRequest(req.params.id, req.body);
-    return admin_request;
+export const updateAdminRequest = handlerRequest(adminRequestDto.updateAdminRequestDTO, adminRequestEntity, async (req) => {
+    return adminRequestService.updateAdminRequest(req.params.id, req.body);
 });
 
 // Delete adminRequest
-const deleteAdminRequest = handlerRequest(deleteAdminRequestDto, adminRequestEntity, async (admin_request) => {
-    const admin_request = adminRequestService.deleteAdminRequest(req.params.id);
-    return admin_request;
+export const deleteAdminRequest = handlerRequest(adminRequestDto.deleteAdminRequestDTO, adminRequestEntity, async (req) => {
+    return adminRequestService.deleteAdminRequest(req.params.id);
 });
-
-module.exports = {
-    getAdminRequests,
-    getAdminRequest,
-    createAdminRequest,
-    updateAdminRequest,
-    deleteAdminRequest
-};

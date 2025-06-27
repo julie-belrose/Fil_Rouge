@@ -1,5 +1,7 @@
-const db = require('../../../config/database');
-const AdminMapper = require('./mapper/admin.mapper');
+import { adminMapper } from '#domains/user/admin/admin.mapper.js';
+import * as utilsMapper from '#utils/mapper.utils.js';
+import { adminEntity } from '#domains/user/admin/admin.entity.js';
+import { createWithTimestampsSQL, findManyByField, findById } from '#utils/mysql.utils.js';
 
 class AdminRepository {
     constructor() {
@@ -12,16 +14,8 @@ class AdminRepository {
      * @returns {Promise<Object>} Created admin
      */
     async create(adminData) {
-        try {
-            const [id] = await db(this.tableName)
-                .insert(AdminMapper.toPersistence(adminData))
-                .returning('user_id');
-            
-            return this.findByUserId(adminData.user_id);
-        } catch (error) {
-            console.error('Error creating admin:', error);
-            throw error;
-        }
+        const [id] = await createWithTimestampsSQL(this.tableName, adminMapper.toPersistence(adminData));
+        return await findById(this.tableName, id, admin => utilsMapper.toDTO(admin, adminEntity));
     }
 
 
@@ -31,16 +25,8 @@ class AdminRepository {
      * @returns {Promise<Array>} List of admins
      */
     async findByCenterId(centerId) {
-        try {
-            const admins = await db(this.tableName)
-                .where('center_id', centerId);
-                
-            return admins.map(AdminMapper.toDomain);
-        } catch (error) {
-            console.error(`Error finding admins for center ${centerId}:`, error);
-            throw error;
-        }
+        return await findManyByField(this.tableName, 'center_id', centerId, admin => utilsMapper.toDTO(admin, adminEntity));
     }
 }
 
-module.exports = new AdminRepository();
+export const adminRepository = new AdminRepository();

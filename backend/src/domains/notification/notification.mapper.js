@@ -1,17 +1,7 @@
-const notificationEntity = require('./notification.entity');
-
 /**
  * Mapper for converting between different notification data representations
  */
 class NotificationMapper {
-
-    static toEntity(raw) {
-        return notificationEntity({
-            ...raw,
-            _id: raw._id?.toString()
-        });
-    }
-
 
     /**
      * Converts domain entity to persistence format (MongoDB)
@@ -30,4 +20,4 @@ class NotificationMapper {
     }
 }
 
-module.exports = NotificationMapper;
+export const notificationMapper = new NotificationMapper();

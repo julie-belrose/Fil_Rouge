@@ -1,23 +1,17 @@
-const express = require('express');
+import express from 'express';
+import * as badgeController from '#domains/badge/badge.controller.js';
+
 const router = express.Router();
 
-const {
-    getBadges,
-    getBadge,
-    createBadge,
-    updateBadge,
-    deleteBadge
-} = require('./badge.controller');
+router.get('/:id', badgeController.getBadge);
+router.get('/', badgeController.getBadges);
+router.post('/', badgeController.createBadge);
+router.put('/:id', badgeController.updateBadge);
+router.delete('/:id', badgeController.deleteBadge);
 
-// Test agents route
+// Test badges route
 router.get('/', (req, res) => {
     res.json({ message: 'Badges route is working' });
 });
 
-router.get('/:id', getBadge);
-router.get('/', getBadges);
-router.post('/', createBadge);
-router.put('/:id', updateBadge);
-router.delete('/:id', deleteBadge);
-
-module.exports = router;
+export default router;

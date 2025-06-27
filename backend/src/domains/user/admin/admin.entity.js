@@ -3,7 +3,7 @@
  * @param {Object} data - Raw admin data
  * @returns {Object} Admin entity
  */
-const adminEntity = (data = {}) => {
+export const adminEntity = (data = {}) => {
     return {
         user_id: data.user_id || null,
         center_id: data.center_id || null,
@@ -19,5 +19,3 @@ const adminEntity = (data = {}) => {
         }
     };
 };
-
-module.exports = adminEntity;

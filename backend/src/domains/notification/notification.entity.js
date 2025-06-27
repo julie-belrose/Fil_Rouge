@@ -1,7 +1,7 @@
 /**
  * Notification entity factory function
  */
-const notificationEntity = (data = {}) => {
+export const notificationEntity = (data = {}) => {
     const now = new Date();
 
     return {
@@ -23,5 +23,3 @@ const notificationEntity = (data = {}) => {
         }
     };
 };
-
-module.exports = notificationEntity;

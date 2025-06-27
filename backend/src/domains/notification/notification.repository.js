@@ -1,5 +1,5 @@
-const utilsMapper = require('../utils/mapperUtils');
-const mongoUtils = require('../utils/mongoUtils');
+import * as utilsMapper from '#utils/mapper.utils.js';
+import * as mongoUtils from '#utils/mongo.utils.js';
 
 /**
  * Handles database operations for notifications
@@ -48,4 +48,4 @@ class NotificationRepository {
     }
 }
 
-module.exports = new NotificationRepository();
+export const notificationRepository = new NotificationRepository();
