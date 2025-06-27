@@ -1,0 +1,21 @@
+/**
+ * Mapper for the conversion between different layers of the application
+ * Manages the transformation of data between database format and business format
+ */
+class AdminMapper {
+    /**
+     * Converts domain entity to persistence format
+     * @param {Object} admin - Admin domain entity
+     * @returns {Object} Persistence format
+     */
+    static toPersistence(admin) {
+        return {
+            user_id: admin.user_id,
+            center_id: admin.center_id,
+            created_at: admin.created_at,
+            updated_at: admin.updated_at
+        };
+    }
+}
+
+export const adminMapper = new AdminMapper();
