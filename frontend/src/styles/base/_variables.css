@@ -1,0 +1,11 @@
+:root {
+    --color-text: #333;
+    --color-white: #fff;
+    --color-green: #2ecc71;
+    --color-green-dark: #27ae60;
+    --color-light-bg: #f7f9fa;
+    --color-footer-bg: #ecf0f1;
+  
+    --padding-base: 20px;
+    --border-radius: 6px;
+  }
