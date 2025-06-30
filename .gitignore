@@ -16,11 +16,13 @@ yarn-error.log*
 
 # Environment variables
 .env
-.env.*.local
+!.env.example
+.env.*
+!.env.example.*
 .env.local
-.env.dev
-.env.test
-.env.prod
+.env.dev.local
+.env.test.local
+.env.prod.local
 
 # JetBrains IDEs (WebStorm, PhpStorm, etc.)
 .idea/
@@ -37,7 +39,13 @@ coverage/
 
 # OS-specific files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+
 
 # Docker (optional)
 docker-compose.override.yml
@@ -48,3 +56,11 @@ pids
 *.pid
 *.seed
 *.pid.lock
+
+# Lock files (should be committed)
+package-lock.json
+yarn.lock
+
+# Production build
+build
+dist
