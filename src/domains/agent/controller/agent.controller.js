@@ -13,6 +13,8 @@ const getAgent = (req, res) => {
 // Create agent
 const createAgent = (req, res) => {
     const agentData = createAgentDto(req.body);
+    const agent = agentEntity(agentData);
+    console.log(agent);
     console.log(agentData);
     res.status(201).json('CreateAgent Controller OK');
 };

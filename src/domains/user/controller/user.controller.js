@@ -13,6 +13,8 @@ const getUser = (req, res) => {
 // Create user
 const createUser = (req, res) => {
     const userData = createUserDto(req.body);
+    const user = userEntity(userData);
+    onsole.log('User created:', user);
     console.log('New user:', userData);
     res.status(201).json('CreateUser Controller OK');
 };

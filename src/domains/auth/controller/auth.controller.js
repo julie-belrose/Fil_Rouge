@@ -10,6 +10,8 @@ const login = (req, res) => {
 // Register new user
 const register = (req, res) => {
     const userData = registerDto(req.body);
+    const user = authEntity(userData);
+    console.log(user);
     console.log('New registration:', userData);
     res.status(201).json('User registered successfully');
 };

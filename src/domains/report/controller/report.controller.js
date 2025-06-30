@@ -13,7 +13,9 @@ const getReport = (req, res) => {
 // Create report
 const createReport = (req, res) => {
     const reportData = createReportDto(req.body);
-    console.log('New report:', reportData);  
+    const report = reportEntity(reportData);
+    console.log(report);
+    console.log(reportData);
     res.status(201).json('CreateReport Controller OK');
 };
 

@@ -13,6 +13,8 @@ const getAdmin = (req, res) => {
 // Create admin
 const createAdmin = (req, res) => {
     const adminData = createAdminDto(req.body);
+    const admin = adminEntity(adminData);
+    console.log(admin);
     console.log(adminData);
     res.status(201).json('CreateAdmin Controller OK');
 };
