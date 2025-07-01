@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const path = require('path');
 const { errorHandler } = require('./src/middleware/error.middleware');
 const { notFoundHandler } = require('./src/middleware/not-found.middleware');
 
@@ -16,6 +17,18 @@ const homeRoutes = require('./src/routes/home.routes');
 
 // Initialisation of the Express application
 const app = express();
+
+// Detect the environment
+const env = process.env.NODE_ENV || 'DEV';
+
+// Serve static files according to the environment
+if (env === 'PROD') {
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+  console.log('→ Server in mode PRODUCTION (frontend/dist)');
+} else {
+  app.use(express.static(path.join(__dirname, '../frontend/src')));
+  console.log('→ Server in mode DEV (frontend/src)');
+}
 
 // Middleware
 app.use(helmet());
@@ -34,12 +47,36 @@ app.use('/api/agents', agentRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/reports', reportRoutes);
 
-// Error handling
+// 404
+app.use((req, res) => {
+  res.status(404).send('Page non trouvée');
+});
+
+// Routes middleware
 app.use(notFoundHandler);
 app.use(errorHandler);
 
 // Configuration of the port
 const PORT = process.env.PORT || 3000;
+
+app.use((req, res, next) => {
+  console.log('Incoming request:', req.method, req.url);
+  next();
+});
+
+
+// For all other routes (non API), return the index.html of the frontend
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../frontend/src/index.html'));
+// });
+
+// app.get('*', (req, res, next) => {
+//   if (req.url.endsWith('.js')) {
+//     return res.status(404).send('Script introuvable');
+//   }
+//   next();
+// });
+
 
 // Start the server
 app.listen(PORT, () => {
