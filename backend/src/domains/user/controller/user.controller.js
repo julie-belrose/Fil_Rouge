@@ -1,4 +1,5 @@
-const { createUserDto } = require('../dto/user.dto');
+const { createUserDto, updateUserDto } = require('../dto/user.dto');
+const { userEntity } = require('../entity/user.entity');
 
 // Get all users
 const getUsers = (req, res) => {

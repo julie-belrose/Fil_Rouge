@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const path = require('path');
 const { errorHandler } = require('./src/middleware/error.middleware');
 const { notFoundHandler } = require('./src/middleware/not-found.middleware');
 
@@ -16,6 +17,18 @@ const homeRoutes = require('./src/routes/home.routes');
 
 // Initialisation of the Express application
 const app = express();
+
+// Detect the environment
+const env = process.env.NODE_ENV || 'DEV';
+
+// Serve static files according to the environment
+if (env === 'PROD') {
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+  console.log('Server in mode PRODUCTION (frontend/dist)');
+} else {
+  app.use(express.static(path.join(__dirname, '../frontend/src')));
+  console.log('Server in mode DEV (frontend/src)');
+}
 
 // Middleware
 app.use(helmet());
@@ -34,16 +47,27 @@ app.use('/api/agents', agentRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/reports', reportRoutes);
 
-// Error handling
+// Gestion of errors 404
 app.use(notFoundHandler);
+
+// Middleware of errors
 app.use(errorHandler);
 
 // Configuration of the port
 const PORT = process.env.PORT || 3000;
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+const startServer = async () => {
+  try {
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+      console.log(`Open http://localhost:${PORT} in your browser`);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error.message);
+    process.exit(1); // Stop the process in case of error
+  }
+};
+
+startServer();
 
 module.exports = app;
