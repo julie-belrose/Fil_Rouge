@@ -1,12 +1,19 @@
-const loginDto = (data) => ({
-    email: data.email,
-    password: data.password
-});
+const { loginSchema, registerSchema } = require('../schema/auth.schema');
 
-const registerDto = (data) => ({
-    name: data.name,
-    email: data.email,
-    password: data.password
-});
+const loginDto = (data) => {
+    const { error, value } = loginSchema.validate(data);
+    if (error) {
+        throw new Error(`Validation error: ${error.details[0].message}`);
+    }
+    return value;
+};
+
+const registerDto = (data) => {
+    const { error, value } = registerSchema.validate(data);
+    if (error) {
+        throw new Error(`Validation error: ${error.details[0].message}`);
+    }
+    return value;
+};
 
 module.exports = { loginDto, registerDto };
