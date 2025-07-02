@@ -1,19 +1,39 @@
 const { loginDto, registerDto } = require('../dto/auth.dto');
+const AuthentificationService = require('../service/auth.service');
 
 // Login user
 const login = (req, res) => {
-    const credentials = loginDto(req.body);
-    console.log('Login attempt with:', credentials);
-    res.json(`Login Controller OK`);
+    try {
+        const credentials = loginDto(req.body);
+        const auth = authEntity(credentials);
+        console.log(auth);
+        res.json({
+            success: true,
+            data: auth
+        });
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: error.message
+        });
+    }
 };
 
-// Register new user
+// Create new account
 const register = (req, res) => {
-    const userData = registerDto(req.body);
-    const user = authEntity(userData);
-    console.log(user);
-    console.log('New registration:', userData);
-    res.status(201).json('User registered successfully');
+    try {
+        const authData = registerDto(req.body);
+        const auth = authEntity(authData);
+        res.status(201).json({
+            success: true,
+            data: auth
+        });
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: error.message
+        });
+    }
 };
 
 

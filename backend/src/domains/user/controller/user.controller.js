@@ -1,5 +1,5 @@
 const { createUserDto, updateUserDto } = require('../dto/user.dto');
-const { userEntity } = require('../entity/user.entity');
+const userService = require('../service/user.service');
 
 // Get all users
 const getUsers = (req, res) => {
@@ -12,19 +12,57 @@ const getUser = (req, res) => {
 };
 
 // Create user
-const createUser = (req, res) => {
-    const userData = createUserDto(req.body);
-    const user = userEntity(userData);
-    onsole.log('User created:', user);
-    console.log('New user:', userData);
-    res.status(201).json('CreateUser Controller OK');
-};
+/**
+    * Handles user creation request
+    * @param {Object} req - Express request object
+    * @param {Object} res - Express response object
+    */
+const createUser = async (req, res) => {
+    try {
+        // 1. Validate and transform input
+        const userData = createUserDto(req.body);
+
+        // 2. Process business logic
+        const newUser = await userService.createUser(userData);
+
+        // 3. Return success response
+        res.status(201).json({
+            success: true,
+            data: newUser
+        });
+    } catch (error) {
+        // Handle errors
+        const statusCode = error.message.includes('Validation') ? 400 : 500;
+        res.status(statusCode).json({
+            success: false,
+            message: error.message
+        });
+    }
+}
 
 // Update user
 const updateUser = (req, res) => {
-    const userData = updateUserDto(req.body);
-    console.log('Updated user:', userData);
-    res.json(`UpdateUser ${req.params.id} Controller OK`);
+    try {
+        // 1. Validate and transform input using DTO
+        const validatedData = updateUserDto(req.body);
+        console.log('Updated user data:', validatedData);
+
+        // 2. Create entity from validated data
+        const user = userEntity({ ...validatedData, id: req.params.id });
+
+        res.json({
+            success: true,
+            message: `UpdateUser ${req.params.id}`,
+            data: user
+        });
+    } catch (error) {
+        console.error('Error in updateUser:', error);
+        const statusCode = error.message.includes('Validation') ? 400 : 500;
+        res.status(statusCode).json({
+            success: false,
+            message: error.message
+        });
+    }
 };
 
 // Delete user

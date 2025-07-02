@@ -8,8 +8,12 @@
  * @example
  * // Create a new user
  * const newUser = userEntity({
- *   name: 'John Doe',
- *   email: 'john@example.com'
+ *   auth_id: 1,
+ *   pseudo: 'John Doe',
+ *   first_name: 'John',
+ *   last_name: 'Doe',
+ *   district: 'District',
+ *   loyalty_points: 0
  * });
  * 
  * // From a DTO
@@ -18,21 +22,25 @@
  * 
  * @param {Object} data - The user data (DTO)
  * @param {string} [data.id=null] - The unique identifier of the user
- * @param {string} [data.name=''] - The name of the user
- * @param {string} [data.email=''] - The email of the user
- * @param {string} [data.role='user'] - The role of the user (default: 'user')
- * @param {Date} [data.createdAt=new Date()] - Creation date
- * @param {Date} [data.updatedAt=new Date()] - Update date
+ * @param {string} [data.auth_id=null] - The authentication ID of the user
+ * @param {string} [data.pseudo=null] - The pseudo of the user
+ * @param {string} [data.first_name=null] - The first name of the user
+ * @param {string} [data.last_name=null] - The last name of the user
+ * @param {string} [data.district=null] - The district of the user
+ * @param {number} [data.loyalty_points=0] - The loyalty points of the user
+ * @param {Date} [data.created_at=new Date()] - Creation date
  * 
  * @returns {Object} The normalized user object
  */
 const userEntity = (data = {}) => ({
     id: data.id || null,
-    name: data.name || '',
-    email: data.email || '',
-    role: data.role || 'user',
-    createdAt: data.createdAt || new Date(),
-    updatedAt: data.updatedAt || new Date()
+    auth_id: data.auth_id || null,
+    pseudo: data.pseudo || null,
+    first_name: data.first_name || null,
+    last_name: data.last_name || null,
+    district: data.district || null,
+    loyalty_points: data.loyalty_points !== undefined ? data.loyalty_points : 0,
+    created_at: data.created_at || new Date().toISOString()
 });
 
 module.exports = userEntity;
