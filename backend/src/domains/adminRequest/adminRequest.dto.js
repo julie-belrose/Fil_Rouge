@@ -1,6 +1,5 @@
-const { createSchema, updateSchema, deleteSchema } = require('./adminRequest.schema');
+const { createSchema, updateSchema } = require('./adminRequest.schema');
 const admin_requestEntity = require('./adminRequest.entity');
-const validateAndTransform = require('../utils/parseDTO');
 
 /**
  * Validates and transforms adminRequest creation data
@@ -9,7 +8,17 @@ const validateAndTransform = require('../utils/parseDTO');
  * @throws {Error} If validation fails
  */
 const createAdminRequestDto = (data) => {
-    return validateAndTransform(data, createSchema, admin_requestEntity);
+    const { error, value } = createSchema.validate(data, {
+        abortEarly: false,
+        stripUnknown: true
+    });
+
+    if (error) {
+        const errorMessage = error.details.map(detail => detail.message).join('; ');
+        throw new Error(`Validation error: ${errorMessage}`);
+    }
+
+    return admin_requestEntity(value);
 };
 
 /**
@@ -19,11 +28,17 @@ const createAdminRequestDto = (data) => {
  * @throws {Error} If validation fails
  */
 const updateAdminRequestDto = (data) => {
-    return validateAndTransform(data, updateSchema, admin_requestEntity);
+    const { error, value } = updateSchema.validate(data, {
+        abortEarly: false,
+        stripUnknown: true
+    });
+
+    if (error) {
+        const errorMessage = error.details.map(detail => detail.message).join('; ');
+        throw new Error(`Validation error: ${errorMessage}`);
+    }
+
+    return admin_requestEntity(value);
 };
 
-const deleteAdminRequestDto = (data) => {
-    return validateAndTransform(data, deleteSchema, admin_requestEntity);
-};
-
-module.exports = { createAdminRequestDto, updateAdminRequestDto, deleteAdminRequestDto };
+module.exports = { createAdminRequestDto, updateAdminRequestDto };

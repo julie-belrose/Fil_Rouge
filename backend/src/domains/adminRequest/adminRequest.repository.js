@@ -1,6 +1,5 @@
 const pool = require('../../config/database');
 const Admin_requestMapper = require('./adminRequest.mapper');
-const utilsMapper = require('../utils/mapperUtils');
 
 class AdminRequestRepository {
     /**
@@ -29,9 +28,7 @@ class AdminRequestRepository {
             'SELECT * FROM admin_requests WHERE id = ?',
             [id]
         );
-
-        const result = rows[0];
-        return result ? utilsMapper.toDTO(result) : null;
+        return rows.length ? Admin_requestMapper.toDomain(rows[0]) : null;
     }
 }
 
