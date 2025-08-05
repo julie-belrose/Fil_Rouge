@@ -1,71 +1,46 @@
-const pool = require('../../../config/database');
-const bcrypt = require('bcryptjs');
-const adminEntity = require('../entity/admin.entity');
-const AdminDataMapper = require('../mapper/admin.mapper');
+const db = require('../../../config/database');
+const AdminMapper = require('./mapper/admin.mapper');
 
 class AdminRepository {
-     /**
-     * Create a new admin in the database
-     * @param {Object} adminData - The data of the admin to create
-     * @returns {Promise<Object>} The created admin with its ID
+    constructor() {
+        this.tableName = 'admins';
+    }
+
+    /**
+     * Creates a new admin
+     * @param {Object} adminData - Admin data
+     * @returns {Promise<Object>} Created admin
      */
-    static async create(adminData) {
+    async create(adminData) {
         try {
-        // 1. Hash the password
-             const hashedPassword = await bcrypt.hash(adminData.password, 10);
-
-             // 2. Prepare the data with the hashed password
-             const adminWithHashedPassword = {
-                 ...adminData,
-                 password: hashedPassword
-             };
-
-             // 3. Convert the data to database format
-             const dbData = AdminDataMapper.convertToPersistenceFormat(adminWithHashedPassword);
-
-             // 4. Execute the query
-             const [result] = await pool.execute(
-                'INSERT INTO admins SET ?',
-                [dbData]
-            );
-
-             // 5. Retrieve and return the created admin
-             return this.findById(result.insertId);
-         } catch (error) {
-             console.error('Error in AdminDataAccess.create:', error);
-             throw new Error(`Failed to create admin: ${error.message}`);
-         }
+            const [id] = await db(this.tableName)
+                .insert(AdminMapper.toPersistence(adminData))
+                .returning('user_id');
+            
+            return this.findByUserId(adminData.user_id);
+        } catch (error) {
+            console.error('Error creating admin:', error);
+            throw error;
+        }
     }
 
-    /**
-     * Find an admin by its ID
-     */
-    static async findById(id) {
-        const [rows] = await pool.execute(
-            'SELECT * FROM admins WHERE id = ?',
-            [id]
-        );
-        return rows[0] ? adminEntity(rows[0]) : null;
-    }
 
     /**
-     * Find an admin by its email
+     * Finds admins by center ID
+     * @param {number} centerId - Center ID
+     * @returns {Promise<Array>} List of admins
      */
-    static async findByEmail(email) {
-        const [rows] = await pool.execute(
-            'SELECT * FROM admins WHERE email = ?',
-            [email]
-        );
-        return rows[0] ? adminEntity(rows[0]) : null;
-    }
-
-    /**
-     * Find all admins
-     */
-    static async findAll() {
-        const [rows] = await pool.query('SELECT * FROM admins');
-        return rows.map(adminEntity);
+    async findByCenterId(centerId) {
+        try {
+            const admins = await db(this.tableName)
+                .where('center_id', centerId);
+                
+            return admins.map(AdminMapper.toDomain);
+        } catch (error) {
+            console.error(`Error finding admins for center ${centerId}:`, error);
+            throw error;
+        }
     }
 }
 
-module.exports = AdminModel;
+module.exports = new AdminRepository();
