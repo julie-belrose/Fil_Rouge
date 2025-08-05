@@ -10,52 +10,46 @@ const getAdmin = (req, res) => {
     res.json(`GetAdmin ${req.params.id} Controller OK`);
 };
 
-// Create admin
+/**
+     * Creates a new admin
+     * @param {Object} req - Express request object
+     * @param {Object} res - Express response object
+     */
 const createAdmin = async (req, res) => {
     try {
-        // 1. Validate data with DTO
-        const adminData = createAdminDto(req.body);
-
-        // 2. Check if email already exists
-        const existingAdmin = await AdminModel.findByEmail(adminData.email);
-        if (existingAdmin) {
+        // 1. Validate request
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
             return res.status(400).json({
                 success: false,
-                message: 'This email is already used'
+                errors: errors.array()
             });
         }
 
-        // 3. Create admin
-        const newAdmin = await AdminModel.create(adminData);
+        // 2. Create DTO and validate
+        const adminData = createAdminDto({
+            ...req.body,
+            // In a real app, you might want to get this from the authenticated user
+            created_by: req.user?.id
+        });
 
-        // 4. Response (without password)
-        const { password, ...adminWithoutPassword } = newAdmin;
+        // 3. Create admin using service
+        const admin = await adminService.createAdmin(adminData);
 
+        // 4. Return response
         res.status(201).json({
             success: true,
-            data: adminWithoutPassword
+            data: admin
         });
-
     } catch (error) {
-        console.error('Error creating admin:', error);
-
-        // Error handling specific
-        if (error.name === 'ValidationError') {
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid data',
-                errors: error.errors
-            });
-        }
-
-        // Error server generic
-        res.status(500).json({
+        console.error('Error in createAdmin:', error);
+        const statusCode = error.message.includes('Validation') ? 400 : 500;
+        res.status(statusCode).json({
             success: false,
-            message: 'Error creating admin',
-            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+            message: error.message
         });
     }
-};
+}
 
 // Update admin
 const updateAdmin = (req, res) => {
