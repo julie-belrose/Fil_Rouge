@@ -28,34 +28,6 @@ class NotificationMapper {
 
         return persistence;
     }
-
-    /**
-     * Converts raw database data to domain entity
-     * @param {Object|null} rawData - Raw data from MongoDB
-     * @returns {Object|null} Notification domain entity or null if input is falsy
-     */
-    static toDomain(rawData) {
-        if (!rawData) return null;
-        return NotificationMapper.toEntity(rawData);
-    }
-
-    /**
-     * Converts domain entity to DTO for API responses
-     * @param {Object} notification - Notification domain entity
-     * @returns {Object} Safe notification data for API responses
-     */
-    static toDTO(notification) {
-        if (!notification) return null;
-
-        // Create a shallow copy and remove internal fields
-        const { _id, user_id, ...dto } = notification;
-
-        // Add id field (using _id) for the API response
-        return {
-            id: _id,
-            ...dto
-        };
-    }
 }
 
 module.exports = NotificationMapper;

@@ -11,16 +11,6 @@ class AgentMapper {
             sector: agent.sector
         };
     }
-
-    static toDomain(rawData) {
-        if (!rawData) return null;
-        return agentEntity(rawData);
-    }
-
-    static toDTO(agent) {
-        if (!agent) return null;
-        return { ...agent };
-    }
 }
 
 module.exports = AgentMapper;
