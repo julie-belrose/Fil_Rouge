@@ -40,6 +40,24 @@ class BadgeService {
             throw new Error(`Failed to get badge: ${error.message}`);
         }
     }
+
+    /**
+     * Updates a badge by user ID
+     * @param {Object} badgeData - Badge data
+     * @returns {Promise<Object>} Updated badge
+     */
+    async updateBadge(badgeData) {
+        //todo
+    }
+
+    /**
+     * Deletes a badge by user ID
+     * @param {number} userId - User ID
+     * @returns {Promise<Object>} Deleted badge
+     */
+    async deleteBadge(userId) {
+        //todo
+    }
 }
 
 module.exports = new BadgeService();
