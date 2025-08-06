@@ -1,5 +1,5 @@
 const { getDb } = require('../../database/mongodb');
-const TreatmentCenterMapper = require('./treatment_center.mapper');
+const TreatmentCenterMapper = require('./treatmentCenter.mapper');
 
 /**
  * Handles database operations for treatment centers

@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    getTreatmentCenters,
+    getAllTreatmentCenters,
     getTreatmentCenter,
     createTreatmentCenter,
     updateTreatmentCenter,
     deleteTreatmentCenter
-} = require('./treatment_center.controller');
+} = require('./treatmentCenter.controller');
 
 // Test agents route
 router.get('/', (req, res) => {
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 }); 
 
 router.get('/:id', getTreatmentCenter);
-router.get('/', getTreatmentCenters);
+router.get('/', getAllTreatmentCenters);
 router.post('/', createTreatmentCenter);
 router.put('/:id', updateTreatmentCenter);
 router.delete('/:id', deleteTreatmentCenter);

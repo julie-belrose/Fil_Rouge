@@ -1,5 +1,5 @@
-const treatmentCenterRepository = require('./repository/treatment_center.repository');
-const TreatmentCenterMapper = require('./mapper/treatment_center.mapper');
+const treatmentCenterRepository = require('./repository/treatmentCenter.repository');
+const TreatmentCenterMapper = require('./mapper/treatmentCenter.mapper');
 
 class TreatmentCenterService {
     /**
@@ -18,6 +18,23 @@ class TreatmentCenterService {
             console.error(`Failed to get treatment center ${centerId}:`, error);
             throw new Error(`Failed to get treatment center: ${error.message}`);
         }
+    }
+
+
+    async createTreatmentCenter(treatmentCenter) {
+        //todo
+    }
+
+    async updateTreatmentCenter(treatmentCenter) {
+        //todo
+    }
+
+    async deleteTreatmentCenter(treatmentCenter) {
+        //todo
+    }
+
+    async getTreatmentCenters() {
+        //todo
     }
 }
 

@@ -1,65 +1,40 @@
-const { createAdminDto } = require('./admin.dto');
+const { createAdminDto, updateAdminDto, deleteAdminDto } = require('./admin.dto');
+const adminService = require('./admin.service');
+const adminEntity = require('./admin.entity');
+const handlerBody = require('../utils/handlerBody');
+const handlerRequest = require('../utils/handlerRequest');
 
 // Get all admins
-const getAllAdmins = (req, res) => {
-    res.json('Get AllAdmins Controller OK');
-};
+const getAllAdmins = handlerBody(async (req, res) => {
+    return await adminService.getAllAdmins();
+});
 
 // Get single admin
-const getAdmin = (req, res) => {
-    res.json(`GetAdmin ${req.params.id} Controller OK`);
-};
+const getAdmin = handlerBody(async (req, res) => {
+    return await adminService.getAdmin(req.params.id);
+});
 
 /**
      * Creates a new admin
      * @param {Object} req - Express request object
      * @param {Object} res - Express response object
      */
-const createAdmin = async (req, res) => {
-    try {
-        // 1. Validate request
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                success: false,
-                errors: errors.array()
-            });
-        }
-
-        // 2. Create DTO and validate
-        const adminData = createAdminDto({
-            ...req.body,
-            // In a real app, you might want to get this from the authenticated user
-            created_by: req.user?.id
-        });
-
-        // 3. Create admin using service
-        const admin = await adminService.createAdmin(adminData);
-
-        // 4. Return response
-        res.status(201).json({
-            success: true,
-            data: admin
-        });
-    } catch (error) {
-        console.error('Error in createAdmin:', error);
-        const statusCode = error.message.includes('Validation') ? 400 : 500;
-        res.status(statusCode).json({
-            success: false,
-            message: error.message
-        });
-    }
-}
+const createAdmin = handlerRequest(createAdminDto, adminEntity, async (admin) => {
+    const newAdmin = await adminService.createAdmin(admin);
+    return newAdmin;
+});
 
 // Update admin
-const updateAdmin = (req, res) => {
-    res.json(`UpdateAdmin ${req.params.id} Controller OK`);
-};
+const updateAdmin = handlerRequest(updateAdminDto, adminEntity, async (admin) => {
+    const updatedAdmin = await adminService.updateAdmin(admin);
+    return updatedAdmin;
+});
 
 // Delete admin
-const deleteAdmin = (req, res) => {
-    res.json(`DeleteAdmin ${req.params.id} Controller OK`);
-};
+const deleteAdmin = handlerRequest(deleteAdminDto, adminEntity, async (admin) => {
+    const deletedAdmin = await adminService.deleteAdmin(admin);
+    return deletedAdmin;
+});
 
 module.exports = {
     getAllAdmins,

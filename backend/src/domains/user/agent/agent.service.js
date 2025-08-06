@@ -40,6 +40,18 @@ class AgentService {
             throw new Error(`Failed to get agent: ${error.message}`);
         }
     }
+
+    async updateAgent(agentData) {
+        //todo
+    }
+
+    async deleteAgent(agentData) {
+        //todo
+    }
+
+    async getAgents() {
+        //todo
+    }
 }
 
 module.exports = new AgentService();
