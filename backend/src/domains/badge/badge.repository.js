@@ -1,5 +1,6 @@
 const pool = require('../../config/database');
 const AgentMapper = require('./badge.mapper');
+const utilsMapper = require('../utils/mapperUtils');
 
 class AgentRepository {
     /**
@@ -25,7 +26,8 @@ class AgentRepository {
             'SELECT * FROM agents WHERE user_id = ?',
             [userId]
         );
-        return AgentMapper.toDomain(rows[0]);
+        const result = rows[0];
+        return result ? utilsMapper.toDTO(result) : null;
     }
 }
 

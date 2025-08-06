@@ -1,8 +1,11 @@
-const { getDb } = require('../../database/mongodb');
+const { ObjectId } = require('mongodb');
 const NotificationMapper = require('./notification.mapper');
+const utilsMapper = require('../utils/mapperUtils');
+const utilsRepository = require('../utils/repositoryUtils').default;
+const mongoUtils = require('../utils/mongoUtils');
 
 /**
- * Handles database operations for reports
+ * Handles database operations for notifications
  */
 class NotificationRepository {
     constructor() {
@@ -10,12 +13,11 @@ class NotificationRepository {
     }
 
     /**
-     * Gets the MongoDB collection for reports
+     * Gets the MongoDB collection for notifications
      * @returns {Promise<Collection>} MongoDB collection
      */
     async getCollection() {
-        const db = await getDb();
-        return db.collection(this.collectionName);
+        return await mongoUtils.getMongoCollection(this.collectionName);
     }
 
     /**
@@ -25,15 +27,10 @@ class NotificationRepository {
      */
     async create(notificationData) {
         const collection = await this.getCollection();
-        const now = new Date();
-        
-        const notification = {
-            ...NotificationMapper.toPersistence(notificationData),
-            created_at: now,
-            updated_at: now
-        };
-        
-        const result = await collection.insertOne(notification);
+        const baseData = NotificationMapper.toPersistence(notificationData);
+        const dataWithTimestamps = utilsRepository.setTimestamps(baseData);
+
+        const result = await collection.insertOne(dataWithTimestamps);
         return this.findById(result.insertedId);
     }
 
@@ -43,9 +40,15 @@ class NotificationRepository {
      * @returns {Promise<Object|null>} Found notification or null if not found
      */
     async findById(id) {
-        const collection = await this.getCollection();
-        const notification = await collection.findOne({ _id: id });
-        return NotificationMapper.toDomain(notification);
+        try {
+            const collection = await this.getCollection();
+            const objectId = new ObjectId(id);
+            const notification = await collection.findOne({ _id: objectId });
+            return notification ? utilsMapper.toDTO(notification) : null;
+        } catch (err) {
+            console.error(`Invalid ObjectId or error finding notification: ${id}`, err);
+            return null;
+        }
     }
 
     /**
@@ -54,9 +57,15 @@ class NotificationRepository {
      * @returns {Promise<boolean>} True if deleted, false if not found
      */
     async delete(id) {
-        const collection = await this.getCollection();
-        const result = await collection.deleteOne({ _id: id });
-        return result.deletedCount > 0;
+        try {
+            const collection = await this.getCollection();
+            const objectId = new ObjectId(id);
+            const result = await collection.deleteOne({ _id: objectId });
+            return result.deletedCount > 0;
+        } catch (err) {
+            console.error(`Error deleting notification: ${id}`, err);
+            return false;
+        }
     }
 }
 

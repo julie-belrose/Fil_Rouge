@@ -10,16 +10,6 @@ class BadgeMapper {
             updated_at: badge.updated_at
         };
     }
-
-    static toDomain(rawData) {
-        if (!rawData) return null;
-        return badgeEntity(rawData);
-    }
-
-    static toDTO(badge) {
-        if (!badge) return null;
-        return { ...badge };
-    }
 }
 
 module.exports = BadgeMapper;

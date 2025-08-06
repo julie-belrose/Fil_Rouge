@@ -1,5 +1,6 @@
 const pool = require('../../../../config/database');
 const AuthMapper = require('./auth.mapper');
+const utilsMapper = require('../utils/mapperUtils');
 
 class AuthRepository {
   /**
@@ -21,7 +22,9 @@ class AuthRepository {
       'SELECT * FROM authentification WHERE id = ?',
       [id]
     );
-    return AuthMapper.toDomain(rows[0]);
+
+    const result = rows[0];
+    return result ? utilsMapper.toDTO(result) : null;
   }
 
   /**
@@ -32,7 +35,8 @@ class AuthRepository {
       'SELECT * FROM authentification WHERE email = ?',
       [email]
     );
-    return AuthMapper.toDomain(rows[0]);
+    const result = rows[0];
+    return result ? utilsMapper.toDTO(result) : null;
   }
 }
 

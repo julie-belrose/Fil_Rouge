@@ -1,5 +1,7 @@
-const { getDb } = require('../../database/mongodb');
 const ReportMapper = require('./report.mapper');
+const utilsRepository = require('../utils/repositoryUtils').default;
+const utilsMapper = require('../utils/mapperUtils');
+const mongoUtils = require('../utils/mongoUtils');
 
 /**
  * Handles database operations for reports
@@ -14,8 +16,7 @@ class ReportRepository {
      * @returns {Promise<Collection>} MongoDB collection
      */
     async getCollection() {
-        const db = await getDb();
-        return db.collection(this.collectionName);
+        return await mongoUtils.getMongoCollection(this.collectionName);
     }
 
     /**
@@ -25,16 +26,8 @@ class ReportRepository {
      */
     async create(reportData) {
         const collection = await this.getCollection();
-        const now = new Date();
-        
-        const report = {
-            ...ReportMapper.toPersistence(reportData),
-            created_at: now,
-            updated_at: now
-        };
-        
-        const result = await collection.insertOne(report);
-        return this.findById(result.insertedId);
+        const result = await utilsRepository.create(reportData, collection);
+
     }
 
     /**
@@ -45,7 +38,8 @@ class ReportRepository {
     async findById(id) {
         const collection = await this.getCollection();
         const report = await collection.findOne({ _id: id });
-        return ReportMapper.toDomain(report);
+        const result = report;
+        return result ? utilsMapper.toDTO(result) : null;
     }
 
     /**
@@ -65,7 +59,7 @@ class ReportRepository {
             .limit(limit);
         
         const reports = await cursor.toArray();
-        return reports.map(ReportMapper.toDomain);
+        return reports.map(utilsMapper.toDTO);
     }
 
     /**
@@ -89,7 +83,7 @@ class ReportRepository {
             { returnDocument: 'after' }
         );
         
-        return ReportMapper.toDomain(result.value);
+        return result.value ? utilsMapper.toDTO(result.value) : null;
     }
 
     /**

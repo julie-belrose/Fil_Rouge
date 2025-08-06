@@ -13,22 +13,6 @@ class AuthMapper {
             created_at: auth.created_at
         };
     }
-
-    /**
-     * Convert the raw data to entity
-     */
-    static toDomain(rawData) {
-        if (!rawData) return null;
-        return authEntity(rawData);
-    }
-
-    /**
-     * Convert the entity to dto for the responses API
-     */
-    static toDTO(auth) {
-        const { password_hash, ...authData } = auth;
-        return authData;
-    }
 }
 
 module.exports = AuthMapper;
