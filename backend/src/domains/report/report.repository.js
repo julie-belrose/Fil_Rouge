@@ -1,5 +1,3 @@
-const ReportMapper = require('./report.mapper');
-const utilsRepository = require('../utils/repositoryUtils').default;
 const utilsMapper = require('../utils/mapperUtils');
 const mongoUtils = require('../utils/mongoUtils');
 
@@ -26,8 +24,7 @@ class ReportRepository {
      */
     async create(reportData) {
         const collection = await this.getCollection();
-        const result = await utilsRepository.create(reportData, collection);
-
+        return mongoUtils.createWithTimestamps(collection, reportData, utilsMapper.toDTO);
     }
 
     /**
@@ -37,9 +34,7 @@ class ReportRepository {
      */
     async findById(id) {
         const collection = await this.getCollection();
-        const report = await collection.findOne({ _id: id });
-        const result = report;
-        return result ? utilsMapper.toDTO(result) : null;
+        return mongoUtils.findById(collection, id, utilsMapper.toDTO);
     }
 
     /**
@@ -52,14 +47,7 @@ class ReportRepository {
      */
     async findByUserId(userId, { limit = 10, skip = 0 } = {}) {
         const collection = await this.getCollection();
-        const cursor = await collection
-            .find({ user_id: userId })
-            .sort({ created_at: -1 })
-            .skip(skip)
-            .limit(limit);
-        
-        const reports = await cursor.toArray();
-        return reports.map(utilsMapper.toDTO);
+        return mongoUtils.findByUserId(collection, userId, { limit, skip }, utilsMapper.toDTO);
     }
 
     /**
@@ -70,20 +58,7 @@ class ReportRepository {
      */
     async update(id, updateData) {
         const collection = await this.getCollection();
-        const now = new Date();
-        
-        const result = await collection.findOneAndUpdate(
-            { _id: id },
-            { 
-                $set: { 
-                    ...updateData,
-                    updated_at: now 
-                } 
-            },
-            { returnDocument: 'after' }
-        );
-        
-        return result.value ? utilsMapper.toDTO(result.value) : null;
+        return mongoUtils.updateById(collection, id, updateData, utilsMapper.toDTO);
     }
 
     /**
@@ -93,9 +68,9 @@ class ReportRepository {
      */
     async delete(id) {
         const collection = await this.getCollection();
-        const result = await collection.deleteOne({ _id: id });
-        return result.deletedCount > 0;
+        return mongoUtils.deleteById(collection, id);
     }
+
 }
 
 module.exports = new ReportRepository();
