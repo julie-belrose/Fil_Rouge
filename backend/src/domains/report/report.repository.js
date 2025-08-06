@@ -1,5 +1,5 @@
-const utilsMapper = require('../utils/mapperUtils');
-const mongoUtils = require('../utils/mongoUtils');
+const { getDb } = require('../../database/mongodb');
+const ReportMapper = require('./report.mapper');
 
 /**
  * Handles database operations for reports
@@ -14,7 +14,8 @@ class ReportRepository {
      * @returns {Promise<Collection>} MongoDB collection
      */
     async getCollection() {
-        return await mongoUtils.getMongoCollection(this.collectionName);
+        const db = await getDb();
+        return db.collection(this.collectionName);
     }
 
     /**
@@ -24,7 +25,16 @@ class ReportRepository {
      */
     async create(reportData) {
         const collection = await this.getCollection();
-        return mongoUtils.createWithTimestamps(collection, reportData, utilsMapper.toDTO);
+        const now = new Date();
+        
+        const report = {
+            ...ReportMapper.toPersistence(reportData),
+            created_at: now,
+            updated_at: now
+        };
+        
+        const result = await collection.insertOne(report);
+        return this.findById(result.insertedId);
     }
 
     /**
@@ -34,7 +44,8 @@ class ReportRepository {
      */
     async findById(id) {
         const collection = await this.getCollection();
-        return mongoUtils.findById(collection, id, utilsMapper.toDTO);
+        const report = await collection.findOne({ _id: id });
+        return ReportMapper.toDomain(report);
     }
 
     /**
@@ -47,7 +58,14 @@ class ReportRepository {
      */
     async findByUserId(userId, { limit = 10, skip = 0 } = {}) {
         const collection = await this.getCollection();
-        return mongoUtils.findByUserId(collection, userId, { limit, skip }, utilsMapper.toDTO);
+        const cursor = await collection
+            .find({ user_id: userId })
+            .sort({ created_at: -1 })
+            .skip(skip)
+            .limit(limit);
+        
+        const reports = await cursor.toArray();
+        return reports.map(ReportMapper.toDomain);
     }
 
     /**
@@ -58,7 +76,20 @@ class ReportRepository {
      */
     async update(id, updateData) {
         const collection = await this.getCollection();
-        return mongoUtils.updateById(collection, id, updateData, utilsMapper.toDTO);
+        const now = new Date();
+        
+        const result = await collection.findOneAndUpdate(
+            { _id: id },
+            { 
+                $set: { 
+                    ...updateData,
+                    updated_at: now 
+                } 
+            },
+            { returnDocument: 'after' }
+        );
+        
+        return ReportMapper.toDomain(result.value);
     }
 
     /**
@@ -68,9 +99,9 @@ class ReportRepository {
      */
     async delete(id) {
         const collection = await this.getCollection();
-        return mongoUtils.deleteById(collection, id);
+        const result = await collection.deleteOne({ _id: id });
+        return result.deletedCount > 0;
     }
-
 }
 
 module.exports = new ReportRepository();

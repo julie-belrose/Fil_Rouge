@@ -27,22 +27,6 @@ class UserService {
             throw new Error(`Failed to create user: ${error.message}`);
         }
     }
-
-    async updateUser(userData) {
-        //todo
-    }
-
-    async deleteUser(userData) {
-        //todo
-    }
-
-    async getUsers() {
-        //todo
-    }
-
-    async getUserById(id) {
-        //todo
-    }
 }
 
 module.exports = new UserService();

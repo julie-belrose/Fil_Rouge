@@ -19,6 +19,27 @@ class UserMapper {
             loyalty_points: user.loyalty_points
         };
     }
+
+    /**
+     * Converts raw database data to domain entity
+     * @param {Object|null} rawData - Raw data from database
+     * @returns {Object|null} User domain entity or null if input is falsy
+     */
+    static toDomain(rawData) {
+        if (!rawData) return null;
+        return userEntity(rawData);
+    }
+
+    /**
+     * Converts domain entity to DTO for API responses
+     * @param {Object} user - User domain entity
+     * @returns {Object} Safe user data for API responses
+     */
+    static toDTO(user) {
+        // Exclude internal fields from response
+        const { auth_id, ...userData } = user;
+        return userData;
+    }
 }
 
 module.exports = UserMapper;

@@ -8,7 +8,17 @@ const badgeEntity = require('./badge.entity');
  * @throws {Error} If validation fails
  */
 const createBadgeDto = (data) => {
-    return validateAndTransform(data, createSchema, badgeEntity);
+    const { error, value } = createSchema.validate(data, {
+        abortEarly: false,
+        stripUnknown: true
+    });
+
+    if (error) {
+        const errorMessage = error.details.map(detail => detail.message).join('; ');
+        throw new Error(`Validation error: ${errorMessage}`);
+    }
+
+    return badgeEntity(value);
 };
 
 /**
@@ -18,12 +28,17 @@ const createBadgeDto = (data) => {
  * @throws {Error} If validation fails
  */
 const updateBadgeDto = (data) => {
-    return validateAndTransform(data, updateSchema, badgeEntity);
+    const { error, value } = updateSchema.validate(data, {
+        abortEarly: false,
+        stripUnknown: true
+    });
+
+    if (error) {
+        const errorMessage = error.details.map(detail => detail.message).join('; ');
+        throw new Error(`Validation error: ${errorMessage}`);
+    }
+
+    return badgeEntity(value);
 };
 
-const deleteBadgeDto = (data) => {
-    // TODO: Implement deleteBadgeDto
-}
-
-
-module.exports = { createBadgeDto, updateBadgeDto, deleteBadgeDto };
+module.exports = { createBadgeDto, updateBadgeDto };

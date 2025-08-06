@@ -1,8 +1,8 @@
-const utilsMapper = require('../utils/mapperUtils');
-const mongoUtils = require('../utils/mongoUtils');
+const { getDb } = require('../../database/mongodb');
+const NotificationMapper = require('./notification.mapper');
 
 /**
- * Handles database operations for notifications
+ * Handles database operations for reports
  */
 class NotificationRepository {
     constructor() {
@@ -10,11 +10,12 @@ class NotificationRepository {
     }
 
     /**
-     * Gets the MongoDB collection for notifications
+     * Gets the MongoDB collection for reports
      * @returns {Promise<Collection>} MongoDB collection
      */
     async getCollection() {
-        return await mongoUtils.getMongoCollection(this.collectionName);
+        const db = await getDb();
+        return db.collection(this.collectionName);
     }
 
     /**
@@ -24,7 +25,16 @@ class NotificationRepository {
      */
     async create(notificationData) {
         const collection = await this.getCollection();
-        return mongoUtils.createWithTimestamps(collection, notificationData, utilsMapper.toDTO);
+        const now = new Date();
+        
+        const notification = {
+            ...NotificationMapper.toPersistence(notificationData),
+            created_at: now,
+            updated_at: now
+        };
+        
+        const result = await collection.insertOne(notification);
+        return this.findById(result.insertedId);
     }
 
     /**
@@ -34,7 +44,8 @@ class NotificationRepository {
      */
     async findById(id) {
         const collection = await this.getCollection();
-        return mongoUtils.findById(collection, id, utilsMapper.toDTO);
+        const notification = await collection.findOne({ _id: id });
+        return NotificationMapper.toDomain(notification);
     }
 
     /**
@@ -44,7 +55,8 @@ class NotificationRepository {
      */
     async delete(id) {
         const collection = await this.getCollection();
-        return mongoUtils.deleteById(collection, id);
+        const result = await collection.deleteOne({ _id: id });
+        return result.deletedCount > 0;
     }
 }
 

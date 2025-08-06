@@ -1,6 +1,4 @@
-const { loginSchema, registerSchema, logoutSchema } = require('./auth.schema');
-const authEntity = require('./auth.entity');
-const validateAndTransform = require('../utils/parseDTO');
+const { loginSchema, registerSchema } = require('./auth.schema');
 
 /**
  * Validates and transforms login data
@@ -9,7 +7,17 @@ const validateAndTransform = require('../utils/parseDTO');
  * @throws {Error} If validation fails
  */
 const loginDto = (data) => {
-    return validateAndTransform(data, loginSchema, authEntity);
+    const { error, value } = loginSchema.validate(data, {
+        abortEarly: false,
+        stripUnknown: true
+    });
+
+    if (error) {
+        const errorMessage = error.details.map(detail => detail.message).join('; ');
+        throw new Error(`Validation error: ${errorMessage}`);
+    }
+
+    return authEntity(value);
 };
 
 
@@ -21,7 +29,17 @@ const loginDto = (data) => {
  * @throws {Error} If validation fails
  */
 const registerDto = (data) => {
-    return validateAndTransform(data, registerSchema, authEntity);
+    const { error, value } = registerSchema.validate(data, {
+        abortEarly: false,
+        stripUnknown: true
+    });
+
+    if (error) {
+        const errorMessage = error.details.map(detail => detail.message).join('; ');
+        throw new Error(`Validation error: ${errorMessage}`);
+    }
+
+    return authEntity(value);
 };
 
 
@@ -32,7 +50,17 @@ const registerDto = (data) => {
  * @throws {Error} If validation fails
  */
 const logoutDto = (data) => {
-    return validateAndTransform(data, logoutSchema, authEntity);
+    const { error, value } = logoutSchema.validate(data, {
+        abortEarly: false,
+        stripUnknown: true
+    });
+
+    if (error) {
+        const errorMessage = error.details.map(detail => detail.message).join('; ');
+        throw new Error(`Validation error: ${errorMessage}`);
+    }
+
+    return authEntity(value);
 };
 
-module.exports = { loginDto, registerDto, logoutDto };
+module.exports = { loginDto, registerDto };

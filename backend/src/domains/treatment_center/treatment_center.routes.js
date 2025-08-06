@@ -7,7 +7,7 @@ const {
     createTreatmentCenter,
     updateTreatmentCenter,
     deleteTreatmentCenter
-} = require('../domains/treatment_center/controller/treatment_center.controller');
+} = require('./treatment_center.controller');
 
 // Test agents route
 router.get('/', (req, res) => {

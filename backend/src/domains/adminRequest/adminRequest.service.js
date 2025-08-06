@@ -40,6 +40,28 @@ class AdminRequestService {
             throw new Error(`Failed to get admin_request: ${error.message}`);
         }
     }
+
+    /**
+     * Creates a new adminRequest
+     * @param {number} userId - User ID
+     * @returns {Object} Admin_request data
+     */
+    async createAdminRequest(userId) {
+        const token = generateUUID();
+        const hashedToken = hashSHA256(token); //todo: example
+
+        const now = getCurrentDate();
+        const expires = addHours(now, 24);
+
+        return {
+            hashed_token: hashedToken,
+            related_user_id: userId,
+            status: 'pending',
+            created_at: now,
+            expires_at: expires
+        };
+    }
+
 }
 
 module.exports = new AdminRequestService();

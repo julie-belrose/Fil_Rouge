@@ -1,7 +1,6 @@
 const Joi = require('joi');
 const { createAdminSchema } = require('./admin.schema');
 const adminEntity = require('./admin.entity');
-const validateAndTransform = require('../utils/parseDTO');
 
 /**
  * Validates and transforms admin creation data
@@ -10,19 +9,19 @@ const validateAndTransform = require('../utils/parseDTO');
  * @throws {Error} If validation fails
  */
 const createAdminDto = (data) => {
-    return validateAndTransform(data, createSchema, adminEntity);
-};
+    const { error, value } = createAdminSchema.validate(data, {
+        abortEarly: false,
+        stripUnknown: true
+    });
 
-const updateAdminDto = (data) => {
-    //todo
-};
+    if (error) {
+        const errorMessage = error.details.map(detail => detail.message).join('; ');
+        throw new Error(`Validation error: ${errorMessage}`);
+    }
 
-const deleteAdminDto = (data) => {
-//todo
+    return adminEntity(value);
 };
 
 module.exports = {
-    createAdminDto,
-    updateAdminDto,
-    deleteAdminDto
+    createAdminDto
 };

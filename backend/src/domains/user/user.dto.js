@@ -1,7 +1,3 @@
-const { createSchema, updateSchema } = require('./user.schema');
-const userEntity = require('./user.entity');
-const validateAndTransform = require('../utils/parseDTO');  
-
 /**
  * Validates and transforms user creation data
  * @param {Object} data - Raw input data
@@ -9,15 +5,19 @@ const validateAndTransform = require('../utils/parseDTO');
  * @throws {Error} If validation fails
  */
 const createUserDto = (data) => {
-    return validateAndTransform(data, createSchema, userEntity);
+    const { error, value } = createSchema.validate(data);
+    if (error) {
+        throw new Error(`Validation error: ${error.details[0].message}`);
+    }
+    return userEntity(value);
 };
 
 const updateUserDto = (data) => {
-    return validateAndTransform(data, updateSchema, userEntity);
+    const { error, value } = updateSchema.validate(data);
+    if (error) {
+        throw new Error(`Validation error: ${error.details[0].message}`);
+    }
+    return userEntity(value);
 };
 
-const deleteUserDto = (data) => {
-    //todo
-};
-
-module.exports = { createUserDto, updateUserDto, deleteUserDto };
+module.exports = { createUserDto, updateUserDto };

@@ -1,16 +1,24 @@
 const { createSchema, updateSchema } = require('./report.schema');
 const reportEntity = require('./report.entity');
-const validateAndTransform = require('../utils/parseDTO');
-
 
 /**
  * Validates and transforms report creation data
  * @param {Object} data - Raw input data
- * @returns {Object} Validated and transformed report data  
+ * @returns {Object} Validated and transformed report data
  * @throws {Error} If validation fails
  */
 const createReportDto = (data) => {
-    return validateAndTransform(data, createSchema, reportEntity);
+    const { error, value } = createSchema.validate(data, {
+        abortEarly: false,
+        stripUnknown: true
+    });
+
+    if (error) {
+        const errorMessage = error.details.map(detail => detail.message).join('; ');
+        throw new Error(`Validation error: ${errorMessage}`);
+    }
+
+    return reportEntity(value);
 };
 
 /**
@@ -20,13 +28,25 @@ const createReportDto = (data) => {
  * @throws {Error} If validation fails
  */
 const updateReportDto = (data) => {
-    return validateAndTransform(data, updateSchema, reportEntity);
+    const { error, value } = updateSchema.validate(data, {
+        abortEarly: false,
+        stripUnknown: true
+    });
+
+    if (error) {
+        const errorMessage = error.details.map(detail => detail.message).join('; ');
+        throw new Error(`Validation error: ${errorMessage}`);
+    }
+
+    // Only return the fields that were actually provided
+    const updateData = {};
+    Object.keys(value).forEach(key => {
+        if (value[key] !== undefined) {
+            updateData[key] = value[key];
+        }
+    });
+
+    return updateData;
 };
 
-const deleteReportDto = (data) => {
-    //todo
-};
-
-
-
-module.exports = { createReportDto, updateReportDto, deleteReportDto };
+module.exports = { createReportDto, updateReportDto };

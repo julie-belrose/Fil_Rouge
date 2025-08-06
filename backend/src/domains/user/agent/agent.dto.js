@@ -1,6 +1,5 @@
 const { createSchema, updateSchema } = require('./agent.schema');
 const agentEntity = require('./agent.entity');
-const validateAndTransform = require('../utils/parseDTO');
 
 /**
  * Validates and transforms agent creation data
@@ -9,7 +8,17 @@ const validateAndTransform = require('../utils/parseDTO');
  * @throws {Error} If validation fails
  */
 const createAgentDto = (data) => {
-    return validateAndTransform(data, createSchema, agentEntity);
+    const { error, value } = createSchema.validate(data, {
+        abortEarly: false,
+        stripUnknown: true
+    });
+
+    if (error) {
+        const errorMessage = error.details.map(detail => detail.message).join('; ');
+        throw new Error(`Validation error: ${errorMessage}`);
+    }
+
+    return agentEntity(value);
 };
 
 /**
@@ -19,11 +28,17 @@ const createAgentDto = (data) => {
  * @throws {Error} If validation fails
  */
 const updateAgentDto = (data) => {
-    return validateAndTransform(data, updateSchema, agentEntity);
+    const { error, value } = updateSchema.validate(data, {
+        abortEarly: false,
+        stripUnknown: true
+    });
+
+    if (error) {
+        const errorMessage = error.details.map(detail => detail.message).join('; ');
+        throw new Error(`Validation error: ${errorMessage}`);
+    }
+
+    return agentEntity(value);
 };
 
-const deleteAgentDto = (data) => {
-//todo
-};
-
-module.exports = { createAgentDto, updateAgentDto, deleteAgentDto };
+module.exports = { createAgentDto, updateAgentDto };

@@ -23,19 +23,6 @@ class ReportService {
             throw new Error(`Failed to create report: ${error.message}`);
         }
     }
-
-    async updateReport(reportData) {
-        //todo
-    }
-
-    async deleteReport(reportData) {
-        //todo
-    }
-
-    async getReports() {
-        //todo
-    }
-
 }
 
 module.exports = new ReportService();

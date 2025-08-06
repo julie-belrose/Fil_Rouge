@@ -1,15 +1,15 @@
-const { createUserDto, updateUserDto, deleteUserDto } = require('./user.dto');
+const { createUserDto, updateUserDto } = require('./user.dto');
 const userService = require('./user.service');
 
 // Get all users
-const getUsers = handlerBody(async (req, res) => {
-    return await userService.getUsers();
-});
+const getUsers = (req, res) => {
+    res.json('GetUsers Controller OK');
+};
 
 // Get single user
-const getUser = handlerBody(async (req, res) => {
-    return await userService.getUser(req.params.id);
-});
+const getUser = (req, res) => {
+    res.json(`GetUser ${req.params.id} Controller OK`);
+};
 
 // Create user
 /**
@@ -17,22 +17,58 @@ const getUser = handlerBody(async (req, res) => {
     * @param {Object} req - Express request object
     * @param {Object} res - Express response object
     */
-const createUser = handlerRequest(createUserDto, userEntity, async (user) => {
-    const newUser = await userService.createUser(user);
-    return newUser;
-});
+const createUser = async (req, res) => {
+    try {
+        // 1. Validate and transform input
+        const userData = createUserDto(req.body);
+
+        // 2. Process business logic
+        const newUser = await userService.createUser(userData);
+
+        // 3. Return success response
+        res.status(201).json({
+            success: true,
+            data: newUser
+        });
+    } catch (error) {
+        // Handle errors
+        const statusCode = error.message.includes('Validation') ? 400 : 500;
+        res.status(statusCode).json({
+            success: false,
+            message: error.message
+        });
+    }
+}
 
 // Update user
-const updateUser = handlerRequest(updateUserDto, userEntity, async (user) => {
-    const updatedUser = await userService.updateUser(user);
-    return updatedUser;
-});
+const updateUser = (req, res) => {
+    try {
+        // 1. Validate and transform input using DTO
+        const validatedData = updateUserDto(req.body);
+        console.log('Updated user data:', validatedData);
+
+        // 2. Create entity from validated data
+        const user = userEntity({ ...validatedData, id: req.params.id });
+
+        res.json({
+            success: true,
+            message: `UpdateUser ${req.params.id}`,
+            data: user
+        });
+    } catch (error) {
+        console.error('Error in updateUser:', error);
+        const statusCode = error.message.includes('Validation') ? 400 : 500;
+        res.status(statusCode).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
 
 // Delete user
-const deleteUser = handlerRequest(deleteUserDto, userEntity, async (user) => {
-    const deletedUser = await userService.deleteUser(user);
-    return deletedUser;
-});
+const deleteUser = (req, res) => {
+    res.json(`DeleteUser ${req.params.id} Controller OK`);
+};
 
 module.exports = {
     getUsers,
