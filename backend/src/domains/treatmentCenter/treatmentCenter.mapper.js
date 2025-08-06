@@ -18,6 +18,31 @@ class TreatmentCenterMapper {
             updated_at: treatmentCenter.updated_at
         };
     }
+
+    /**
+     * Converts raw data to domain entity
+     * @param {Object} rawData - Raw data from database
+     * @returns {Object} Treatment center domain entity
+     */
+    static toDomain(rawData) {
+        if (!rawData) return null;
+        return treatmentCenterEntity(rawData);
+    }
+
+    /**
+     * Converts domain entity to DTO
+     * @param {Object} treatmentCenter - Treatment center domain entity
+     * @returns {Object} DTO
+     */
+    static toDTO(treatmentCenter) {
+        if (!treatmentCenter) return null;
+        
+        const { _id, ...dto } = treatmentCenter;
+        return {
+            id: _id,
+            ...dto
+        };
+    }
 }
 
 module.exports = TreatmentCenterMapper;
