@@ -23,6 +23,18 @@ class NotificationService {
             throw new Error(`Failed to create notification: ${error.message}`);
         }
     }
+
+    async getNotificationById(id) {
+        //todo
+    }
+
+    async updateNotification(id, notificationData) {
+        //todo
+    }
+
+    async deleteNotification(id) {
+        //todo
+    }
 }
 
 module.exports = new NotificationService();

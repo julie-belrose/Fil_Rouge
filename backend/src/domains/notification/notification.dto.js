@@ -1,5 +1,6 @@
 const { createSchema, updateSchema } = require('./notification.schema');
 const notificationEntity = require('./notification.entity');
+const validateAndTransform = require('../utils/parseDTO');
 
 /**
  * Validates and transforms notification creation data
@@ -8,17 +9,7 @@ const notificationEntity = require('./notification.entity');
  * @throws {Error} If validation fails
  */
 const createNotificationDto = (data) => {
-    const { error, value } = createSchema.validate(data, {
-        abortEarly: false,
-        stripUnknown: true
-    });
-
-    if (error) {
-        const errorMessage = error.details.map(detail => detail.message).join('; ');
-        throw new Error(`Validation error: ${errorMessage}`);
-    }
-
-    return notificationEntity(value);
+    validateAndTransform(data, createSchema, notificationEntity);
 };
 
 /**
@@ -28,17 +19,7 @@ const createNotificationDto = (data) => {
  * @throws {Error} If validation fails
  */
 const updateNotificationDto = (data) => {
-    const { error, value } = updateSchema.validate(data, {
-        abortEarly: false,
-        stripUnknown: true
-    });
-
-    if (error) {
-        const errorMessage = error.details.map(detail => detail.message).join('; ');
-        throw new Error(`Validation error: ${errorMessage}`);
-    }
-
-    return notificationEntity(value);
+    validateAndTransform(data, updateSchema, notificationEntity);
 };
 
 module.exports = { createNotificationDto, updateNotificationDto };
