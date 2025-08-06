@@ -1,5 +1,5 @@
-const { getDb } = require('../../database/mongodb');
-const TreatmentCenterMapper = require('./treatmentCenter.mapper');
+const mongoUtils = require('../utils/mongoUtils');
+const utilsMapper = require('../utils/mapperUtils');
 
 /**
  * Handles database operations for treatment centers
@@ -14,8 +14,7 @@ class TreatmentCenterRepository {
      * @returns {Promise<Collection>} MongoDB collection
      */
     async getCollection() {
-        const db = await getDb();
-        return db.collection(this.collectionName);
+        return await mongoUtils.getMongoCollection(this.collectionName);
     }
 
     /**
@@ -25,8 +24,7 @@ class TreatmentCenterRepository {
      */
     async findById(id) {
         const collection = await this.getCollection();
-        const treatmentCenter = await collection.findOne({ _id: id });
-        return TreatmentCenterMapper.toDomain(treatmentCenter);
+        return mongoUtils.findById(collection, id, utilsMapper.toDTO);
     }
 }
 

@@ -1,7 +1,4 @@
-const { ObjectId } = require('mongodb');
-const NotificationMapper = require('./notification.mapper');
 const utilsMapper = require('../utils/mapperUtils');
-const utilsRepository = require('../utils/repositoryUtils').default;
 const mongoUtils = require('../utils/mongoUtils');
 
 /**
@@ -27,11 +24,7 @@ class NotificationRepository {
      */
     async create(notificationData) {
         const collection = await this.getCollection();
-        const baseData = NotificationMapper.toPersistence(notificationData);
-        const dataWithTimestamps = utilsRepository.setTimestamps(baseData);
-
-        const result = await collection.insertOne(dataWithTimestamps);
-        return this.findById(result.insertedId);
+        return mongoUtils.createWithTimestamps(collection, notificationData, utilsMapper.toDTO);
     }
 
     /**
@@ -40,15 +33,8 @@ class NotificationRepository {
      * @returns {Promise<Object|null>} Found notification or null if not found
      */
     async findById(id) {
-        try {
-            const collection = await this.getCollection();
-            const objectId = new ObjectId(id);
-            const notification = await collection.findOne({ _id: objectId });
-            return notification ? utilsMapper.toDTO(notification) : null;
-        } catch (err) {
-            console.error(`Invalid ObjectId or error finding notification: ${id}`, err);
-            return null;
-        }
+        const collection = await this.getCollection();
+        return mongoUtils.findById(collection, id, utilsMapper.toDTO);
     }
 
     /**
@@ -57,15 +43,8 @@ class NotificationRepository {
      * @returns {Promise<boolean>} True if deleted, false if not found
      */
     async delete(id) {
-        try {
-            const collection = await this.getCollection();
-            const objectId = new ObjectId(id);
-            const result = await collection.deleteOne({ _id: objectId });
-            return result.deletedCount > 0;
-        } catch (err) {
-            console.error(`Error deleting notification: ${id}`, err);
-            return false;
-        }
+        const collection = await this.getCollection();
+        return mongoUtils.deleteById(collection, id);
     }
 }
 
