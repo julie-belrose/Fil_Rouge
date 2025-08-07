@@ -1,6 +1,6 @@
 const pool = require('../../config/database');
 const AgentMapper = require('./badge.mapper');
-const utilsMapper = require('../utils/mapperUtils');
+const utilsMapper = require('../../utils/mapperUtils');
 
 class AgentRepository {
     /**

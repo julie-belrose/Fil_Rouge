@@ -1,6 +1,6 @@
 const { createSchema, updateSchema } = require('./report.schema');
 const reportEntity = require('./report.entity');
-const validateAndTransform = require('../utils/parseDTO');
+const validateAndTransform = require('../../utils/parseDTO');
 
 
 /**

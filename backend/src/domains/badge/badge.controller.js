@@ -1,8 +1,8 @@
 const { createBadgeDto, updateBadgeDto, deleteBadgeDto } = require('./badge.dto');
 const badgeEntity = require('./badge.entity');
 const BadgeService = require('./badge.service');
-const handlerRequest = require('../utils/handlerRequest');
-const handlerBody = require('../utils/handlerBody');
+const handlerRequest = require('../../utils/handlerRequest');
+const handlerBody = require('../../utils/handlerBody');
 
 // Get all badges
 const getBadges = handlerBody(async (req, res) => {

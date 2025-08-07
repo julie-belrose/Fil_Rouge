@@ -1,8 +1,8 @@
 const { createAdminRequestDto, updateAdminRequestDto, deleteAdminRequestDto } = require('./adminRequest.dto');
 const adminRequestEntity = require('./adminRequest.entity');
 const adminRequestService = require('./adminRequest.service');
-const handlerRequest = require('../utils/handlerRequest');
-const handlerBody = require('../utils/handlerBody');
+const handlerRequest = require('../../utils/handlerRequest');
+const handlerBody = require('../../utils/handlerBody');
 
 // Get all admin_requests
 const getAdminRequests = handlerBody(async (req, res) => {

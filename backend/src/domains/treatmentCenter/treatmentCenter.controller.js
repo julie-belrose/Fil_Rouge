@@ -1,8 +1,8 @@
 const { createTreatmentCenterDto, updateTreatmentCenterDto, deleteTreatmentCenterDto } = require('./treatmentCenter.dto');
 const treatmentCenterEntity = require('./treatmentCenter.entity');
 const TreatmentCenterService = require('./treatmentCenter.service');
-const handlerRequest = require('../utils/handlerRequest');
-const handlerBody = require('../utils/handlerBody');
+const handlerRequest = require('../../utils/handlerRequest');
+const handlerBody = require('../../utils/handlerBody');
 
 // Get all reports
 const getAllTreatmentCenters = handlerBody(async (req, res) => {

@@ -1,8 +1,8 @@
 const { createNotificationDto } = require('./notification.dto');
 const notificationEntity = require('./notification.entity');
 const notificationService = require('./notification.service');
-const handlerRequest = require('../utils/handlerRequest');
-const handlerBody = require('../utils/handlerBody');
+const handlerRequest = require('../../utils/handlerRequest');
+const handlerBody = require('../../utils/handlerBody');
 
 // Get all reports
 const getNotifications = handlerBody(async (req, res) => {
