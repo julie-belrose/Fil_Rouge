@@ -28,7 +28,7 @@ const closeDB = async () => {
   }
 };
 
-const testConnectionMySQL = async () => {
+export const testConnectionMySQL = async () => {
   try {
     const pool = await connectDB();
     const connection = await pool.getConnection();

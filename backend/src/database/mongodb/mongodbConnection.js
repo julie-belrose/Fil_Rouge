@@ -1,5 +1,5 @@
-const { MongoClient } = require('mongodb');
-const config = require('../../config/mongo/config');
+import { MongoClient } from 'mongodb';
+import config from '../../../config/mongodb/mongodbConfig.js';
 
 let client = null;
 let db = null;
@@ -42,7 +42,7 @@ const closeDB = async () => {
   }
 };
 
-const testConnectionMongo = async () => {
+export const testConnectionMongoDB = async () => {
   try {
     const db = await connectDB();
 
@@ -57,9 +57,9 @@ const testConnectionMongo = async () => {
   }
 };
 
-module.exports = {
+export default {
   connectDB,
   getDb,
   closeDB,
-  testConnectionMongo
+  testConnectionMongoDB
 };

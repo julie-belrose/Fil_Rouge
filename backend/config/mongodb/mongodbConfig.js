@@ -1,4 +1,4 @@
-require('dotenv').config();
+import 'dotenv/config';
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -23,4 +23,4 @@ if (!config?.url || !config?.dbName) {
     throw new Error(`MongoDB configuration is missing for environment: ${env}`);
 }
 
-module.exports = config;
+export default config;
