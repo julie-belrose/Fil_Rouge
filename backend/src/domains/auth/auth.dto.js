@@ -1,6 +1,6 @@
 const { loginSchema, registerSchema, logoutSchema } = require('./auth.schema');
 const authEntity = require('./auth.entity');
-const validateAndTransform = require('../utils/parseDTO');
+const validateAndTransform = require('../../utils/parseDTO');
 
 /**
  * Validates and transforms login data

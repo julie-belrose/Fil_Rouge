@@ -1,5 +1,5 @@
-const utilsMapper = require('../utils/mapperUtils');
-const mongoUtils = require('../utils/mongoUtils');
+const utilsMapper = require('../../utils/mapperUtils');
+const mongoUtils = require('../../utils/mongoUtils');
 
 /**
  * Handles database operations for notifications

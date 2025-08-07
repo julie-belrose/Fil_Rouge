@@ -1,6 +1,6 @@
 const { createSchema, updateSchema } = require('./user.schema');
 const userEntity = require('./user.entity');
-const validateAndTransform = require('../utils/parseDTO');  
+const validateAndTransform = require('../../utils/parseDTO');
 
 /**
  * Validates and transforms user creation data

@@ -63,12 +63,27 @@ const updateById = async (collection, id, updateData, mapper = (x) => x) => {
 };
 
 /**
- * Create document with created_at and updated_at
+ * Inserts a document with created_at and updated_at timestamps
+ * 
+ * @param {Collection} collection - MongoDB collection
+ * @param {Object} data - Raw data to insert
+ * @param {Function} [mapper] - Optional mapper function (e.g. toDTO)
+ * @returns {Promise<Object>} - Inserted and mapped document
  */
 const createWithTimestamps = async (collection, data, mapper = (x) => x) => {
+    if (!collection || typeof collection.insertOne !== 'function') {
+        throw new Error('Invalid MongoDB collection');
+    }
+
     const enriched = repositoryUtils.setTimestamps(data);
+
     const result = await collection.insertOne(enriched);
-    return findById(collection, result.insertedId, mapper);
+    if (!result.insertedId) {
+        throw new Error('Failed to insert document');
+    }
+
+    const inserted = await collection.findOne({ _id: result.insertedId });
+    return inserted ? mapper(inserted) : null;
 };
 
 export default {

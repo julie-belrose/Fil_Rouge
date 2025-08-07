@@ -1,6 +1,6 @@
 const { createSchema, updateSchema } = require('./notification.schema');
 const notificationEntity = require('./notification.entity');
-const validateAndTransform = require('../utils/parseDTO');
+const validateAndTransform = require('../../utils/parseDTO');
 
 /**
  * Validates and transforms notification creation data

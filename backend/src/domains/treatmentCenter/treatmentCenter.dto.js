@@ -1,6 +1,6 @@
 const { createSchema, updateSchema } = require('./treatmentCenter.schema');
 const treatmentCenterEntity = require('./treatmentCenter.entity');
-const validateAndTransform = require('../utils/parseDTO');
+const validateAndTransform = require('../../utils/parseDTO');
 
 
 const createTreatmentCenterDto = (data) => {

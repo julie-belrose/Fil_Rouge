@@ -1,6 +1,6 @@
 const { createSchema, updateSchema, deleteSchema } = require('./adminRequest.schema');
 const admin_requestEntity = require('./adminRequest.entity');
-const validateAndTransform = require('../utils/parseDTO');
+const validateAndTransform = require('../../utils/parseDTO');
 
 /**
  * Validates and transforms adminRequest creation data

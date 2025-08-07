@@ -1,5 +1,5 @@
-const mongoUtils = require('../utils/mongoUtils');
-const utilsMapper = require('../utils/mapperUtils');
+const mongoUtils = require('../../utils/mongoUtils');
+const utilsMapper = require('../../utils/mapperUtils');
 
 /**
  * Handles database operations for treatment centers
