@@ -1,20 +1,32 @@
 import 'dotenv/config';
-import { connectDB, closeDB, getPool } from '../src/database/mysql/mysqlConnection';
+import mysql from 'mysql2/promise';
 
-const initMySQL = (async () => {
+const env = process.env.NODE_ENV || 'development';
+const database = {
+    development: process.env.DB_NAME,
+    test: process.env.TEST_DB_NAME,
+    production: process.env.PROD_DB_NAME
+}[env];
+
+const config = {
+    host: process.env[`${env.toUpperCase()}_DB_HOST`],
+    port: process.env[`${env.toUpperCase()}_DB_PORT`] || 3306,
+    user: process.env[`${env.toUpperCase()}_DB_USER`],
+    password: process.env[`${env.toUpperCase()}_DB_PASSWORD`],
+    database
+};
+
+const initMySQL = async () => {
     try {
-        await connectDB();
-        const pool = getPool();
-        const connection = await pool.getConnection();
-
+        const connection = await mysql.createConnection(config);
         await connection.query('SELECT 1');
-        console.info('MySQL initialized - connection OK');
-        connection.release();
-        await closeDB();
+        console.info(`MySQL '${config.database}' is accessible (env: ${env})`);
+        await connection.end();
+        process.exit(0);
     } catch (err) {
-        console.error('MySQL init failed:', err.message);
+        console.error(`MySQL init failed: ${err.message}`);
         process.exit(1);
     }
-});
+};
 
 initMySQL();

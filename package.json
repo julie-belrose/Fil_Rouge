@@ -1,14 +1,20 @@
 {
   "name": "fil-rouge",
   "version": "1.0.0",
-  "description": "Gestion des déchets - HTML/CSS/JS avec Node",
+  "type": "module",
+  "description": "Gestion des déchets - HTML/CSS/JS avec Express.js",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "commit": "cz",
     "start": "node backend/app.js",
     "dev": "nodemon backend/app.js",
-    "build:frontend": "rm -rf frontend/dist && mkdir frontend/dist && cp -r frontend/public/* frontend/dist/ && cp -r frontend/src/* frontend/dist/"
+    "build:frontend": "rm -rf frontend/dist && mkdir frontend/dist && cp -r frontend/public/* frontend/dist/ && cp -r frontend/src/* frontend/dist/",
+    "check:env": "node backend/src/utils/validateEnv.js",
+    "init:mongo": "node scripts/initMongo.js",
+    "seed:mongo": "node scripts/seedMongo.js",
+    "init:mysql": "node scripts/initMySQL.js",
+    "seed:mysql": "node scripts/seedMySQL.js"
   },
   "keywords": [],
   "author": "",

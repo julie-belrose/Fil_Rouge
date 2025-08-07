@@ -1,31 +1,31 @@
 import 'dotenv/config';
-import { connectDB, closeDB } from '../database/mongodb/mongodbConnection.js';
+import { MongoClient } from 'mongodb';
+import config from '../config/mongodb/mongodbConfig.js';
 
-const initMongo = (async () => {
+const initMongo = async () => {
+    let client;
+
     try {
-        const db = await connectDB();
-        const collectionName = '__init__';
+        client = new MongoClient(config.url, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
 
-        const collections = await db.listCollections({ name: collectionName }).toArray();
+        await client.connect();
+        const db = client.db(config.dbName);
 
-        if (collections.length > 0) {
-            await db.collection(collectionName).drop();
-            console.info(`Old '${collectionName}' collection dropped`);
-        }
+        const admin = db.admin();
+        await admin.ping();
 
-        await db.createCollection(collectionName);
-        console.info(`MongoDB connected to '${db.databaseName}' and '${collectionName}' collection created`);
-
-        await db.collection(collectionName).insertOne({ initializedAt: new Date() });
-
-        await closeDB();
-        console.info('Connection closed');
+        console.info(`MongoDB '${config.dbName}' is accessible (env: ${process.env.NODE_ENV || 'development'})`);
+        await client.close();
         process.exit(0);
-    } catch (error) {
-        console.error(`MongoDB init failed: ${error.message}`);
+    } catch (err) {
+        console.error(`MongoDB init failed: ${err.message}`);
+        if (client) await client.close();
         process.exit(1);
     }
-});
+};
 
 initMongo();
 
