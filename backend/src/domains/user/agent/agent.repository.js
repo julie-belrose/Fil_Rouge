@@ -1,5 +1,7 @@
-const pool = require('../../config/database');
-const AgentMapper = require('./agent.mapper');
+import { toDTO } from '@utils/mapper.utils.js';
+import { agentMapper } from './agent.mapper.js';
+import { createWithTimestampsSQL, findById } from '@utils/mysql.utils.js';
+
 
 class AgentRepository {
     /**
@@ -8,11 +10,7 @@ class AgentRepository {
      * @returns {Promise<Object>} Created agent
      */
     async create(agentData) {
-        const [result] = await pool.execute(
-            'INSERT INTO agents SET ?',
-            [AgentMapper.toPersistence(agentData)]
-        );
-        return this.findByUserId(agentData.user_id);
+        return await createWithTimestampsSQL('agents', agentMapper.toPersistence(agentData), agentMapper.toDomain);
     }
 
     /**
@@ -21,12 +19,8 @@ class AgentRepository {
      * @returns {Promise<Object|null>} Found agent or null if not found
      */
     async findByUserId(userId) {
-        const [rows] = await pool.execute(
-            'SELECT * FROM agents WHERE user_id = ?',
-            [userId]
-        );
-        return AgentMapper.toDomain(rows[0]);
+        return await findById('agents', userId, {}, utilsMapper.toDTO);
     }
 }
 
-module.exports = new AgentRepository();
+export const agentRepository = new AgentRepository();

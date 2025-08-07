@@ -1,38 +1,57 @@
 {
   "name": "fil-rouge",
   "version": "1.0.0",
-  "type": "module",
   "description": "Gestion des déchets - HTML/CSS/JS avec Express.js",
   "main": "app.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "commit": "cz",
-    "start": "node backend/app.js",
-    "dev": "nodemon backend/app.js",
+    "start": "node backend/src/app.js",
+    "dev": "vite build && concurrently \"vite build --watch\" \"nodemon dist/app.js\"",
+    "build:backend": "rm -rf backend/dist && vite build",
     "build:frontend": "rm -rf frontend/dist && mkdir frontend/dist && cp -r frontend/public/* frontend/dist/ && cp -r frontend/src/* frontend/dist/",
     "check:env": "node backend/src/utils/validateEnv.js",
-    "init:mongo": "node scripts/initMongo.js",
-    "seed:mongo": "node scripts/seedMongo.js",
-    "init:mysql": "node scripts/initMySQL.js",
-    "seed:mysql": "node scripts/seedMySQL.js"
+    "init:mongo": "vite-node backend/src/scripts/initMongo.js",
+    "seed:mongo": "vite-node backend/src/scripts/seedMongoDB.js",
+    "init:mysql": "vite-node backend/src/scripts/initMySQL.js",
+    "seed:mysql": "vite-node backend/src/scripts/seedMySQL.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.6.0",
     "express": "^5.1.0",
+    "express-validator": "^7.2.1",
     "helmet": "^8.1.0",
-    "morgan": "^1.10.0"
+    "joi": "^18.0.0",
+    "module-alias": "^2.2.3",
+    "mongodb": "^6.18.0",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.14.3",
+    "vite-node": "^3.2.4"
   },
   "devDependencies": {
     "commitizen": "^4.3.1",
-    "cz-conventional-changelog": "^3.3.0"
+    "concurrently": "^9.2.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "install": "^0.13.0",
+    "vite": "^7.1.1"
   },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "_moduleAliases": {
+    "@utils": "backend/src/utils",
+    "@config": "backend/src/config",
+    "@scripts": "backend/src/scripts",
+    "@domains": "backend/src/domains",
+    "@middleware": "backend/src/middleware",
+    "@database": "backend/src/database"
   }
 }

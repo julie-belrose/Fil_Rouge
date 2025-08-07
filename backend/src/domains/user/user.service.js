@@ -1,6 +1,5 @@
-const userRepository = require('./user.repository');
-const UserMapper = require('./user.mapper');
-
+import { userRepository } from './user.repository.js';
+import * as utilsMapper from '@utils/mapper.utils.js'; 
 /**
  * Handles user business logic
  */
@@ -21,18 +20,18 @@ class UserService {
 
             // Create new user
             const newUser = await userRepository.create(userData);
-            return UserMapper.toDTO(newUser);
+            return utilsMapper.toDTO(newUser);
         } catch (error) {
             console.error('User creation failed:', error);
             throw new Error(`Failed to create user: ${error.message}`);
         }
     }
 
-    async updateUser(userData) {
+    async updateUser(id, userData) {
         //todo
     }
 
-    async deleteUser(userData) {
+    async deleteUser(id) {
         //todo
     }
 
@@ -45,4 +44,4 @@ class UserService {
     }
 }
 
-module.exports = new UserService();
+export const userService = new UserService();

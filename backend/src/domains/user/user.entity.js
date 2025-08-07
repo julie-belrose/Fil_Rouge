@@ -32,7 +32,7 @@
  * 
  * @returns {Object} The normalized user object
  */
-const userEntity = (data = {}) => ({
+export const userEntity = (data = {}) => ({
     id: data.id || null,
     auth_id: data.auth_id || null,
     pseudo: data.pseudo || null,
@@ -42,5 +42,3 @@ const userEntity = (data = {}) => ({
     loyalty_points: data.loyalty_points !== undefined ? data.loyalty_points : 0,
     created_at: data.created_at || new Date().toISOString()
 });
-
-module.exports = userEntity;

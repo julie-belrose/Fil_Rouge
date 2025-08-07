@@ -1,5 +1,5 @@
-const treatmentCenterRepository = require('./repository/treatmentCenter.repository');
-const TreatmentCenterMapper = require('./mapper/treatmentCenter.mapper');
+import { treatmentCenterRepository } from '@domains/treatmentCenter/treatmentCenter.repository.js';
+import { toDTO } from '@utils/mapper.utils.js'; 
 
 class TreatmentCenterService {
     /**
@@ -13,7 +13,7 @@ class TreatmentCenterService {
             if (!treatmentCenter) {
                 throw new Error('Treatment center not found');
             }
-            return TreatmentCenterMapper.toDTO(treatmentCenter);
+            return toDTO(treatmentCenter);
         } catch (error) {
             console.error(`Failed to get treatment center ${centerId}:`, error);
             throw new Error(`Failed to get treatment center: ${error.message}`);
@@ -38,4 +38,4 @@ class TreatmentCenterService {
     }
 }
 
-module.exports = new TreatmentCenterService();    
+export const treatmentCenterService = new TreatmentCenterService();    

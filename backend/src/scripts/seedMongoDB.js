@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { connectDB, closeDB } from '../src/database/mongodb/mongodbConnection.js';
+import { connectDB, closeDB } from '@database/mongodb/mongodbConnection.js';
 import { ObjectId } from 'mongodb';
 
 const seedMongoDB = (async () => {

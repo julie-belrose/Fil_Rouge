@@ -1,20 +1,19 @@
-import 'dotenv/config';
+import 'module-alias/register';
+import * as dotenv from 'dotenv';
+dotenv.config();
 import mysql from 'mysql2/promise';
+import { getEnvVar } from '@utils/env.utils.js';
 
-const env = process.env.NODE_ENV || 'development';
-const database = {
-    development: process.env.DB_NAME,
-    test: process.env.TEST_DB_NAME,
-    production: process.env.PROD_DB_NAME
-}[env];
+const env = process.env.NODE_ENV || 'dev';
 
 const config = {
-    host: process.env[`${env.toUpperCase()}_DB_HOST`],
-    port: process.env[`${env.toUpperCase()}_DB_PORT`] || 3306,
-    user: process.env[`${env.toUpperCase()}_DB_USER`],
-    password: process.env[`${env.toUpperCase()}_DB_PASSWORD`],
-    database
+    host: getEnvVar('DB_HOST'),
+    port: Number(getEnvVar('DB_PORT')) || 3306,
+    user: getEnvVar('DB_USER'),
+    password: getEnvVar('DB_PASSWORD') ?? '',
+    database: getEnvVar('DB_NAME') || '',
 };
+
 
 const initMySQL = async () => {
     try {

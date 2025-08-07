@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { connectDB, closeDB } from '../src/database/mysql/mysqlConnection.js';
+import { connectDB, closeDB } from '@database/mysql/mysqlConnection.js';
 
 const seedMySQL = (async () => {
   try {

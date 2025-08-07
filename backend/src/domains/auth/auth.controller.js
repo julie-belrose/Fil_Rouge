@@ -1,50 +1,37 @@
-const { loginDto, registerDto } = require('./auth.dto');
-const AuthentificationService = require('./auth.service');
-const adminRequestService = require('../adminRequest/adminRequest.service');
+import * as authDto from '@domains/auth/auth.dto.js';
+import { authService } from '@domains/auth/auth.service.js';
+import { authEntity } from '@domains/auth/auth.entity.js';
+import handlerRequest from '@utils/handlerRequest.js';
 
-// Login user
+/**
+ * Login user
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
+export const login = handlerRequest(authDto.loginDTO, authEntity, async (authData) => {
+    return newAuth = await authService.login(authData);
+// if (authData.role === 'admin_pending') {
+//     await adminRequestService.createAdminRequest(newAuth.user_id);
+// }
+});
+
 /**
  * Logout user
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-const login = handlerRequest(loginDto, authEntity, async (auth) => {
-    const newAuth = await AuthentificationService.login(auth);
-    if (auth.role === 'admin_pending') {
-        await adminRequestService.createAdminRequest(newAuth.user_id);
-    }
-    return newAuth;
+export const logout = handlerRequest(authDto.logoutDTO, authEntity, async (authData) => {
+    return await authService.logout(authData);
 });
-
-
-
-/**
- * Logout user
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
-const logout = handlerRequest(logoutDto, authEntity, async (auth) => {
-    const newAuth = await AuthentificationService.logout(auth);
-    return newAuth;
-});
-
 
 /**
  * Create a new user
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-const register = handlerRequest(registerDto, authEntity, async (auth) => {
-    const newAuth = await AuthentificationService.createAuth(auth);
-    if (auth.role === 'admin_pending') {
-        await adminRequestService.createAdminRequest(newAuth.user_id);
-    }
-    return newAuth;
+export const register = handlerRequest(authDto.registerDTO, authEntity, async (authData) => {
+    return await authService.register(authData);
+// if (authData.role === 'admin_pending') {
+//     await adminRequestService.createAdminRequest(newAuth.user_id);
+// }
 });
-
-
-module.exports = {
-    login,
-    register,
-    logout
-};

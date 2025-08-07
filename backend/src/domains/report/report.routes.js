@@ -1,23 +1,17 @@
-const express = require('express');
+import express from 'express';
+import * as reportController from './report.controller.js';
+
 const router = express.Router();
 
-const {
-    getReports,
-    getReport,
-    createReport,
-    updateReport,
-    deleteReport
-} = require('./report.controller');
-
-// Test agents route
+// Test reports route
 router.get('/', (req, res) => {
     res.json({ message: 'Reports route is working' });
 }); 
 
-router.get('/:id', getReport);
-router.get('/', getReports);
-router.post('/', createReport);
-router.put('/:id', updateReport);
-router.delete('/:id', deleteReport);
+router.get('/:id', reportController.getReport);
+router.get('/', reportController.getReports);
+router.post('/', reportController.createReport);
+router.put('/:id', reportController.updateReport);
+router.delete('/:id', reportController.deleteReport);
 
-module.exports = router;
+export default router;

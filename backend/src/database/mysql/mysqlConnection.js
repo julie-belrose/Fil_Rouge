@@ -1,17 +1,16 @@
 import { createPool } from 'mysql2/promise';
-import config from '../../config/mysql/config';
+import { configMySQL } from '@config/mysql/mysqlConfig';
 
-let pool = null;
-
-const connectDB = async () => {
+let pool = null
+export const connectDB = async () => {
   if (!pool) {
-    pool = createPool(config);
+    pool = createPool(configMySQL);
     console.info('MySQL pool created');
   }
   return pool;
 };
 
-const getPool = () => {
+export const getPool = () => {
   if (!pool) {
     const msg = 'MySQL pool not initialized. Call connectDB() first.';
     console.error(msg);
@@ -20,7 +19,7 @@ const getPool = () => {
   return pool;
 };
 
-const closeDB = async () => {
+export const closeDB = async () => {
   if (pool) {
     await pool.end();
     pool = null;
@@ -28,7 +27,7 @@ const closeDB = async () => {
   }
 };
 
-const testConnectionMySQL = async () => {
+export const testConnectionMySQL = async () => {
   try {
     const pool = await connectDB();
     const connection = await pool.getConnection();
@@ -43,11 +42,4 @@ const testConnectionMySQL = async () => {
     console.error(`MySQL test failed: ${err.message}`);
     process.exit(1);
   }
-};
-
-export default {
-  connectDB,
-  getPool,
-  closeDB,
-  testConnectionMySQL
 };

@@ -1,5 +1,5 @@
-const agentRepository = require('./repository/agent.repository');
-const AgentMapper = require('./mapper/agent.mapper');
+import { agentRepository } from '@domains/user/agent/agent.repository.js';
+import { toDTO } from '@utils/mapper.utils.js'; 
 
 class AgentService {
     /**
@@ -16,7 +16,7 @@ class AgentService {
             }
 
             const newAgent = await agentRepository.create(agentData);
-            return AgentMapper.toDTO(newAgent);
+            return toDTO(newAgent);
         } catch (error) {
             console.error('Failed to create agent:', error);
             throw new Error(`Failed to create agent: ${error.message}`);
@@ -34,7 +34,7 @@ class AgentService {
             if (!agent) {
                 throw new Error('Agent not found');
             }
-            return AgentMapper.toDTO(agent);
+            return toDTO(agent);
         } catch (error) {
             console.error(`Failed to get agent ${userId}:`, error);
             throw new Error(`Failed to get agent: ${error.message}`);
@@ -54,4 +54,4 @@ class AgentService {
     }
 }
 
-module.exports = new AgentService();
+export const agentService = new AgentService();

@@ -1,6 +1,6 @@
-const { createSchema, updateSchema, deleteSchema } = require('./adminRequest.schema');
-const admin_requestEntity = require('./adminRequest.entity');
-const validateAndTransform = require('../../utils/parseDTO');
+import { createSchema, updateSchema, deleteSchema } from './adminRequest.schema.js';
+import { adminRequestEntity } from './adminRequest.entity.js';
+import { validateAndTransform } from '../../utils/parseDTO.js';
 
 /**
  * Validates and transforms adminRequest creation data
@@ -8,8 +8,8 @@ const validateAndTransform = require('../../utils/parseDTO');
  * @returns {Object} Validated and transformed adminRequest data
  * @throws {Error} If validation fails
  */
-const createAdminRequestDto = (data) => {
-    return validateAndTransform(data, createSchema, admin_requestEntity);
+export const createAdminRequestDTO = (data) => {
+    return validateAndTransform(data, createSchema, adminRequestEntity);
 };
 
 /**
@@ -18,12 +18,10 @@ const createAdminRequestDto = (data) => {
  * @returns {Object} Validated and transformed adminRequest data
  * @throws {Error} If validation fails
  */
-const updateAdminRequestDto = (data) => {
-    return validateAndTransform(data, updateSchema, admin_requestEntity);
+export const updateAdminRequestDTO = (data) => {
+    return validateAndTransform(data, updateSchema, adminRequestEntity);
 };
 
-const deleteAdminRequestDto = (data) => {
-    return validateAndTransform(data, deleteSchema, admin_requestEntity);
+export const deleteAdminRequestDTO = (data) => {
+    return validateAndTransform(data, deleteSchema, adminRequestEntity);
 };
-
-module.exports = { createAdminRequestDto, updateAdminRequestDto, deleteAdminRequestDto };

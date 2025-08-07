@@ -1,22 +1,19 @@
-const { MongoClient } = require('mongodb');
-const config = require('../../config/mongo/config');
+import { MongoClient } from 'mongodb';
+import { configMongoDB } from '@config/mongodb/mongodbConfig.js';
 
 let client = null;
 let db = null;
 
-const connectDB = async () => {
+export const connectDB = async () => {
   if (db) return db;
 
   try {
-    client = new MongoClient(config.url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
+    client = new MongoClient(configMongoDB.url);
 
     await client.connect();
-    db = client.db(config.dbName);
+    db = client.db(configMongoDB.dbName);
 
-    console.info(`MongoDB connected to ${config.dbName}`);
+    console.info(`MongoDB connected to ${configMongoDB.dbName}`);
     return db;
   } catch (err) {
     console.error(`Failed to connect to MongoDB: ${err.message}`);
@@ -24,7 +21,7 @@ const connectDB = async () => {
   }
 };
 
-const getDb = () => {
+export const getDb = () => {
   if (!db) {
     const msg = 'MongoDB not connected. Call connectDB() first.';
     console.error(msg);
@@ -33,7 +30,7 @@ const getDb = () => {
   return db;
 };
 
-const closeDB = async () => {
+export const closeDB = async () => {
   if (client) {
     await client.close();
     db = null;
@@ -42,7 +39,7 @@ const closeDB = async () => {
   }
 };
 
-const testConnectionMongo = async () => {
+export const testConnectionMongoDB = async () => {
   try {
     const db = await connectDB();
 
@@ -55,11 +52,4 @@ const testConnectionMongo = async () => {
     console.error(`MongoDB test failed: ${err.message}`);
     process.exit(1);
   }
-};
-
-module.exports = {
-  connectDB,
-  getDb,
-  closeDB,
-  testConnectionMongo
 };

@@ -1,6 +1,5 @@
-const logger = require('../utils/logger');
-
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 const requiredVarsByEnv = {
     development: [
@@ -23,8 +22,8 @@ const requiredVarsByEnv = {
 const missing = requiredVars.filter((key) => !process.env[key]);
 
 if (missing.length > 0) {
-    logger.error(`Missing environment variables for NODE_ENV=${env}:\n${missing.join('\n')}`);
+  console.error(`Missing environment variables for NODE_ENV=${env}:\n${missing.join('\n')}`);
     process.exit(1);
 }
 
-logger.info(`All required environment variables are set for NODE_ENV=${env}`);
+console.info(`All required environment variables are set for NODE_ENV=${env}`);

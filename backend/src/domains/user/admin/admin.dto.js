@@ -1,7 +1,6 @@
-const Joi = require('joi');
-const { createAdminSchema } = require('./admin.schema');
-const adminEntity = require('./admin.entity');
-const validateAndTransform = require('../utils/parseDTO');
+import { createAdminSchema } from './admin.schema.js';
+import { adminEntity } from './admin.entity.js';
+import { validateAndTransform } from '@utils/parseDTO.js';
 
 /**
  * Validates and transforms admin creation data
@@ -9,20 +8,14 @@ const validateAndTransform = require('../utils/parseDTO');
  * @returns {Object} Validated and transformed admin data
  * @throws {Error} If validation fails
  */
-const createAdminDto = (data) => {
-    return validateAndTransform(data, createSchema, adminEntity);
+export const createAdminDTO = (data) => {
+    return validateAndTransform(data, createAdminSchema, adminEntity);
 };
 
-const updateAdminDto = (data) => {
+export const updateAdminDTO = (data) => {
     //todo
 };
 
-const deleteAdminDto = (data) => {
+export const deleteAdminDTO = (data) => {
 //todo
-};
-
-module.exports = {
-    createAdminDto,
-    updateAdminDto,
-    deleteAdminDto
 };

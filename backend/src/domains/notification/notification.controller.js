@@ -1,46 +1,38 @@
-const { createNotificationDto } = require('./notification.dto');
-const notificationEntity = require('./notification.entity');
-const notificationService = require('./notification.service');
-const handlerRequest = require('../../utils/handlerRequest');
-const handlerBody = require('../../utils/handlerBody');
+import * as notificationDto from '@domains/notification/notification.dto.js';
+import { notificationEntity } from '@domains/notification/notification.entity.js';
+import { notificationService } from '@domains/notification/notification.service.js';
+import handlerRequest from '@utils/handlerRequest.js';
+import { handlerBody } from '@utils/handlerBody.js';
 
-// Get all reports
-const getNotifications = handlerBody(async (req, res) => {
+// Get all notifications
+export const getNotifications = handlerBody(async (req, res) => {
     return await notificationService.getNotifications();
 });
 
-// Get single report
-const getNotification = handlerBody(async (req, res) => {
-    const notification = notificationService.getNotificationById(req.params.id);
+// Get single notification
+export const getNotification = handlerBody(async (req, res) => {
+    const notification = await notificationService.getNotificationById(req.params.id);
     return notification;
 });
 
 /**
- * Create a new report
+ * Create a new notification
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-const createNotification = handlerRequest(createNotificationDto, notificationEntity, async (notification) => {
+export const createNotification = handlerRequest(notificationDto.createNotificationDTO, notificationEntity, async (notification) => {
     const newNotification = await notificationService.createNotification(notification);
     return newNotification;
 });
 
-// Update report
-const updateNotification = handlerRequest(updateNotificationDto, notificationEntity, async (notification) => {
-    const updatedNotification = notificationService.updateNotification(notification);
+// Update notification
+export const updateNotification = handlerRequest(notificationDto.updateNotificationDTO, notificationEntity, async (notification) => {
+    const updatedNotification = await notificationService.updateNotification(notification);
     return updatedNotification;
 });
 
-// Delete report
-const deleteNotification = handlerRequest(deleteNotificationDto, notificationEntity, async (notification) => {
-    const deletedNotification = notificationService.deleteNotification(notification);
+// Delete notification
+export const deleteNotification = handlerRequest(notificationDto.deleteNotificationDTO, notificationEntity, async (notification) => {
+    const deletedNotification = await notificationService.deleteNotification(notification.id);
     return deletedNotification;
 });
-
-module.exports = {
-    getNotifications,
-    getNotification,
-    createNotification,
-    updateNotification,
-    deleteNotification
-};

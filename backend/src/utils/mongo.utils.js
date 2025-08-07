@@ -1,6 +1,5 @@
-import { getDb } from '../../database/mongodb';
+import { getDb } from '@database/mongodb/mongodbConnection.js';
 import { ObjectId } from 'mongodb';
-import repositoryUtils from './repositoryUtils';
 
 /**
  * Gets a MongoDB collection by name
@@ -8,7 +7,7 @@ import repositoryUtils from './repositoryUtils';
  * @returns {Promise<Collection>} MongoDB collection
  * @throws {Error} If connection is not established
  */
-const getMongoCollection = async (collectionName) => {
+export const getMongoCollection = async (collectionName) => {
     const db = await getDb();
     if (!db) {
         throw new Error('MongoDB connection is not established.');
@@ -21,24 +20,33 @@ const getMongoCollection = async (collectionName) => {
  * @param {string} id - String id to convert
  * @returns {ObjectId|null}
  */
-const toObjectId = (id) => {
+export const toObjectId = (id) => {
     return ObjectId.isValid(id) ? new ObjectId(id) : null;
 };
 
 /**
  * Generic find by ID + mapping
  */
-const findById = async (collection, id, mapper = (x) => x) => {
+export const findById = async (collection, id, options = {}, mapper = (x) => x) => {
     const objectId = toObjectId(id);
     if (!objectId) return null;
-    const result = await collection.findOne({ _id: objectId });
+    const result = await collection.findOne({ _id: objectId }, options);
     return result ? mapper(result) : null;
+};
+
+/**
+ * Find many with query + pagination
+ */
+export const findMany = async (collection, query = {}, { limit = 10, skip = 0 } = {}, mapper = (x) => x) => {
+    const cursor = collection.find(query).skip(skip).limit(limit);
+    const docs = await cursor.toArray();
+    return docs.map(mapper);
 };
 
 /**
  * Generic delete by ID
  */
-const deleteById = async (collection, id) => {
+export const deleteById = async (collection, id) => {
     const objectId = toObjectId(id);
     if (!objectId) return false;
     const result = await collection.deleteOne({ _id: objectId });
@@ -48,7 +56,7 @@ const deleteById = async (collection, id) => {
 /**
  * Generic update by ID + mapping
  */
-const updateById = async (collection, id, updateData, mapper = (x) => x) => {
+export const updateById = async (collection, id, updateData, mapper = (x) => x) => {
     const objectId = toObjectId(id);
     if (!objectId) return null;
     const now = new Date();
@@ -70,12 +78,12 @@ const updateById = async (collection, id, updateData, mapper = (x) => x) => {
  * @param {Function} [mapper] - Optional mapper function (e.g. toDTO)
  * @returns {Promise<Object>} - Inserted and mapped document
  */
-const createWithTimestamps = async (collection, data, mapper = (x) => x) => {
+export const createWithTimestamps = async (collection, data, mapper = (x) => x) => {
     if (!collection || typeof collection.insertOne !== 'function') {
         throw new Error('Invalid MongoDB collection');
     }
 
-    const enriched = repositoryUtils.setTimestamps(data);
+    const enriched = setTimestamps(data);
 
     const result = await collection.insertOne(enriched);
     if (!result.insertedId) {
@@ -84,13 +92,4 @@ const createWithTimestamps = async (collection, data, mapper = (x) => x) => {
 
     const inserted = await collection.findOne({ _id: result.insertedId });
     return inserted ? mapper(inserted) : null;
-};
-
-export default {
-    getMongoCollection,
-    toObjectId,
-    findById,
-    deleteById,
-    updateById,
-    createWithTimestamps
 };

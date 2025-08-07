@@ -5,7 +5,7 @@
 /**
  * Simple shallow copy to DTO
  */
-const toDTO = (domainObject) => {
+export const toDTO = (domainObject) => {
     return domainObject ? { ...domainObject } : null;
 };
 
@@ -15,11 +15,6 @@ const toDTO = (domainObject) => {
  * @param {Function} entityFactory
  * @returns {Object|null}
  */
-const fromDTO = (dto, entityFactory) => {
+export const fromDTO = (dto, entityFactory) => {
     return dto ? entityFactory(dto) : null;
-};
-
-module.exports = {
-    toDTO,
-    fromDTO
 };

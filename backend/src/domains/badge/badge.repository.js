@@ -1,34 +1,36 @@
-const pool = require('../../config/database');
-const AgentMapper = require('./badge.mapper');
-const utilsMapper = require('../../utils/mapperUtils');
+import { getPool } from '@database/mysql/mysqlConnection.js';
+import { badgeMapper } from '@domains/badge/badge.mapper.js';
+import * as utilsMapper from '@utils/mapper.utils.js';
+import * as sqlUtils from '@utils/sql.utils.js';
 
-class AgentRepository {
+class BadgeRepository {
     /**
-     * Creates a new agent in the database
-     * @param {Object} agentData - Agent data to create
-     * @returns {Promise<Object>} Created agent
+     * Creates a new badge in the database
+     * @param {Object} badgeData - Badge data to create
+     * @returns {Promise<Object>} Created badge
      */
-    async create(agentData) {
-        const [result] = await pool.execute(
-            'INSERT INTO agents SET ?',
-            [AgentMapper.toPersistence(agentData)]
+    async create(badgeData) {
+        const [result] = await getPool().execute(
+            'INSERT INTO badges SET ?',
+            [badgeMapper.toPersistence(badgeData)]
         );
-        return this.findByUserId(agentData.user_id);
+        return this.findById(result.insertId);
     }
 
     /**
-     * Finds an agent by user ID
-     * @param {number} userId - User ID
-     * @returns {Promise<Object|null>} Found agent or null if not found
+     * Finds a badge by ID
+     * @param {number} id - Badge ID
+     * @returns {Promise<Object|null>} Found badge or null if not found
      */
-    async findByUserId(userId) {
-        const [rows] = await pool.execute(
-            'SELECT * FROM agents WHERE user_id = ?',
-            [userId]
+    async findById(id) {
+        const [rows] = await getPool().execute(
+            'SELECT * FROM badges WHERE id = ?',
+            [id]
         );
+
         const result = rows[0];
         return result ? utilsMapper.toDTO(result) : null;
     }
 }
 
-module.exports = new AgentRepository();
+export const badgeRepository = new BadgeRepository();

@@ -1,6 +1,6 @@
-const { createSchema, updateSchema } = require('./agent.schema');
-const agentEntity = require('./agent.entity');
-const validateAndTransform = require('../utils/parseDTO');
+import { createSchema, updateSchema } from '@domains/user/agent/agent.schema.js';
+import { agentEntity } from '@domains/user/agent/agent.entity.js';
+import { validateAndTransform } from '@utils/parseDTO.js';
 
 /**
  * Validates and transforms agent creation data
@@ -8,7 +8,7 @@ const validateAndTransform = require('../utils/parseDTO');
  * @returns {Object} Validated and transformed agent data
  * @throws {Error} If validation fails
  */
-const createAgentDto = (data) => {
+export const createAgentDTO = (data) => {
     return validateAndTransform(data, createSchema, agentEntity);
 };
 
@@ -18,12 +18,10 @@ const createAgentDto = (data) => {
  * @returns {Object} Validated and transformed agent data
  * @throws {Error} If validation fails
  */
-const updateAgentDto = (data) => {
+export const updateAgentDTO = (data) => {
     return validateAndTransform(data, updateSchema, agentEntity);
 };
 
-const deleteAgentDto = (data) => {
-//todo
+export const deleteAgentDTO = (data) => {
+    //todo
 };
-
-module.exports = { createAgentDto, updateAgentDto, deleteAgentDto };

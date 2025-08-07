@@ -1,12 +1,16 @@
-const { createReportDto, updateReportDto, deleteReportDto } = require('./report.dto');
+import * as reportDTO from './report.dto.js';
+import { reportEntity } from './report.entity.js';
+import { reportService } from './report.service.js';
+import handlerRequest from '@utils/handlerRequest.js';
+import { handlerBody } from '@utils/handlerBody.js';
 
 // Get all reports
-const getReports = handlerBody(async (req, res) => {
+export const getReports = handlerBody(async (req, res) => {
     return await reportService.getReports();
 });
 
 // Get single report
-const getReport = handlerBody(async (req, res) => {
+export const getReport = handlerBody(async (req, res) => {
     return await reportService.getReport(req.params.id);
 });
 
@@ -15,27 +19,19 @@ const getReport = handlerBody(async (req, res) => {
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-const createReport = handlerRequest(createReportDto, reportEntity, async (report) => {
+export const createReport = handlerRequest(reportDTO.createReportDTO, reportEntity, async (report) => {
     const newReport = await reportService.createReport(report);
     return newReport;
 });
 
 // Update report
-const updateReport = handlerRequest(updateReportDto, reportEntity, async (report) => {
+export const updateReport = handlerRequest(reportDTO.updateReportDTO, reportEntity, async (report) => {
     const updatedReport = await reportService.updateReport(report);
     return updatedReport;
 });
 
 // Delete report
-const deleteReport = handlerRequest(deleteReportDto, reportEntity, async (report) => {
+export const deleteReport = handlerRequest(reportDTO.deleteReportDTO, reportEntity, async (report) => {
     const deletedReport = await reportService.deleteReport(report);
     return deletedReport;
 });
-
-module.exports = {
-    getReports,
-    getReport,
-    createReport,
-    updateReport,
-    deleteReport
-};

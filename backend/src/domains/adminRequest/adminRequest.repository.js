@@ -1,16 +1,16 @@
-const pool = require('../../config/database');
-const Admin_requestMapper = require('./adminRequest.mapper');
-const utilsMapper = require('../../utils/mapperUtils');
+import { getPool } from '@database/mysql/mysqlConnection.js';
+import { adminRequestMapper } from '@domains/adminRequest/adminRequest.mapper.js';
+import * as utilsMapper from '@utils/mapper.utils.js';
 
 class AdminRequestRepository {
     /**
      * Creates a new adminRequest in the database
-     * @param {Object} admin_requestData - adminRequest data to create
+     * @param {Object} admin_requestData - Admin request data to create
      * @returns {Promise<Object>} Created adminRequest
      */
     async create(admin_requestData) {
-        const data = Admin_requestMapper.toPersistence(admin_requestData);
-        const [result] = await pool.execute(
+        const data = adminRequestMapper.toPersistence(admin_requestData);
+        const [result] = await getPool().execute(
             `INSERT INTO admin_requests (
                 hashed_token, related_user_id, status, created_at, expires_at
             ) VALUES (?, ?, ?, ?, ?)`,
@@ -20,12 +20,12 @@ class AdminRequestRepository {
     }
 
     /**
-     * Finds an adminRequest by ID
-     * @param {number} id - Admin_request ID
-     * @returns {Promise<Object|null>} Found adminRequest or null if not found
+     * Finds an admin request by ID
+     * @param {number} id - Admin request ID
+     * @returns {Promise<Object|null>} Found admin request or null if not found
      */
     async findById(id) {
-        const [rows] = await pool.execute(
+        const [rows] = await getPool().execute(
             'SELECT * FROM admin_requests WHERE id = ?',
             [id]
         );
@@ -35,4 +35,4 @@ class AdminRequestRepository {
     }
 }
 
-module.exports = new AdminRequestRepository();
+export const adminRequestRepository = new AdminRequestRepository();

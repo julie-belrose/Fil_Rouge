@@ -1,15 +1,15 @@
-const bcrypt = require('bcryptjs');
-const AuthRepository = require('./auth.repository');
-const { registerDto, loginDto } = require('./auth.dto');
+import bcrypt from 'bcryptjs';
+import { authRepository } from './auth.repository';
+import * as authDto from './auth.dto';
 
 class AuthService {
     /**
      * Register a new authentication
      */
     static async register(authData) {
-        const { email, password, role, is_active } = registerDto(authData);
+        const { email, password, role, is_active } = authDto.registerDTO(authData);
         // Check if the email already exists
-        const existingAuth = await AuthRepository.findByEmail(email);
+        const existingAuth = await authRepository.findByEmail(email);
         if (existingAuth) {
             throw new Error('Email already used');
         }
@@ -19,7 +19,7 @@ class AuthService {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         // Create the authentication
-        const newAuth = await AuthRepository.create({
+        const newAuth = await authRepository.create({
             email,
             password_hash: hashedPassword,
             role,
@@ -37,10 +37,10 @@ class AuthService {
      * Login a user
      */
     static async login(credentials) {
-        const { email, password } = loginDto(credentials);
+        const { email, password } = authDto.loginDTO(credentials);
 
         // Find the authentication
-        const auth = await AuthRepository.findByEmail(email);
+        const auth = await authRepository.findByEmail(email);
         if (!auth) {
             throw new Error('Invalid credentials');
         }
@@ -62,6 +62,10 @@ class AuthService {
             role: auth.role
         };
     }
+
+    static async logout(authData) {
+        //TODO
+    }
 }
 
-module.exports = AuthService;
+export const authService = new AuthService();

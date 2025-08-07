@@ -60,4 +60,4 @@ class BadgeService {
     }
 }
 
-module.exports = new BadgeService();
+export const badgeService = new BadgeService();

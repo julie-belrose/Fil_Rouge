@@ -1,23 +1,17 @@
-const express = require('express');
+import express from 'express';
+import * as notificationController from './notification.controller.js';
+
 const router = express.Router();
 
-const {
-    getNotifications,
-    getNotification,
-    createNotification,
-    updateNotification,
-    deleteNotification
-} = require('../domains/user/notification/controller/notification.controller');
-
-// Test agents route
+// Test notifications route
 router.get('/', (req, res) => {
     res.json({ message: 'Notifications route is working' });
 });
 
-router.get('/:id', getNotification);
-router.get('/', getNotifications);
-router.post('/', createNotification);
-router.put('/:id', updateNotification);
-router.delete('/:id', deleteNotification);
+router.get('/:id', notificationController.getNotification);
+router.get('/', notificationController.getNotifications);
+router.post('/', notificationController.createNotification);
+router.put('/:id', notificationController.updateNotification);
+router.delete('/:id', notificationController.deleteNotification);
 
-module.exports = router;
+export default router;

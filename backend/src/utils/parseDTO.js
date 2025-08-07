@@ -7,7 +7,7 @@
  * @returns {Object} - Transformed entity
  * @throws {Error} - If validation fails
  */
-const validateAndTransform = (data, schema, entityFn) => {
+export const validateAndTransform = (data, schema, entityFn) => {
     const { error, value } = schema.validate(data, {
         abortEarly: false,
         stripUnknown: true
@@ -20,5 +20,3 @@ const validateAndTransform = (data, schema, entityFn) => {
 
     return entityFn(value);
 };
-
-export default validateAndTransform;

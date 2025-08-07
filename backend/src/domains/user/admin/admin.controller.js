@@ -1,16 +1,16 @@
-const { createAdminDto, updateAdminDto, deleteAdminDto } = require('./admin.dto');
-const adminService = require('./admin.service');
-const adminEntity = require('./admin.entity');
-const handlerBody = require('../utils/handlerBody');
-const handlerRequest = require('../utils/handlerRequest');
+import * as adminDto from '@domains/user/admin/admin.dto.js';
+import { adminService } from '@domains/user/admin/admin.service.js';
+import { adminEntity } from '@domains/user/admin/admin.entity.js';
+import { handlerBody } from '@utils/handlerBody.js';
+import handlerRequest from '@utils/handlerRequest.js';
 
 // Get all admins
-const getAllAdmins = handlerBody(async (req, res) => {
+export const getAllAdmins = handlerBody(async (req, res) => {
     return await adminService.getAllAdmins();
 });
 
 // Get single admin
-const getAdmin = handlerBody(async (req, res) => {
+export const getAdmin = handlerBody(async (req, res) => {
     return await adminService.getAdmin(req.params.id);
 });
 
@@ -19,27 +19,19 @@ const getAdmin = handlerBody(async (req, res) => {
      * @param {Object} req - Express request object
      * @param {Object} res - Express response object
      */
-const createAdmin = handlerRequest(createAdminDto, adminEntity, async (admin) => {
+export const createAdmin = handlerRequest(adminDto.createAdminDTO, adminEntity, async (admin) => {
     const newAdmin = await adminService.createAdmin(admin);
     return newAdmin;
 });
 
 // Update admin
-const updateAdmin = handlerRequest(updateAdminDto, adminEntity, async (admin) => {
+export const updateAdmin = handlerRequest(adminDto.updateAdminDTO, adminEntity, async (admin) => {
     const updatedAdmin = await adminService.updateAdmin(admin);
     return updatedAdmin;
 });
 
 // Delete admin
-const deleteAdmin = handlerRequest(deleteAdminDto, adminEntity, async (admin) => {
+export const deleteAdmin = handlerRequest(adminDto.deleteAdminDTO, adminEntity, async (admin) => {
     const deletedAdmin = await adminService.deleteAdmin(admin);
     return deletedAdmin;
 });
-
-module.exports = {
-    getAllAdmins,
-    getAdmin,
-    createAdmin,
-    updateAdmin,
-    deleteAdmin
-};
