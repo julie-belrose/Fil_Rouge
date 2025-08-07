@@ -42,8 +42,24 @@ const closeDB = async () => {
   }
 };
 
+const testConnectionMongo = async () => {
+  try {
+    const db = await connectDB();
+
+    console.info(`MongoDB test OK — Connected to '${db.databaseName}'`);
+
+    await closeDB();
+    console.info('MongoDB connection closed');
+    process.exit(0);
+  } catch (err) {
+    console.error(`MongoDB test failed: ${err.message}`);
+    process.exit(1);
+  }
+};
+
 module.exports = {
   connectDB,
   getDb,
-  closeDB
+  closeDB,
+  testConnectionMongo
 };

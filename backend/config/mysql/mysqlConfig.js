@@ -6,7 +6,7 @@ const mysqlConfig = {
         user: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
         database: process.env.DB_NAME || process.env.TEST_DB_NAME,
-        port: process.env.DB_PORT,
+        port: Number(process.env.DB_PORT) || 3306,
         waitForConnections: true,
         connectionLimit: 10,
         queueLimit: 0,
@@ -23,7 +23,7 @@ const mysqlConfig = {
         user: process.env.TEST_DB_USER,
         password: process.env.TEST_DB_PASSWORD,
         database: process.env.TEST_DB_NAME,
-        port: process.env.TEST_DB_PORT,
+        port: Number(process.env.TEST_DB_PORT) || 3306,
         waitForConnections: true,
         connectionLimit: 5,
         queueLimit: 0,
@@ -36,7 +36,7 @@ const mysqlConfig = {
         user: process.env.PROD_DB_USER,
         password: process.env.PROD_DB_PASSWORD,
         database: process.env.PROD_DB_NAME,
-        port: process.env.PROD_DB_PORT,
+        port: Number(process.env.PROD_DB_PORT) || 3306,
         waitForConnections: true,
         connectionLimit: 20,
         queueLimit: 0,
@@ -57,7 +57,7 @@ if (!config) {
 }
 
 if (['development', 'test'].includes(env)) {
-    console.log(`MySQL config → env: ${env} | host: ${config.host} | port: ${config.port} | db: ${config.database}`);
+    console.log(`MySQL config loaded - env: ${env} | host: ${config.host} | port: ${config.port} | db: ${config.database}`);
 }
 
 module.exports = config;
