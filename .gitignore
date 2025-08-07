@@ -19,10 +19,11 @@ yarn-error.log*
 !.env.example
 .env.*
 !.env.example.*
+.env.*.local
 .env.local
-.env.dev.local
-.env.test.local
-.env.prod.local
+.env.dev
+.env.test
+.env.prod
 
 # JetBrains IDEs (WebStorm, PhpStorm, etc.)
 .idea/
@@ -45,7 +46,6 @@ coverage/
 .Trashes
 ehthumbs.db
 Thumbs.db
-
 
 # Docker (optional)
 docker-compose.override.yml

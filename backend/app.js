@@ -8,12 +8,12 @@ const { errorHandler } = require('./src/middleware/error.middleware');
 const { notFoundHandler } = require('./src/middleware/not-found.middleware');
 
 // Import of routes
-const authRoutes = require('./src/routes/auth.routes');
-const userRoutes = require('./src/routes/user.routes');
-const agentRoutes = require('./src/routes/agent.routes');
-const adminRoutes = require('./src/routes/admin.routes');
-const reportRoutes = require('./src/routes/report.routes');
-const homeRoutes = require('./src/routes/home.routes');
+const authRoutes = require('./src/domains/auth/auth.routes');
+const userRoutes = require('./src/domains/user/user.routes');
+const agentRoutes = require('./src/domains/user/agent/agent.routes');
+const adminRoutes = require('./src/domains/user/admin/admin.routes');
+const reportRoutes = require('./src/domains/report/report.routes');
+const homeRoutes = require('./src/home.routes');
 
 // Initialisation of the Express application
 const app = express();
@@ -44,7 +44,7 @@ app.use('/', homeRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/agents', agentRoutes);
-app.use('/api/admin', adminRoutes);
+app.use('/api/admins', adminRoutes);
 app.use('/api/reports', reportRoutes);
 
 // Gestion of errors 404
@@ -58,6 +58,10 @@ const PORT = process.env.PORT || 3000;
 
 const startServer = async () => {
   try {
+    const { testConnectionMysql } = require('./src/database/mysql/mysql_connexion');
+    await testConnectionMysql();
+    console.log('Database connection established successfully');
+
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
       console.log(`Open http://localhost:${PORT} in your browser`);
