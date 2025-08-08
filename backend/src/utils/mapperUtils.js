@@ -19,7 +19,7 @@ const fromDTO = (dto, entityFactory) => {
     return dto ? entityFactory(dto) : null;
 };
 
-module.exports = {
+export {
     toDTO,
     fromDTO
 };

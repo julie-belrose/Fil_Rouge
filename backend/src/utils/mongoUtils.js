@@ -1,6 +1,6 @@
 import { getDb } from '../../database/mongodb';
 import { ObjectId } from 'mongodb';
-import repositoryUtils from './repositoryUtils';
+import { repositoryUtils } from './repositoryUtils.js';
 
 /**
  * Gets a MongoDB collection by name
@@ -86,7 +86,7 @@ const createWithTimestamps = async (collection, data, mapper = (x) => x) => {
     return inserted ? mapper(inserted) : null;
 };
 
-export default {
+export {
     getMongoCollection,
     toObjectId,
     findById,

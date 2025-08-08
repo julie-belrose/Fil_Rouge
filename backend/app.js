@@ -1,26 +1,26 @@
 'use strict';
 
 import 'dotenv/config';
-import express from 'express';
+import express, { json, urlencoded } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import { join } from 'path';
-import { errorHandler } from './src/middleware/error.middleware';
-import { notFoundHandler } from './src/middleware/not-found.middleware';
-import { server } from './server';
+import { errorHandler } from './src/middleware/error.middleware.js';
+import { notFoundHandler } from './src/middleware/not-found.middleware.js';
+import { server } from './server.js';
 
 // Import of routes
-import authRoutes from './src/domains/auth/auth.routes';
-import adminRequestRoutes from './src/domains/adminRequest/adminRequest.routes';
-import userRoutes from './src/domains/user/user.routes';
-import agentRoutes from './src/domains/user/agent/agent.routes';
-import adminRoutes from './src/domains/user/admin/admin.routes';
-import reportRoutes from './src/domains/report/report.routes';
-import badgeRoutes from './src/domains/badge/badge.routes';
-import notificationRoutes from './src/domains/notification/notification.routes';
-import treatmentCenterRoutes from './src/domains/treatmentCenter/treatmentCenter.routes';
-import homeRoutes from './src/home.routes';
+import authRoutes from './src/domains/auth/auth.routes.js';
+import adminRequestRoutes from './src/domains/adminRequest/adminRequest.routes.js';
+import userRoutes from './src/domains/user/user.routes.js';
+import agentRoutes from './src/domains/user/agent/agent.routes.js';
+import adminRoutes from './src/domains/user/admin/admin.routes.js';
+import reportRoutes from './src/domains/report/report.routes.js';
+import badgeRoutes from './src/domains/badge/badge.routes.js';
+import notificationRoutes from './src/domains/notification/notification.routes.js';
+import treatmentCenterRoutes from './src/domains/treatmentCenter/treatmentCenter.routes.js';
+import homeRoutes from './src/home.routes.js';
 
 // Initialisation of the Express application
 const app = express();

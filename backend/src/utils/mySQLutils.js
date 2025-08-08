@@ -12,6 +12,6 @@ const generateSQLInsertParts = (data) => {
 
 
 
-module.exports = {
+export {
     generateSQLInsertParts
 };

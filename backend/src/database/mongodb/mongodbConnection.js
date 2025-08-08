@@ -1,5 +1,5 @@
 import { MongoClient } from 'mongodb';
-import config from '../../../config/mongodb/mongodbConfig.js';
+import { configMongoDB } from '../../../config/mongodb/mongodbConfig.js';
 
 let client = null;
 let db = null;
@@ -8,15 +8,15 @@ const connectDB = async () => {
   if (db) return db;
 
   try {
-    client = new MongoClient(config.url, {
+    client = new MongoClient(configMongoDB.url, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     });
 
     await client.connect();
-    db = client.db(config.dbName);
+    db = client.db(configMongoDB.dbName);
 
-    console.info(`MongoDB connected to ${config.dbName}`);
+    console.info(`MongoDB connected to ${configMongoDB.dbName}`);
     return db;
   } catch (err) {
     console.error(`Failed to connect to MongoDB: ${err.message}`);
@@ -42,7 +42,7 @@ const closeDB = async () => {
   }
 };
 
-export const testConnectionMongoDB = async () => {
+const testConnectionMongoDB = async () => {
   try {
     const db = await connectDB();
 
@@ -57,7 +57,7 @@ export const testConnectionMongoDB = async () => {
   }
 };
 
-export default {
+export {
   connectDB,
   getDb,
   closeDB,

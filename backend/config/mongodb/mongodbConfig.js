@@ -17,10 +17,10 @@ const mongoConfig = {
     }
 };
 
-const config = mongoConfig[env];
+const configMongoDB = mongoConfig[env];
 
-if (!config?.url || !config?.dbName) {
+if (!configMongoDB?.url || !configMongoDB?.dbName) {
     throw new Error(`MongoDB configuration is missing for environment: ${env}`);
 }
 
-export default config;
+export {configMongoDB};

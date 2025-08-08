@@ -1,4 +1,4 @@
-require('dotenv').config();
+import 'dotenv/config';
 
 const mysqlConfig = {
     development: {
@@ -50,14 +50,14 @@ const mysqlConfig = {
 
 // Get the configuration based on the environment
 const env = process.env.NODE_ENV || 'development';
-const config = mysqlConfig[env];
+const configMySQL = mysqlConfig[env];
 
-if (!config) {
+if (!configMySQL) {
     throw new Error(`Configuration not found for environment: ${env}`);
 }
 
 if (['development', 'test'].includes(env)) {
-    console.log(`MySQL config loaded - env: ${env} | host: ${config.host} | port: ${config.port} | db: ${config.database}`);
+    console.log(`MySQL config loaded - env: ${env} | host: ${configMySQL.host} | port: ${configMySQL.port} | db: ${configMySQL.database}`);
 }
 
-module.exports = config;
+export { configMySQL };

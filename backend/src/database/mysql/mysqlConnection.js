@@ -1,11 +1,10 @@
 import { createPool } from 'mysql2/promise';
-import config from '../../config/mysql/config';
+import { configMySQL } from '../../../config/mysql/mysqlConfig.js';
 
-let pool = null;
-
+let pool = null
 const connectDB = async () => {
   if (!pool) {
-    pool = createPool(config);
+    pool = createPool(configMySQL);
     console.info('MySQL pool created');
   }
   return pool;
@@ -28,7 +27,7 @@ const closeDB = async () => {
   }
 };
 
-export const testConnectionMySQL = async () => {
+const testConnectionMySQL = async () => {
   try {
     const pool = await connectDB();
     const connection = await pool.getConnection();
@@ -45,7 +44,7 @@ export const testConnectionMySQL = async () => {
   }
 };
 
-export default {
+export {
   connectDB,
   getPool,
   closeDB,

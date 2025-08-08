@@ -1,4 +1,4 @@
-const { validationResult } = require('express-validator');
+import { validationResult } from 'express-validator';
 
 /**
  * Handles validation errors using express-validator
@@ -55,4 +55,4 @@ const handlerRequest = (dtoFn, entityFn, handler) => {
     };
 };
 
-module.exports = handlerRequest;
+export default handlerRequest;

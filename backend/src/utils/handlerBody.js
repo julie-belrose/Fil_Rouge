@@ -22,4 +22,4 @@ const handlerBody = (handler, successStatusCode = 200) => {
     };
 };
 
-module.exports = handlerBody;
+export default handlerBody;
