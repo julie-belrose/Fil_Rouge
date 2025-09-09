@@ -8,7 +8,11 @@
     "commit": "cz",
     "start": "node backend/app.js",
     "dev": "nodemon backend/app.js",
-    "build:frontend": "rm -rf frontend/dist && mkdir frontend/dist && cp -r frontend/public/* frontend/dist/ && cp -r frontend/src/* frontend/dist/"
+    "build:frontend": "rm -rf frontend/dist && mkdir frontend/dist && cp -r frontend/public/* frontend/dist/ && cp -r frontend/src/* frontend/dist/",
+    "start:mobile": "cd app-mobile-fil-rouge && expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
   },
   "keywords": [],
   "author": "",
@@ -18,11 +22,18 @@
     "dotenv": "^16.6.0",
     "express": "^5.1.0",
     "helmet": "^8.1.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "expo": "~53.0.22",
+    "expo-status-bar": "~2.2.3",
+    "react": "19.0.0",
+    "react-native": "0.79.6"
   },
   "devDependencies": {
     "commitizen": "^4.3.1",
-    "cz-conventional-changelog": "^3.3.0"
+    "cz-conventional-changelog": "^3.3.0",
+    "@babel/core": "^7.25.2",
+    "@types/react": "~19.0.10",
+    "typescript": "~5.8.3"
   },
   "config": {
     "commitizen": {
