@@ -3,25 +3,25 @@
         "baseUrl": ".",
         "paths": {
             "@frontend/*": [
-                "frontend/src/*"
+                "src/*"
             ],
             "@core/*": [
-                "frontend/src/core/*"
+                "src/core/*"
             ],
             "@api/*": [
-                "frontend/src/core/api/*"
+                "src/core/api/*"
             ],
             "@constants/*": [
-                "frontend/src/constants/*"
+                "src/constants/*"
             ],
             "@components/*": [
-                "frontend/src/components/*"
+                "src/components/*"
             ],
             "@views/*": [
-                "frontend/src/views/*"
+                "src/views/*"
             ],
             "@utils-frontend/*": [
-                "frontend/src/utils/*"
+                "src/utils/*"
             ]
         }
     },

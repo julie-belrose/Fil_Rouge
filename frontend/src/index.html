@@ -2,110 +2,107 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fil_Rouge - Signalement de déchets</title>
-    <meta name="description"
-        content="Signalez les déchets dans votre ville et contribuez à un environnement plus propre avec Fill_Rouge">
-    <meta name="keywords" content="déchets, environnement, signalement, ville propre, écologie">
-    <link rel="icon" type="image/png" href="/assets/images/favicon.png">
-    <link rel="stylesheet" href="styles/base/main.css">
-    <link rel="preload" href="styles/base/main.css" as="style">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fil_Rouge - Signalement de déchets</title>
+<meta name="description"
+    content="Signalez les déchets dans votre ville et contribuez à un environnement plus propre avec Fill_Rouge">
+<meta name="keywords" content="déchets, environnement, signalement, ville propre, écologie">
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="stylesheet" href="styles/base/main.css">
+<link rel="preload" href="styles/base/main.css" as="style">
 </head>
 
 <body>
-    <!-- Main Content -->
-    <main>
-        <div id="app">
-            <!-- The content will be injected here by JavaScript -->
-            <!-- For the initial loading -->
-            <div class="loading-spinner"></div>
+<!-- Header -->
+<header class="main-header">
+    <div class="container">
+        <div class="logo">
+            <a href="/">
+                <img src="/assets/logo.svg" alt="Fill_Rouge Logo" width="180">
+            </a>
         </div>
-    </main>
 
-    <!-- Header -->
-    <header class="main-header">
-        <div class="container">
-            <div class="logo">
-                <a href="/">
-                    <img src="/assets/logo.svg" alt="Fill_Rouge Logo" width="180">
-                </a>
-            </div>
+    <button class="mobile-menu-toggle" aria-label="Menu mobile">
+        <span></span><span></span><span></span>
+        </button>
 
-            <button class="mobile-menu-toggle" aria-label="Menu mobile">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-
-            <h1>Fill_Rouge</h1>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="/" class="active">Accueil</a></li>
-                    <li><a href="pages/report/create/report_create.html">Signaler</a></li>
-                    <li><a href="pages/carte/carte.html">Carte</a></li>
-                    <li><a href="pages/by_the_way/by_the_way.html">À propos</a></li>
-                    <li class="auth-links">
-                        <a href="pages/login/login.html" class="btn btn-outline">Connexion</a>
-                        <a href="pages/subscribe/subscribe.html" class="btn btn-primary">S'inscrire</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+    <h1>Fill_Rouge</h1>
+    <nav class="main-nav">
+        <ul>
+            <li><a href="/" class="active">Accueil</a></li>
+            <li><a href="pages/report/create/report_create.html">Signaler</a></li>
+            <li><a href="pages/carte/carte.html">Carte</a></li>
+            <li><a href="pages/by_the_way/by_the_way.html">À propos</a></li>
+            <li class="auth-links">
+                <a href="pages/login/login.html" class="btn btn-outline">Connexion</a>
+                <a href="pages/subscribe/subscribe.html" class="btn btn-primary">S'inscrire</a>
+            </li>
+        </ul>
+    </nav>
+    </div>
     </header>
 
-    <main class="container">
-        <section>
-            <div class="waste-header">
-                <h2>Liste des signalements</h2>
-                <a href="pages/report/create/report_create.html" class="btn-ajouter">Nouveau
-                    signalement</a>
-            </div>
-            <ul id="waste-list">
-                <!-- The signalements will be loaded dynamically here -->
-                <li data-id="1">Signalement #1 - Déchets plastiques</li>
-                <li data-id="2">Signalement #2 - Verre brisé</li>
-                <li data-id="3">Signalement #3 - Encombrants</li>
-            </ul>
+<!-- Main Content -->
+<main class="container">
+    <!-- Section : Liste des signalements -->
+    <section>
+        <div class="waste-header">
+            <h2>Liste des signalements</h2>
+        <a href="pages/report/create/report_create.html" class="btn-ajouter">Nouveau signalement</a>
+        </div>
+        <ul id="waste-list">
+        <!-- Liste des signalements (statique ou dynamique) -->
+        <li data-id="1">Signalement #1 - Déchets plastiques</li>
+        <li data-id="2">Signalement #2 - Verre brisé</li>
+        <li data-id="3">Signalement #3 - Encombrants</li>
+        </ul>
         </section>
-    </main>
+    <section id="view-users" data-route="/users" class="view hidden">
+        <div class="user-header">
+            <h2>Utilisateurs (test)</h2>
+            <ul id="user-list"></ul>
+        </div>
+    </section>
+</main>
 
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-about">
-                    <h3>Fil_Rouge</h3>
-                    <p>Ensemble pour une ville plus propre et plus agréable à vivre.</p>
-                </div>
-
-                <div class="footer-links">
-                    <h4>Quick links</h4>
-                    <ul>
-                        <li><a href="pages/how_it_works/how_it_works.html">Comment ça marche ?</a></li>
-                        <li><a href="pages/mentions-legales/mentions-legales.html">Mentions légales</a></li>
-                        <li><a href="pages/privacy-policy/privacy-policy.html">Confidentialité</a></li>
-                        <li><a href="/contact">Contact</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-social">
-                    <h4>Suivez-nous</h4>
-                    <div class="social-links">
-                        <a href="#" aria-label="Facebook"><i class="icon-facebook"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="icon-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="icon-instagram"></i></a>
-                    </div>
-                </div>
+<!-- Footer -->
+<footer class="main-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-about">
+                <h3>Fil_Rouge</h3>
+                <p>Ensemble pour une ville plus propre et plus agréable à vivre.</p>
             </div>
 
-            <div class="footer-bottom">
-                <p>&copy; 2025 Fil_Rouge - Projet de gestion des déchets</p>
+        <div class="footer-links">
+            <h4>Quick links</h4>
+            <ul>
+                <li><a href="pages/how_it_works/how_it_works.html">Comment ça marche ?</a></li>
+                <li><a href="pages/mentions-legales/mentions-legales.html">Mentions légales</a></li>
+                <li><a href="pages/privacy-policy/privacy-policy.html">Confidentialité</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-social">
+            <h4>Suivez-nous</h4>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="icon-facebook"></i></a>
+                <a href="#" aria-label="Twitter"><i class="icon-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="icon-instagram"></i></a>
             </div>
         </div>
+        </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2025 Fil_Rouge - Projet de gestion des déchets</p>
+    </div>
+    </div>
     </footer>
 
-    <script src="../src/js/main.js"></script>
+<!-- Scripts -->
+<script type="module" src="../src/js/main.js"></script>
 </body>
 
 </html>

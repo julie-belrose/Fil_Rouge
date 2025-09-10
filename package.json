@@ -53,11 +53,12 @@
     "@domains": "backend/src/domains",
     "@middleware": "backend/src/middleware",
     "@database": "backend/src/database",
-    "@frontend": "frontend/src",
     "@core": "frontend/src/core",
     "@constants": "frontend/src/constants",
     "@components": "frontend/src/components",
     "@views": "frontend/src/views",
-    "@utils-frontend": "frontend/src/utils"
+    "@utils-frontend": "frontend/src/utils",
+    "@styles": "frontend/src/styles",
+    "@pages": "frontend/src/pages"
   }
 }

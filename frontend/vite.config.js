@@ -6,7 +6,7 @@ export default defineConfig({
     build: {
         outDir: 'dist',
         lib: {
-            entry: './frontend/src/main.js', //path to the entry point
+            entry: path.resolve(__dirname, 'src/main.js'),
             formats: ['es'] // compile in ESM (ECMAScript Modules)
         },
         rollupOptions: {
@@ -19,14 +19,14 @@ export default defineConfig({
     emptyOutDir: true,
     resolve: {
         alias: {
-            '@frontend': path.resolve(__dirname, './frontend/src'),
-            '@core': path.resolve(__dirname, './frontend/src/core'),
-            '@api': path.resolve(__dirname, './frontend/src/core/api'),
-            '@constants': path.resolve(__dirname, './frontend/src/constants'),
-            '@components': path.resolve(__dirname, './frontend/src/components'),
-            '@utils-frontend': path.resolve(__dirname, './frontend/src/utils'),
-            '@scripts': path.resolve(__dirname, './frontend/src/scripts'),
-            '@views': path.resolve(__dirname, './frontend/src/views'),
+            '@core': path.resolve(__dirname, './src/core'),
+            '@api': path.resolve(__dirname, './src/core/api'),
+            '@constants': path.resolve(__dirname, './src/core/constants'),
+            '@components': path.resolve(__dirname, './src/components'),
+            '@utils-frontend': path.resolve(__dirname, './src/utils'),
+            '@views': path.resolve(__dirname, './src/views'),
+            '@pages': path.resolve(__dirname, './src/pages'),
+            '@styles': path.resolve(__dirname, './src/styles'),
         }
     }
 });
