@@ -9,8 +9,8 @@
     "commit": "cz",
     "start": "node backend/src/app.js",
     "dev": "vite build && concurrently \"vite build --watch\" \"nodemon dist/app.js\"",
-    "build:backend": "rm -rf backend/dist && vite build",
-    "build:frontend": "rm -rf frontend/dist && mkdir frontend/dist && cp -r frontend/public/* frontend/dist/ && cp -r frontend/src/* frontend/dist/",
+    "build:backend": "rm -rf backend/dist && vite build --config backend/vite.config.js",
+    "build:frontend": "rm -rf frontend/dist && vite build --config frontend/vite.config.js",
     "check:env": "node backend/src/utils/validateEnv.js",
     "init:mongo": "vite-node backend/src/scripts/initMongo.js",
     "seed:mongo": "vite-node backend/src/scripts/seedMongoDB.js",
@@ -52,6 +52,12 @@
     "@scripts": "backend/src/scripts",
     "@domains": "backend/src/domains",
     "@middleware": "backend/src/middleware",
-    "@database": "backend/src/database"
+    "@database": "backend/src/database",
+    "@frontend": "frontend/src",
+    "@core": "frontend/src/core",
+    "@constants": "frontend/src/constants",
+    "@components": "frontend/src/components",
+    "@views": "frontend/src/views",
+    "@utils-frontend": "frontend/src/utils"
   }
 }

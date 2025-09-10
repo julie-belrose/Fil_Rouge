@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@frontend/*": [
+                "frontend/src/*"
+            ],
+            "@core/*": [
+                "frontend/src/core/*"
+            ],
+            "@api/*": [
+                "frontend/src/core/api/*"
+            ],
+            "@constants/*": [
+                "frontend/src/constants/*"
+            ],
+            "@components/*": [
+                "frontend/src/components/*"
+            ],
+            "@views/*": [
+                "frontend/src/views/*"
+            ],
+            "@utils-frontend/*": [
+                "frontend/src/utils/*"
+            ]
+        }
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
