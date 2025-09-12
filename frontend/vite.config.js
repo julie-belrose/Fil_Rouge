@@ -4,7 +4,7 @@ import pkg from '../package.json';
 
 export default defineConfig({
     build: {
-        outDir: 'dist',
+        outDir: 'frontend/dist',
         lib: {
             entry: path.resolve(__dirname, 'src/main.js'),
             formats: ['es'] // compile in ESM (ECMAScript Modules)
