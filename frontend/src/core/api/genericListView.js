@@ -1,4 +1,4 @@
-import { fetchData } from '@core/api/fetchData.js';
+import { fetchData } from '#core-frontend/api/fetchData.js';
 
 export async function genericListView({ url, containerSelector, renderFn }) {
   try {

@@ -1,4 +1,4 @@
-import { showUsers } from '@views/userListView.js';
+import { showUsers } from '#views/userListView.js';
 
 /**
  * Routes configuration
