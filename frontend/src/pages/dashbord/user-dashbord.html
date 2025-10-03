@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fil Rouge - Gestion des signalements urbains</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+<!-- Tailwind Config -->
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    primary: {
+                        50: "#ecfdf5",
+                        100: "#d1fae5",
+                        200: "#a7f3d0",
+                        300: "#6ee7b7",
+                        400: "#34d399",
+                        500: "#10b981",
+                        600: "#059669",
+                        700: "#047857",
+                        800: "#065f46",
+                        900: "#064e3b",
+                    },
+                    navy: {
+                        50: "#f8fafc",
+                        100: "#f1f5f9",
+                        200: "#e2e8f0",
+                        300: "#cbd5e1",
+                        400: "#94a3b8",
+                        500: "#64748b",
+                        600: "#475569",
+                        700: "#334155",
+                        800: "#1e293b",
+                        900: "#0f172a",
+                    },
+                    accent: {
+                        500: "#1e40af",
+                        600: "#1d4ed8",
+                        700: "#1e3a8a",
+                        800: "#1e3a8a",
+                        900: "#1e3a8a",
+                    }
+                },
+            },
+        },
+    };
+</script>
+<script type="module" src="../../services/mockAutoConnexion.service.js"></script>
+
+<!-- Inter Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br bg-accent-600/15 via-white from-blue-50">
+    <!-- ========== HEADER ========== -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3">
+                <div
+                    class="w-10 h-10 bg-gradient-to-br from-navy-600 to-accent-700 rounded-xl flex items-center justify-center shadow-lg">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <a href="../auth/login.html" class="text-xl font-bold text-gray-800">EcoTrack</a>
+                <span class="hidden sm:inline-block px-2 py-1 text-xs font-medium bg-navy-100 text-navy-700 rounded-full">
+                    Plateforme Citoyenne
+                </span>
+                </div>
+<!-- Right Section -->
+<div class="flex items-center space-x-3">
+    <!-- Notifications -->
+    <button class="relative p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
+            </path>
+            </svg>
+            <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+            </button>
+<!-- User Profile -->
+    <div class="flex items-center space-x-2 pl-3 border-l border-gray-200">
+        <img src="https://ui-avatars.com/api/?name=Alex+Morgan&background=10b981&color=fff" alt="Profile"
+            class="w-8 h-8 rounded-full" />
+        <span class="hidden sm:block text-sm font-medium text-gray-700">Alex</span>
+        </div>
+                </div>
+        </div>
+        </nav>
+        </header>
+                            <!-- ===== DEMO VISUEL : DASHBOARD MODERNE (dark, card-based) ===== -->
+                            <section id="modern-dashboard-demo"
+                                class="min-h-screen bg-gradient-to-br from-navy-700 to-accent-700 text-slate-100 py-10">
+                                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+                                    <!-- Header compact -->
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center border border-white/10">
+                                            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                            </svg>
+                                        </div>
+                                        <h1 class="text-xl font-semibold tracking-tight">Bienvenue Alx_Eco</h1>
+                                        <div class="ml-auto flex items-center gap-2">
+                                            <!-- <span class="text-xs text-white"> Dernière mise à jour : 14/09/2025 - </span> -->
+                                            <a href="../account/profil.html" class="text-sm font-medium text-emerald-400 hover:text-emerald-300">Mon
+                                                compte
+                                                →</a>
+                                        </div>
+                                    </div>
+                                    <div class="mt-auto flex flex-wrap gap-3">
+                                        <button
+                                            class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-slate-800/70 to-slate-700/7 border border-white/5 p-4 shadow font-semibold hover:bg-slate-700/80 hover:border-accent-50 transition shadow-lg">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M8 7V3m8 4V3M3 11h18M5 19h14M7 15h10" />
+                                            </svg>
+                                            Consulter l'historique
+                                        </button>
+                                        <button
+                                            class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-slate-800/70 to-slate-700/7 border border-white/5 p-4 shadow font-semibold hover:bg-slate-700/80 hover:border-accent-50 transition shadow-lg">
+                                            Gagner des points
+                                        </button>
+
+    <button
+        class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-slate-800/70 to-slate-700/7 border border-white/5 p-4 shadow font-semibold hover:bg-slate-700/80 hover:border-accent-50 transition shadow-lg">
+        ↗︎ Consulter le classement
+    </button>
+    </div>
+    <!-- KPI strip -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- Card KPI -->
+        <div class="rounded-2xl bg-slate-800/70 border border-white/5 p-4 shadow">
+            <p class="text-xs uppercase tracking-wider text-slate-400">Points totaux</p>
+            <div class="mt-2 flex items-baseline gap-2">
+                <span class="text-2xl font-semibold">1 240</span>
+                <span
+                    class="text-emerald-400 text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">+2,4%</span>
+            </div>
+        </div>
+        <div class="rounded-2xl bg-slate-800/70 border border-white/5 p-4 shadow">
+            <p class="text-xs uppercase tracking-wider text-slate-400">Ce mois</p>
+            <div class="mt-2 flex items-baseline gap-2">
+                <span class="text-2xl font-semibold">+130</span>
+                <span class="text-slate-400 text-xs">sur 30j</span>
+            </div>
+        </div>
+        <div class="rounded-2xl bg-slate-800/70 border border-white/5 p-4 shadow">
+            <p class="text-xs uppercase tracking-wider text-slate-400">Rang</p>
+            <div class="mt-2 flex items-baseline gap-2">
+                <span class="text-2xl font-semibold">12</span>
+                <span class="text-emerald-400 text-xs">↗︎ +2</span>
+            </div>
+        </div>
+        <div class="rounded-2xl bg-slate-800/70 border border-white/5 p-4 shadow">
+            <p class="text-xs uppercase tracking-wider text-slate-400">Taux de validation</p>
+            <div class="mt-2 flex items-center gap-3">
+                <span class="text-2xl font-semibold">78%</span>
+                <div class="flex items-end gap-1 h-5">
+                    <span class="w-2 h-5 bg-emerald-400/70 rounded"></span>
+                    <span class="w-2 h-3 bg-blue-400/70 rounded"></span>
+                    <span class="w-2 h-2 bg-yellow-400/70 rounded"></span>
+                    <span class="w-2 h-1 bg-rose-400/70 rounded"></span>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- Corps : historique (micro-cards) + ranking -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Col gauche : flux d’actions -->
+            <div class="lg:col-span-2 space-y-4">
+                <!-- Barre de filtres -->
+                <div
+                    class="rounded-2xl bg-slate-800/70 border border-white/5 p-3 flex items-center gap-2 overflow-x-auto hide-scrollbar">
+                    <button class="px-3 py-1.5 rounded-full text-xs bg-white text-slate-900 font-semibold">Tous</button>
+                    <button
+                        class="px-3 py-1.5 rounded-full text-xs bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Validés</button>
+                    <button class="px-3 py-1.5 rounded-full text-xs bg-blue-500/10 text-blue-300 border border-blue-500/20">En
+                        cours</button>
+                    <button
+                        class="px-3 py-1.5 rounded-full text-xs bg-yellow-500/10 text-yellow-300 border border-yellow-500/20">En
+                        attente</button>
+                    <button
+                        class="px-3 py-1.5 rounded-full text-xs bg-rose-500/10 text-rose-300 border border-rose-500/20">Refusés</button>
+                    <span class="mx-2 h-4 w-px bg-white/10"></span>
+                    <button class="px-3 py-1.5 rounded-full text-xs bg-slate-700 text-slate-200">7j</button>
+                    <button class="px-3 py-1.5 rounded-full text-xs bg-slate-700/50 text-slate-300">+ 30j</button>
+                </div>
+                <!-- Micro-cards (4 états) -->
+                <!-- VALIDÉ -->
+                <article class="relative rounded-2xl bg-slate-800/70 border border-white/5 p-4 shadow">
+                    <span class="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500/80 rounded-l-2xl"></span>
+                    <div class="grid grid-cols-[auto,1fr,auto] items-start gap-4">
+                        <!-- Points + tooltip -->
+                        <div class="relative">
+                            <button
+                                class="peer inline-flex items-center gap-1 px-2 py-1 rounded-lg text-sm bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                                +20
+                            </button>
+                            <div
+                                class="hidden peer-focus:block md:peer-hover:block absolute z-10 mt-2 w-52 text-[11px] leading-relaxed bg-black/90 text-white px-3 py-2 rounded-lg border border-white/10">
+                                Points obtenus pour cette action. Tap/hover pour fermer.
+                            </div>
+                        </div>
+                        <!-- Titre + méta -->
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.7 10.5A2 2 0 0116.3 20H7.7A2 2 0 015.7 17.5L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2M4 7h16" />
+                                </svg>
+                                <h3 class="text-sm font-semibold truncate">Signalement validé</h3>
+                            </div>
+                            <p class="mt-2 text-sm text-slate-300">
+                                📍 La Part-Dieu • Dépôt illégal • <span class="text-slate-400">#12345</span>
+                            </p>
+                            <p class="mt-1 text-sm text-slate-400 truncate">Dépôt illégal — #12345</p>
+                        </div>
+                        <!-- Statut + date -->
+                        <div class="text-right">
+                            <span
+                                class="inline-flex px-2 py-0.5 rounded-full text-[11px] bg-emerald-500/15 text-emerald-300 border border-emerald-500/25">Validé</span>
+                            <div class="text-[11px] text-slate-400 mt-1">14/09</div>
+                        </div>
+                    </div>
+                </article>
+                <!-- EN ATTENTE -->
+                <article class="relative rounded-2xl bg-slate-800/70 border border-white/5 p-4 shadow">
+                    <span class="absolute left-0 top-0 bottom-0 w-1 bg-yellow-400/80 rounded-l-2xl"></span>
+                    <div class="grid grid-cols-[auto,1fr,auto] items-start gap-4">
+                        <span
+                            class="inline-flex px-2 py-1 rounded-lg text-sm bg-slate-700/60 text-slate-200 border border-white/10">+0</span>
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.6c.2 0 .5.1.7.3L19 8.4V15a2 2 0 01-2 2z" />
+                                </svg>
+                                <h3 class="text-sm font-semibold truncate">Signalement en attente</h3>
+                            </div>
+                            <p class="mt-2 text-sm text-slate-300">📍 Gerland • Poubelle débordante • <span
+                                    class="text-slate-400">#12350</span></p>
+                            <p class="mt-1 text-sm text-slate-400 truncate">Poubelle débordante — #12350</p>
+                        </div>
+                        <div class="text-right">
+                            <span
+                                class="inline-flex px-2 py-0.5 rounded-full text-[11px] bg-yellow-400/15 text-yellow-300 border border-yellow-400/25">En
+                                attente</span>
+                            <div class="text-[11px] text-slate-400 mt-1">13/09</div>
+                        </div>
+                    </div>
+                </article>
+            
+            <!-- EN COURS -->
+            <article class="relative rounded-2xl bg-slate-800/70 border border-white/5 p-4 shadow">
+                <span class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500/80 rounded-l-2xl"></span>
+                <div class="grid grid-cols-[auto,1fr,auto] items-start gap-4">
+                    <span
+                        class="inline-flex px-2 py-1 rounded-lg text-sm bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">+10</span>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3M12 22a10 10 0 110-20 10 10 0 010 20z" />
+                            </svg>
+                            <h3 class="text-sm font-semibold truncate">Signalement en cours</h3>
+                        </div>
+                        <p class="mt-2 text-sm text-slate-300">📍 Mermoz • Collecte manquée • <span
+                                class="text-slate-400">#12355</span></p>
+                        <p class="mt-1 text-sm text-slate-400 truncate">Collecte manquée — #12355</p>
+                    </div>
+                    <div class="text-right">
+                        <span
+                            class="inline-flex px-2 py-0.5 rounded-full text-[11px] bg-blue-500/15 text-blue-300 border border-blue-500/25">En
+                            cours</span>
+                        <div class="text-[11px] text-slate-400 mt-1">12/09</div>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- REFUSÉ -->
+            <article class="relative rounded-2xl bg-slate-800/70 border border-white/5 p-4 shadow">
+                <span class="absolute left-0 top-0 bottom-0 w-1 bg-rose-500/80 rounded-l-2xl"></span>
+                <div class="grid grid-cols-[auto,1fr,auto] items-start gap-4">
+                    <span
+                        class="inline-flex px-2 py-1 rounded-lg text-sm bg-slate-700/60 text-slate-200 border border-white/10">+0</span>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3M12 22a10 10 0 110-20 10 10 0 010 20z" />
+                            </svg>
+                            <h3 class="text-sm font-semibold truncate">Signalement refusé</h3>
+                        </div>
+                        <p class="mt-2 text-sm text-slate-300">📍 Confluence • Collecte manquée • <span class="text-slate-400">#12290</span></p>
+                        <p class="mt-1 text-sm text-slate-400 truncate">Collecte manquée — Doublon détecté</p>
+                        </div>
+                        <div class="text-right">
+                            <span
+                                class="inline-flex px-2 py-0.5 rounded-full text-[11px] bg-rose-500/15 text-rose-300 border border-rose-500/25">Refusé</span>
+                            <div class="text-[11px] text-slate-400 mt-1">31/08/2024</div>
+                    </div>
+                    </div>
+            </article>
+        
+                </div>
+                <!-- Col droite : classement -->
+                <aside class="space-y-4">
+                    <div class="rounded-2xl bg-slate-800/70 border border-white/5 p-4 shadow">
+                <div class="flex items-center justify-between">
+                        <h3 class="text-sm font-semibold">Classement</h3>
+                        <span class="text-[11px] text-slate-400">Top 5</span>
+                        </div>
+                        <div class="mt-3 divide-y divide-white/5">
+                            <div class="py-2 flex items-center justify-between text-sm"><span>1. Clara Dupont</span><span
+                                    class="text-slate-300">1 980</span></div>
+                            <div class="py-2 flex items-center justify-between text-sm bg-emerald-500/5 rounded-md px-2 -mx-2">
+                                <span>12. Alx_Eco (vous)</span><span class="text-slate-300">1 240</span>
+                            </div>
+                            <div class="py-2 flex items-center justify-between text-sm"><span>13. Bilal Rossi</span><span
+                                    class="text-slate-300">1 110</span></div>
+                            <div class="py-2 flex items-center justify-between text-sm"><span>14. Lucie Martin</span><span
+                                    class="text-slate-300">1 020</span></div>
+                            <div class="py-2 flex items-center justify-between text-sm"><span>15. Jean Leroy</span><span
+                                    class="text-slate-300">980</span></div>
+                        </div>
+                        <a class="mt-3 inline-flex text-xs text-emerald-300 hover:text-emerald-200" href="#">Voir tout →</a>
+                        </div>
+                        <div class="rounded-2xl bg-slate-800/70 border border-white/5 p-4 shadow">
+                            <h3 class="text-sm font-semibold">Badges</h3>
+                            <div class="mt-3 grid grid-cols-3 gap-2 text-center">
+                                <div class="rounded-xl border border-white/10 bg-slate-900/40 p-3">
+                                    <div class="text-2xl">🏅</div>
+                                    <div class="text-[11px] mt-1 text-slate-300">5 validés</div>
+                                </div>
+                                <div class="rounded-xl border border-white/10 bg-slate-900/40 p-3 opacity-60">
+                                    <div class="text-2xl">🔥</div>
+                                    <div class="text-[11px] mt-1 text-slate-300">7 jours</div>
+                                </div>
+                                <div class="rounded-xl border border-white/10 bg-slate-900/40 p-3">
+                                    <div class="text-2xl">🌱</div>
+                                    <div class="text-[11px] mt-1 text-slate-300">Eco-actif</div>
+                                </div>
+                            </div>
+                        </div>
+                        </aside>
+                        </div>
+                        </div>
+                        </section>
+                        <!-- ========== PAGE: MOBILE APP SCREENS ========== -->
+                        <div id="mobile-screens" class="hidden">
+                            <!-- Mobile Container -->
+                            <div class="min-h-screen bg-gray-100 flex items-center justify-center p-8">
+                                <div class="flex gap-8 flex-wrap justify-center">
+                        
+                                    <!-- Screen 1: Onboarding -->
+                                    <div class="w-[375px] h-[812px] bg-white rounded-[40px] shadow-2xl overflow-hidden relative">
+                                        <div class="h-full bg-gradient-to-b from-navy-50 to-navy-100 flex flex-col">
+                                            <!-- Illustration Area -->
+                                            <div class="flex-1 flex items-center justify-center p-8">
+                                                <div class="text-center">
+                                                    <div
+                                                        class="w-48 h-48 mx-auto mb-8 bg-gradient-to-br from-navy-100 to-navy-200 rounded-full flex items-center justify-center">
+                                                        <svg class="w-24 h-24 text-accent-600" fill="none" stroke="currentColor"
+                                                            viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                        </svg>
+                                                    </div>
+                                                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Sort Smarter, Live Greener</h2>
+                                                    <p class="text-gray-600 text-sm px-4">
+                                                        Your guide to public trash sorting. Find bins, learn materials, and sort right.
+                                                    </p>
+                                                    </div>
+                                                    </div>
+                                                    <!-- Button -->
+                                                    <div class="p-8">
+                                                        <button class="w-full py-4 bg-accent-600 text-white rounded-2xl font-semibold text-lg">
+                                                            Get Started
+                                                        </button>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    <!-- Screen 2: Waste Types -->
+                                                    <div class="w-[375px] h-[812px] bg-white rounded-[40px] shadow-2xl overflow-hidden">
+                                                        <div class="h-full bg-gradient-to-b from-navy-50 to-white flex flex-col">
+                                                            <!-- Header -->
+                                                            <div class="px-6 pt-12 pb-6">
+                                                                <h1 class="text-2xl font-bold text-gray-900 mb-2">
+                                                                    Trouvez des réponses rapides à vos questions sur le tri
+                                                                </h1>
+                                                            </div>
+                                                            <!-- Map Preview -->
+                                                            <div class="px-6 mb-6">
+                                                                <div class="h-48 bg-gray-100 rounded-2xl overflow-hidden relative">
+                                                                    <img src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/2.3381,48.8693,13,0/375x200@2x?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw"
+                                                                        alt="Map" class="w-full h-full object-cover">
+                                                                    <div class="absolute inset-0 flex items-center justify-center">
+                                                                        <div class="bg-white rounded-full p-3 shadow-lg">
+                                                                            <span class="text-2xl font-bold text-accent-600">2</span>
+                                                                        </div>
+                                                                    </div>
+                                                    </div>
+                                                    </div>
+                                            <!-- Waste Types List -->
+                                            <div class="px-6 flex-1 overflow-y-auto">
+                                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Types de déchets</h3>
+                                            
+                                                <div class="space-y-3">
+                                                    <!-- Battery -->
+                                                    <a href="#"
+                                                        class="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-200 hover:border-accent-500 transition-colors">
+                                                        <div class="flex items-center space-x-3">
+                                                            <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                                                <span class="text-xl">🔋</span>
+                                                            </div>
+                                                            <span class="font-medium text-gray-900">Piles et batteries</span>
+                                                        </div>
+                                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                                        </svg>
+                                                    </a>
+                                                    <!-- Glass -->
+                                                    <a href="#"
+                                                        class="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-200 hover:border-accent-500 transition-colors">
+                                                        <div class="flex items-center space-x-3">
+                                                            <div class="w-10 h-10 bg-navy-100 rounded-lg flex items-center justify-center">
+                                                                <span class="text-xl">🍾</span>
+                                                            </div>
+                                                            <span class="font-medium text-gray-900">Verre</span>
+                                                        </div>
+                                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                                        </svg>
+                                                    </a>
+                                                    <!-- PMC -->
+                                                    <a href="#"
+                                                        class="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-200 hover:border-accent-500 transition-colors">
+                                                        <div class="flex items-center space-x-3">
+                                                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                                                <span class="text-xl">♻️</span>
+                                                            </div>
+                                                            <span class="font-medium text-gray-900">PMC</span>
+                                                        </div>
+                                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                                        </svg>
+                                                    </a>
+                                                    <!-- Paper -->
+                                                    <a href="#"
+                                                        class="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-200 hover:border-accent-500 transition-colors">
+                                                        <div class="flex items-center space-x-3">
+                                                            <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                                                                <span class="text-xl">📦</span>
+                                                            </div>
+                                                            <span class="font-medium text-gray-900">Papiers-cartons</span>
+                                                        </div>
+                                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                                        </svg>
+                                                        </a>
+                                                        <!-- Residual -->
+                                                        <a href="#"
+                                                            class="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-200 hover:border-accent-500 transition-colors">
+                                                            <div class="flex items-center space-x-3">
+                                                                <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                                                                    <span class="text-xl">🗑️</span>
+                                                            </div>
+                                                            <span class="font-medium text-gray-900">Déchets résiduels</span>
+                                                            </div>
+                                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                                        </svg>
+                                                    </a>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    <!-- Screen 3: Collection Points Map -->
+                                                    <div class="w-[375px] h-[812px] bg-white rounded-[40px] shadow-2xl overflow-hidden">
+                                                        <div class="h-full flex flex-col">
+                                                            <!-- Header -->
+                                                            <div class="px-6 pt-12 pb-4 bg-white">
+                                                                <h1 class="text-2xl font-bold text-gray-900 mb-2">
+                                                                    Trouvez des réponses rapides à vos questions sur le tri
+                                                                </h1>
+                                                                <div class="flex items-center text-sm text-gray-600">
+                                                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                                    </svg>
+                                                                    <span>Points de collecte</span>
+                                                                </div>
+                                                                </div>
+                                            <!-- Map -->
+                                            <div class="flex-1 relative">
+                                                <img src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s+10b981(2.3381,48.8693),pin-s+10b981(2.3481,48.8593),pin-s+10b981(2.3281,48.8793)/2.3381,48.8693,12,0/375x400@2x?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw"
+                                                    alt="Map" class="w-full h-full object-cover">
+                                            </div>
+                                            <!-- Guide Section -->
+                                            <div class="bg-white p-6">
+                                                <h3 class="text-lg font-semibold text-gray-900 mb-3">Guide de tri</h3>
+                                                <div class="relative">
+                                                    <input type="text" placeholder="Que voulez-vous trier ?" class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm">
+                                                </div>
+                                                <!-- Categories -->
+                                                <div class="mt-4 space-y-2">
+                                                    <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                                                        <div class="flex items-center space-x-3">
+                                                            <span class="text-xl">🔋</span>
+                                                            <span class="text-sm font-medium">Piles et batteries</span>
+                                                        </div>
+                                                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                                        </svg>
+                                                    </div>
+                                                    <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                                                        <div class="flex items-center space-x-3">
+                                                            <span class="text-xl">🍾</span>
+                                                            <span class="text-sm font-medium">Verre</span>
+                                                        </div>
+                                                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                                        </svg>
+                                                        </div>
+                                                        </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                        </div><!-- /flex screens -->
+                        </div><!-- /container -->
+                        </div><!-- /mobile-screens -->
+                        </body>
+                        
+                        </html>
+
+</body>
+</html>

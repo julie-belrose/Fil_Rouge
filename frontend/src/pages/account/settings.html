@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paramètres du compte - Fill Rouge</title>
+    <link rel="stylesheet" href="/src/styles/base/main.css">
+</head>
+<body>
+    <div class="settings-container">
+        <div class="settings-sidebar">
+            <h2>Paramètres</h2>
+            <nav>
+                <ul>
+                    <li><a href="/account/profile" class="active">Profil</a></li>
+                    <li><a href="/account/security">Sécurité</a></li>
+                    <li><a href="/account/settings">Préférences</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="settings-content">
+            <h1>Préférences</h1>
+            <form id="settingsForm">
+                <div class="form-group">
+                    <label>Langue</label>
+                    <select name="language">
+                        <option value="fr">Français</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Thème</label>
+                    <select name="theme">
+                        <option value="light">Clair</option>
+                        <option value="dark">Sombre</option>
+                        <option value="system">Système</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Notifications</label>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" name="email_notifications" checked>
+                            Notifications par email
+                        </label>
+                        <label>
+                            <input type="checkbox" name="push_notifications" checked>
+                            Notifications push
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
