@@ -68,6 +68,7 @@
             scrollbar-width: none;
         }
     </style>
+    <script type="module" src="user-dashbord.js"></script>
 </head>
 <body class="bg-gradient-to-br bg-accent-600/15 via-white from-blue-50">
     <!-- ========== HEADER ========== -->
@@ -100,9 +101,9 @@
             </button>
 <!-- User Profile -->
     <div class="flex items-center space-x-2 pl-3 border-l border-gray-200">
-        <img src="https://ui-avatars.com/api/?name=Alex+Morgan&background=10b981&color=fff" alt="Profile"
+        <img src="https://ui-avatars.com/api/?name=Alex+Dupont&background=10b981&color=fff" alt="Profile"
             class="w-8 h-8 rounded-full" />
-        <span class="hidden sm:block text-sm font-medium text-gray-700">Alex</span>
+        <span class="hidden sm:block text-sm font-medium text-gray-700" id="userFirstname">Alex</span>
         </div>
                 </div>
         </div>
@@ -120,7 +121,7 @@
                                                     d="M13 10V3L4 14h7v7l9-11h-7z" />
                                             </svg>
                                         </div>
-                                        <h1 class="text-xl font-semibold tracking-tight">Bienvenue Alx_Eco</h1>
+                                        <h1 class="text-xl font-semibold tracking-tight" id="welcomeMessage">Bienvenue Alex</h1>
                                         <div class="ml-auto flex items-center gap-2">
                                             <!-- <span class="text-xs text-white"> Dernière mise à jour : 14/09/2025 - </span> -->
                                             <a href="../account/profil.html" class="text-sm font-medium text-emerald-400 hover:text-emerald-300">Mon

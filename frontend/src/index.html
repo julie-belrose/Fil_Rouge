@@ -4,108 +4,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fil_Rouge - Signalement de déchets</title>
-    <meta name="description"
-        content="Signalez les déchets dans votre ville et contribuez à un environnement plus propre avec Fill_Rouge">
-    <meta name="keywords" content="déchets, environnement, signalement, ville propre, écologie">
-    <link rel="icon" type="image/png" href="/assets/images/favicon.png">
-    <link rel="stylesheet" href="styles/base/main.css">
-    <link rel="preload" href="styles/base/main.css" as="style">
+    <title>EcoTrack - Plateforme de signalement urbain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
 
-<body>
-    <!-- Main Content -->
-    <main>
-        <div id="app">
-            <!-- The content will be injected here by JavaScript -->
-            <!-- For the initial loading -->
-            <div class="loading-spinner"></div>
+<body class="bg-gradient-to-br from-blue-50 to-gray-50 min-h-screen">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="text-center">
+            <!-- Logo -->
+            <div
+                class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-2xl mb-6">
+                <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+            </div>
+
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">EcoTrack</h1>
+            <p class="text-gray-600 mb-8">Plateforme de signalement urbain</p>
+
+            <!-- Loading spinner -->
+            <div class="inline-flex items-center justify-center">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+            </div>
+            <p class="text-sm text-gray-500 mt-4">Chargement...</p>
         </div>
-    </main>
+    </div>
 
-    <!-- Header -->
-    <header class="main-header">
-        <div class="container">
-            <div class="logo">
-                <a href="/">
-                    <img src="/assets/logo.svg" alt="Fill_Rouge Logo" width="180">
-                </a>
-            </div>
+    <script>
+        // Vérifier l'authentification et rediriger
+        window.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('auth_token');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-            <button class="mobile-menu-toggle" aria-label="Menu mobile">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-
-            <h1>Fill_Rouge</h1>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="/" class="active">Accueil</a></li>
-                    <li><a href="pages/report/create/report_create.html">Signaler</a></li>
-                    <li><a href="pages/carte/carte.html">Carte</a></li>
-                    <li><a href="pages/by_the_way/by_the_way.html">À propos</a></li>
-                    <li class="auth-links">
-                        <a href="pages/login/login.html" class="btn btn-outline">Connexion</a>
-                        <a href="pages/subscribe/subscribe.html" class="btn btn-primary">S'inscrire</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <main class="container">
-        <section>
-            <div class="waste-header">
-                <h2>Liste des signalements</h2>
-                <a href="pages/report/create/report_create.html" class="btn-ajouter">Nouveau
-                    signalement</a>
-            </div>
-            <ul id="waste-list">
-                <!-- The signalements will be loaded dynamically here -->
-                <li data-id="1">Signalement #1 - Déchets plastiques</li>
-                <li data-id="2">Signalement #2 - Verre brisé</li>
-                <li data-id="3">Signalement #3 - Encombrants</li>
-            </ul>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-about">
-                    <h3>Fil_Rouge</h3>
-                    <p>Ensemble pour une ville plus propre et plus agréable à vivre.</p>
-                </div>
-
-                <div class="footer-links">
-                    <h4>Quick links</h4>
-                    <ul>
-                        <li><a href="pages/how_it_works/how_it_works.html">Comment ça marche ?</a></li>
-                        <li><a href="pages/mentions-legales/mentions-legales.html">Mentions légales</a></li>
-                        <li><a href="pages/privacy-policy/privacy-policy.html">Confidentialité</a></li>
-                        <li><a href="/contact">Contact</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-social">
-                    <h4>Suivez-nous</h4>
-                    <div class="social-links">
-                        <a href="#" aria-label="Facebook"><i class="icon-facebook"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="icon-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="icon-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2025 Fil_Rouge - Projet de gestion des déchets</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="../src/js/main.js"></script>
-</body>
-
+            setTimeout(() => {
+                if (!token) {
+                    window.location.href = '/auth/login.html';
+                } else {
+                    switch (user.role) {
+                        case 'admin':
+                            window.location.href = '/pages/dashbord/admin-dashbord.html';
+                            break;
+                        case 'agent':
+                            window.location.href = '/pages/dashbord/agent-dashbord.html';
+                            break;
+                        default:
+                            window.location.href = '/pages/dashbord/user-dashbord.html';
+                    }
+                }
+            }, 1000);
+        });
+            </script>
+            </body>
 </html>

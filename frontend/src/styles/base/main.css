@@ -75,6 +75,21 @@ main {
   margin: 0 auto;
 }
 
+/* ===== UTILITIES ===== */
+#waste-list li {
+    background: var(--color-light-bg);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#waste-list li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
 footer {
   background: var(--color-footer-bg);
   text-align: center;

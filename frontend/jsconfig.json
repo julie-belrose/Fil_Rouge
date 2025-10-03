@@ -25,6 +25,9 @@
             ],
           "#services/*": [
             "src/services"
+          ],
+          "#domains-frontend/*": [
+            "src/domains"
           ]
         }
     },
