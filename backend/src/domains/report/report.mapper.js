@@ -1,5 +1,3 @@
-const reportEntity = require('./report.entity');
-
 /**
  * Mapper for converting between different report data representations
  */
@@ -31,4 +29,4 @@ class ReportMapper {
     }
 }
 
-module.exports = ReportMapper;
+export const reportMapper = new ReportMapper();

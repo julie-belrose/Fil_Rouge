@@ -3,7 +3,7 @@
  * @param {Object} data - Raw agent data
  * @returns {Object} Normalized agent entity
  */
-const agentEntity = (data = {}) => ({
+export const agentEntity = (data = {}) => ({
     user_id: data.user_id || null,
     agent_number: data.agent_number || '',
     created_by: data.created_by || null,
@@ -11,5 +11,3 @@ const agentEntity = (data = {}) => ({
     team_id: data.team_id || null,
     sector: data.sector || null
 });
-
-module.exports = agentEntity;

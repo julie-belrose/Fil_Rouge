@@ -1,6 +1,6 @@
-const { createSchema, updateSchema } = require('./report.schema');
-const reportEntity = require('./report.entity');
-const validateAndTransform = require('../utils/parseDTO');
+import { createSchema, updateSchema } from '#domains/report/report.schema.js';
+import { reportEntity } from '#domains/report/report.entity.js';
+import { validateAndTransform } from '#utils/parseDTO.js';
 
 
 /**
@@ -9,7 +9,7 @@ const validateAndTransform = require('../utils/parseDTO');
  * @returns {Object} Validated and transformed report data  
  * @throws {Error} If validation fails
  */
-const createReportDto = (data) => {
+export const createReportDTO = (data) => {
     return validateAndTransform(data, createSchema, reportEntity);
 };
 
@@ -19,14 +19,10 @@ const createReportDto = (data) => {
  * @returns {Object} Validated and transformed report data
  * @throws {Error} If validation fails
  */
-const updateReportDto = (data) => {
+export const updateReportDTO = (data) => {
     return validateAndTransform(data, updateSchema, reportEntity);
 };
 
-const deleteReportDto = (data) => {
+export const deleteReportDTO = (data) => {
     //todo
 };
-
-
-
-module.exports = { createReportDto, updateReportDto, deleteReportDto };

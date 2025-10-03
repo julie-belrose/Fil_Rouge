@@ -3,7 +3,7 @@
  * @param {Object} data - Raw treatment center data
  * @returns {Object} Treatment Center entity
  */
-const treatmentCenterEntity = (data = {}) => {
+export const treatmentCenterEntity = (data = {}) => {
     const now = new Date();
     
     return {
@@ -29,5 +29,3 @@ const treatmentCenterEntity = (data = {}) => {
         }
     };
 };
-
-module.exports = treatmentCenterEntity;

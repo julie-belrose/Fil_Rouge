@@ -3,7 +3,7 @@
  * @param {Object} data - Raw agent data
  * @returns {Object} Normalized agent entity
  */
-const badgeEntity = (data = {}) => ({
+export const badgeEntity = (data = {}) => ({
     name: data.name || null,
     description: data.description || null,
     image_url: data.image_url || null,
@@ -14,5 +14,3 @@ const badgeEntity = (data = {}) => ({
         return this.name && this.description && this.image_url && this.created_at && this.updated_at;
     }
 });
-
-module.exports = badgeEntity;

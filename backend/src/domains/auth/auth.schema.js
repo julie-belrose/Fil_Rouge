@@ -1,24 +1,22 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
-module.exports = {
-    registerSchema: Joi.object({
+export const registerSchema = Joi.object({
         email: Joi.string().email().required(),
         password: Joi.string().min(8).required(),
         role: Joi.string().valid('user', 'agent', 'admin').default('user').required(),
         is_active: Joi.boolean().default(true)
-    }),
+});
 
-    loginSchema: Joi.object({
+export const loginSchema = Joi.object({
         email: Joi.string().email().required(),
         password: Joi.string().required()
-    }),
+});
 
-    logoutSchema: Joi.object({
+export const logoutSchema = Joi.object({
         email: Joi.string().email().required()
-    }),
+});
 
-    updateSchema: Joi.object({
+export const updateSchema = Joi.object({
         email: Joi.string().email(),
         is_active: Joi.boolean()
-    }).min(1)
-};
+}).min(1);

@@ -1,5 +1,5 @@
-const notificationRepository = require('./repository/notification.repository');
-const NotificationMapper = require('./mapper/notification.mapper');
+import { notificationRepository } from '#domains/notification/notification.repository.js';
+import { toDTO } from '#utils/mapper.utils.js'; 
 
 class NotificationService {
     /**
@@ -17,11 +17,16 @@ class NotificationService {
     async createNotification(notificationData) {
         try {
             const newNotification = await notificationRepository.create(notificationData);
-            return NotificationMapper.toDTO(newNotification);
+            return toDTO(newNotification);
         } catch (error) {
             console.error('Failed to create notification:', error);
             throw new Error(`Failed to create notification: ${error.message}`);
         }
+    }
+
+    async getNotifications() {
+        const notifications = await notificationRepository.getNotifications();
+        return notifications.map(toDTO);
     }
 
     async getNotificationById(id) {
@@ -37,4 +42,4 @@ class NotificationService {
     }
 }
 
-module.exports = new NotificationService();
+export const notificationService = new NotificationService();

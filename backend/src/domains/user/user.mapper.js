@@ -1,5 +1,3 @@
-const userEntity = require('./user.entity');
-
 /**
  * Mapper for converting between different user data representations
  */
@@ -21,4 +19,4 @@ class UserMapper {
     }
 }
 
-module.exports = UserMapper;
+export const userMapper = new UserMapper();

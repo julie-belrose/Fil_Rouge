@@ -1,5 +1,6 @@
-const { createSchema, updateSchema } = require('./badge.schema');
-const badgeEntity = require('./badge.entity');
+import { createSchema, updateSchema } from '#domains/badge/badge.schema.js';
+import { badgeEntity } from '#domains/badge/badge.entity.js';
+import { validateAndTransform } from '#utils/parseDTO.js';
 
 /**
  * Validates and transforms badge creation data
@@ -7,7 +8,7 @@ const badgeEntity = require('./badge.entity');
  * @returns {Object} Validated and transformed badge data
  * @throws {Error} If validation fails
  */
-const createBadgeDto = (data) => {
+export const createBadgeDTO = (data) => {
     return validateAndTransform(data, createSchema, badgeEntity);
 };
 
@@ -17,13 +18,10 @@ const createBadgeDto = (data) => {
  * @returns {Object} Validated and transformed badge data
  * @throws {Error} If validation fails
  */
-const updateBadgeDto = (data) => {
+export const updateBadgeDTO = (data) => {
     return validateAndTransform(data, updateSchema, badgeEntity);
 };
 
-const deleteBadgeDto = (data) => {
+export const deleteBadgeDTO = (data) => {
     // TODO: Implement deleteBadgeDto
-}
-
-
-module.exports = { createBadgeDto, updateBadgeDto, deleteBadgeDto };
+};
