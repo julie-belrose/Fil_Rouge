@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des agents - Admin - Fill Rouge</title>
+    <link rel="stylesheet" href="/src/styles/base/main.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="admin-sidebar">
+            <h2>Administration</h2>
+            <nav>
+                <ul>
+                    <li><a href="/admin/dashboard">Tableau de bord</a></li>
+                    <li><a href="/admin/users">Utilisateurs</a></li>
+                    <li><a href="/admin/agents" class="active">Agents</a></li>
+                    <li><a href="/admin/reports">Signalements</a></li>
+                    <li><a href="/admin/analytics">Analytiques</a></li>
+                    <li><a href="/admin/tours">Tournées</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="admin-content">
+            <div class="admin-header">
+                <h1>Gestion des agents</h1>
+                <div class="admin-actions">
+                    <button id="exportAgents" class="btn btn-secondary">
+                        <i class="fas fa-download"></i> Exporter
+                    </button>
+                    <button id="addAgent" class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i> Ajouter un agent
+                    </button>
+                </div>
+            </div>
+            
+            <div class="admin-filters">
+                <div class="form-group">
+                    <input type="text" id="searchAgents" placeholder="Rechercher un agent...">
+                </div>
+                <div class="form-group">
+                    <select id="statusFilter">
+                        <option value="">Tous les statuts</option>
+                        <option value="active">Actif</option>
+                        <option value="inactive">Inactif</option>
+                        <option value="on_leave">En congé</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select id="departmentFilter">
+                        <option value="">Tous les services</option>
+                        <option value="propreté">Propreté</option>
+                        <option value="voirie">Voirie</option>
+                        <option value="espaces_verts">Espaces Verts</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table id="agentsTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Matricule</th>
+                            <th>Service</th>
+                            <th>Statut</th>
+                            <th>Dernière activité</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Les données seront chargées dynamiquement -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal d'ajout/modification d'agent -->
+    <div id="agentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Ajouter un agent</h2>
+            <form id="agentForm">
+                <input type="hidden" id="agentId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">Prénom</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Nom</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="employeeId">Matricule</label>
+                    <input type="text" id="employeeId" name="employeeId" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email professionnel</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Téléphone</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="department">Service</label>
+                        <select id="department" name="department" required>
+                            <option value="">Sélectionner un service</option>
+                            <option value="propreté">Propreté</option>
+                            <option value="voirie">Voirie</option>
+                            <option value="espaces_verts">Espaces Verts</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Statut</label>
+                        <select id="status" name="status" required>
+                            <option value="active">Actif</option>
+                            <option value="inactive">Inactif</option>
+                            <option value="on_leave">En congé</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" name="notes" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        // Initialisation de la DataTable
+        $(document).ready(function() {
+            const agentsTable = $('#agentsTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json'
+                },
+                responsive: true,
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '/api/admin/agents',
+                    type: 'GET'
+                },
+                columns: [
+                    { data: 'id' },
+                    { 
+                        data: null,
+                        render: function(data) {
+                            return data.firstName + ' ' + data.lastName;
+                        }
+                    },
+                    { data: 'employeeId' },
+                    { data: 'department' },
+                    { 
+                        data: 'status',
+                        render: function(data) {
+                            const statusClass = {
+                                'active': 'status-active',
+                                'inactive': 'status-inactive',
+                                'on_leave': 'status-warning'
+                            };
+                            return `<span class="status-badge ${statusClass[data]}">${data}</span>`;
+                        }
+                    },
+                    { data: 'lastActivity' },
+                    {
+                        data: null,
+                        orderable: false,
+                        render: function(data) {
+                            return `
+                                <button class="btn-icon edit-agent" data-id="${data.id}" title="Modifier">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-agent" data-id="${data.id}" title="Supprimer">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <button class="btn-icon view-agent" data-id="${data.id}" title="Voir le profil">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            `;
+                        }
+                    }
+                ]
+            });
+
+            // Gestion de la recherche
+            $('#searchAgents').on('keyup', function() {
+                agentsTable.search(this.value).draw();
+            });
+
+            // Gestion des filtres
+            $('#statusFilter, #departmentFilter').on('change', function() {
+                agentsTable.draw();
+            });
+
+            // Gestion du clic sur le bouton d'ajout d'agent
+            $('#addAgent').on('click', function() {
+                $('#modalTitle').text('Ajouter un agent');
+                $('#agentForm')[0].reset();
+                $('#agentId').val('');
+                $('#agentModal').show();
+            });
+
+            // Fermeture de la modale
+            $('.close, #cancelBtn').on('click', function() {
+                $('#agentModal').hide();
+            });
+
+            // Soumission du formulaire
+            $('#agentForm').on('submit', function(e) {
+                e.preventDefault();
+                // Logique de soumission du formulaire
+                console.log('Formulaire agent soumis');
+                // Fermer la modale après soumission
+                $('#agentModal').hide();
+                // Recharger les données du tableau
+                agentsTable.ajax.reload();
+            });
+
+            // Gestion du clic sur le bouton de modification
+            $(document).on('click', '.edit-agent', function() {
+                const agentId = $(this).data('id');
+                // Récupérer les données de l'agent et remplir le formulaire
+                console.log('Modification de l\'agent', agentId);
+                $('#modalTitle').text('Modifier l\'agent');
+                $('#agentId').val(agentId);
+                // Ici, vous devriez récupérer les données de l'agent depuis l'API
+                // et remplir le formulaire avec ces données
+                $('#agentModal').show();
+            });
+
+            // Gestion du clic sur le bouton de suppression
+            $(document).on('click', '.delete-agent', function() {
+                const agentId = $(this).data('id');
+                if (confirm('Êtes-vous sûr de vouloir supprimer cet agent ?')) {
+                    // Logique de suppression de l'agent
+                    console.log('Suppression de l\'agent', agentId);
+                    // Recharger les données du tableau
+                    agentsTable.ajax.reload();
+                }
+            });
+
+            // Gestion du clic sur le bouton de visualisation
+            $(document).on('click', '.view-agent', function() {
+                const agentId = $(this).data('id');
+                // Rediriger vers la page de profil de l'agent
+                window.location.href = `/admin/agents/${agentId}`;
+            });
+        });
+    </script>
+</body>
+</html>
