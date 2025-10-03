@@ -1,37 +1,7 @@
 import { LocalStorageRepository } from '../infrastructure/LocalStorageRepository.js';
+import { ALL_MOCK_USERS } from '../../tests/mock/index.js';
 
 const storageRepository = new LocalStorageRepository();
-
-// Données utilisateurs en dur pour le développement
-const MOCK_USERS = [
-    {
-        id: 1,
-        email: "user@example.com",
-        password: "demo123",
-        role: "citizen",
-        firstname: "Alex",
-        lastname: "Dupont",
-        points: 1240,
-        district: "Lyon 3e"
-    },
-    {
-        id: 2,
-        email: "agent@example.com",
-        password: "agent123",
-        role: "agent",
-        firstname: "Arthur",
-        lastname: "Morgan",
-        agentId: "A-12345"
-    },
-    {
-        id: 3,
-        email: "admin@example.com",
-        password: "admin123",
-        role: "admin",
-        firstname: "Admin",
-        lastname: "System"
-    }
-];
 
 // Service d'authentification simulé
 export const mockAuthService = {
@@ -40,7 +10,7 @@ export const mockAuthService = {
         // Simuler un délai réseau
         await new Promise(resolve => setTimeout(resolve, 500));
 
-        const user = MOCK_USERS.find(u => u.email === email && u.password === password);
+        const user = ALL_MOCK_USERS.find(u => u.email === email && u.password === password);
 
         if (user) {
             // Vérifier si le rôle sélectionné correspond au rôle de l'utilisateur

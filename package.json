@@ -12,6 +12,8 @@
     "#config/*": "./backend/src/config/*",
     "#scripts/*": "./backend/src/scripts/*",
     "#database/*": "./backend/src/database/*",
+    "#loader/*": "./backend/src/loader/*",
+    "#services/*": "./backend/src/services/*",
     "#core-frontend/*": "./frontend/src/core/*",
     "#constants/*": "./frontend/src/constants/*",
     "#components/*": "./frontend/src/components/*",
@@ -19,8 +21,7 @@
     "#utils-frontend/*": "./frontend/src/utils/*",
     "#styles/*": "./frontend/src/styles/*",
     "#pages/*": "./frontend/src/pages/*",
-    "#loader/*": "./backend/src/loader/*",
-    "#services/*": "./backend/src/services/*"
+    "#domains-frontend":"./frontend/src/domains/*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -1,5 +1,5 @@
 export const BASE_API_URL =
-    import.meta.env.VITE_BASE_API_URL || 'http://localhost:3000/api';
+    (typeof import.meta !== 'undefined' && import.meta.env?.VITE_BASE_API_URL) || 'http://localhost:3000/api';
 
 export const API_ROUTES = {
     AUTH: {
