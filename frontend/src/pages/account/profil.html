@@ -8,47 +8,12 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Tailwind Config -->
-    <script type="module" src="../../services/mockAutoConnexion.service.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            50: "#ecfdf5",
-                            100: "#d1fae5",
-                            200: "#a7f3d0",
-                            300: "#6ee7b7",
-                            400: "#34d399",
-                            500: "#10b981",
-                            600: "#059669",
-                            700: "#047857",
-                            800: "#065f46",
-                            900: "#064e3b",
-                        },
-                        navy: {
-                            50: "#f8fafc",
-                            100: "#f1f5f9",
-                            200: "#e2e8f0",
-                            300: "#cbd5e1",
-                            400: "#94a3b8",
-                            500: "#64748b",
-                            600: "#475569",
-                            700: "#334155",
-                            800: "#1e293b",
-                            900: "#0f172a",
-                        },
-                        accent: {
-                            500: "#1e40af",
-                            600: "#1d4ed8",
-                            700: "#1e3a8a",
-                            800: "#1e3a8a",
-                            900: "#1e3a8a",
-                        }
-                    },
-                },
-            },
-        };
+    <script type="module" src="../../domains/auth/services/mockAutoConnexion.service.js"></script>
+    <script type="module" src="profil.js"></script>
+    <!-- Tailwind Config -->
+    <script type="module">
+        import { tailwindConfig } from '../../styles/tailwind.config.js';
+        tailwind.config = tailwindConfig;
     </script>
     
     <!-- Inter Font -->
@@ -105,7 +70,7 @@
                     <div class="flex items-center space-x-2 pl-3 border-l border-gray-200">
                         <img src="https://ui-avatars.com/api/?name=Admin&background=10b981&color=fff" alt="Profile"
                             class="w-8 h-8 rounded-full" />
-                        <span class="hidden sm:block text-sm font-medium text-gray-700">Alex</span>
+                        <span class="hidden sm:block text-sm font-medium text-gray-700" id="userFirstname">Alex</span>
                     </div>
                     </div>
                     </div>
@@ -136,7 +101,7 @@
                     <!-- Avatar -->
                     <div class="relative -mt-12 mb-4">
                         <img src="https://ui-avatars.com/api/?name=Alex+Dupont&background=10b981&color=fff&size=128" alt="Profile"
-                            class="w-24 h-24 rounded-full border-4 border-white shadow-lg mx-auto">
+                            class="w-24 h-24 rounded-full border-4 border-white shadow-lg mx-auto" id="profileAvatar">
                         <button class="absolute bottom-0 right-1/3 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50">
                             <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -149,7 +114,7 @@
                         </div>
                         <!-- Info -->
                         <div class="text-center">
-                            <h2 class="text-xl font-bold text-gray-900">Alex Dupont</h2>
+                            <h2 class="text-xl font-bold text-gray-900" id="fullName">Alex Dupont</h2>
                             <p class="text-gray-600 text-sm">alex.dupont@gmail.com</p>
                             <p class="text-accent-600 font-medium mt-2">Éco-citoyen actif</p>
                         </div>

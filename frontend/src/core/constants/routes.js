@@ -1,5 +1,5 @@
 export const BASE_API_URL =
-    import.meta.env.VITE_BASE_API_URL || 'http://localhost:3000/api';
+    (typeof import.meta !== 'undefined' && import.meta.env?.VITE_BASE_API_URL) || 'http://localhost:3000/api';
 
 export const API_ROUTES = {
     AUTH: {
@@ -30,6 +30,17 @@ export const HTTP_METHODS = {
     PUT: 'PUT',
     PATCH: 'PATCH',
     DELETE: 'DELETE',
+};
+
+export const FRONTEND_ROUTES = {
+    AUTH: {
+        LOGIN: '/auth/login.html'
+    },
+    DASHBOARD: {
+        ADMIN: '/pages/dashbord/admin-dashbord.html',
+        AGENT: '/pages/dashbord/agent-dashbord.html',
+        USER: '/pages/dashbord/user-dashbord.html'
+    }
 };
 
 

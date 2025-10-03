@@ -1,4 +1,4 @@
-import { API_ROUTES, HTTP_METHODS } from '../../../core/constants/routes.js';
+import { API_ROUTES, HTTP_METHODS } from '#core-frontend/constants/routes.js';
 import { SessionService } from './SessionService.js';
 
 export class AuthService {

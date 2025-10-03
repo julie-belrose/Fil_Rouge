@@ -37,29 +37,6 @@
         </div>
     </div>
 
-    <script>
-        // Vérifier l'authentification et rediriger
-        window.addEventListener('DOMContentLoaded', () => {
-            const token = localStorage.getItem('auth_token');
-            const user = JSON.parse(localStorage.getItem('user') || '{}');
-
-            setTimeout(() => {
-                if (!token) {
-                    window.location.href = '/auth/login.html';
-                } else {
-                    switch (user.role) {
-                        case 'admin':
-                            window.location.href = '/pages/dashbord/admin-dashbord.html';
-                            break;
-                        case 'agent':
-                            window.location.href = '/pages/dashbord/agent-dashbord.html';
-                            break;
-                        default:
-                            window.location.href = '/pages/dashbord/user-dashbord.html';
-                    }
-                }
-            }, 1000);
-        });
-            </script>
+    <script src="./app.js"></script>
             </body>
 </html>
