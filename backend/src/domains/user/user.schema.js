@@ -7,8 +7,6 @@ import Joi from 'joi';
 export const createSchema = Joi.object({
     auth_id: Joi.number().integer().required(),
     pseudo: Joi.string().allow(null, '').optional(),
-    first_name: Joi.string().allow(null, '').optional(),
-    last_name: Joi.string().allow(null, '').optional(),
     district: Joi.string().allow(null, '').optional(),
     loyalty_points: Joi.number().integer().default(0)
 });
@@ -19,8 +17,6 @@ export const createSchema = Joi.object({
  */
 export const updateSchema = Joi.object({
     pseudo: Joi.string().allow(null, '').optional(),
-    first_name: Joi.string().allow(null, '').optional(),
-    last_name: Joi.string().allow(null, '').optional(),
     district: Joi.string().allow(null, '').optional(),
     loyalty_points: Joi.number().integer()
 }).min(1); // At least one field required for update

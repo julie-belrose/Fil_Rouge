@@ -4,7 +4,7 @@
 
  [![forthebadge](https://forthebadge.com/images/badges/built-by-developers.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 
-# ♻️ Fill_Rouge – Waste Reporting Application
+# ♻️ Fil_Rouge – Waste Reporting Application
 
 A fullstack Node.js + HTML/CSS/JS application allowing **citizens**, **municipal agents**, and **administrators** to report and manage urban waste issues efficiently.
 

@@ -15,28 +15,28 @@ export const registerStatic = (app) => {
     const rootPath = resolve(__dirname, "../../..");
     const frontendPath = join(rootPath, "frontend");
 
-    // En développement, servir depuis le répertoire src
     if (env === "development") {
-        // Fichiers statiques du répertoire src
+        // Files statics in src
         app.use(express.static(join(frontendPath, "src")));
 
-        // Routes spécifiques
-        app.use('/auth', express.static(join(frontendPath, 'src/pages/auth')));
-        app.use('/dashbord', express.static(join(frontendPath, 'src/pages/dashbord')));
+        // Routes specifics
+        app.use('/domains', express.static(join(frontendPath, 'src/domains')));
+        app.use('/static', express.static(join(frontendPath, 'static')));
+        app.use('/public', express.static(join(frontendPath, 'public')));
+        app.use('/infrastructure', express.static(join(frontendPath, 'src/infrastructure')));
+        app.use('/tests', express.static(join(frontendPath, 'tests')));
 
-        // Page d'accueil par défaut
         app.get('/', (req, res) => {
             res.sendFile(join(frontendPath, 'src/index.html'));
         });
 
         console.log(`Serveur en mode ${env} - fichiers servis depuis frontend/src`);
     }
-    // En production, servir depuis le répertoire dist
+
     else {
         const distPath = join(frontendPath, "dist");
         app.use(express.static(distPath));
 
-        // Page d'accueil par défaut en production
         app.get('/', (req, res) => {
             res.sendFile(join(distPath, 'index.html'));
         });
