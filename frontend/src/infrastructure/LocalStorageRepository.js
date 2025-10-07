@@ -1,4 +1,5 @@
 import { IStorageRepository } from '../domains/shared/IStorageRepository.js';
+import { TokenMonitorService } from '../shared/services/TokenMonitorService.js';
 
 export class LocalStorageRepository extends IStorageRepository {
     store(key, data) {
@@ -6,6 +7,12 @@ export class LocalStorageRepository extends IStorageRepository {
             localStorage.setItem(key, JSON.stringify(data));
         } else {
             localStorage.setItem(key, data);
+        }
+
+        // Démarrer le monitoring quand un token est stocké
+        if (key === 'auth_token') {
+            const tokenMonitor = TokenMonitorService.getInstance();
+            tokenMonitor.startMonitoring();
         }
     }
 
@@ -22,6 +29,12 @@ export class LocalStorageRepository extends IStorageRepository {
 
     remove(key) {
         localStorage.removeItem(key);
+
+        // Arrêter le monitoring quand le token est supprimé
+        if (key === 'auth_token') {
+            const tokenMonitor = TokenMonitorService.getInstance();
+            tokenMonitor.stopMonitoring();
+        }
     }
 
     clear() {

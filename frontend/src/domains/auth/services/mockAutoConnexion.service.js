@@ -1,12 +1,14 @@
 import { mockAuthService } from './mockAuthService.js';
-import { checkAuth } from './authGuard.js';
+import { AuthService } from './AuthService.js';
+
+const authService = new AuthService();
 
 /**
  * Redirect to login page if user is not authenticated
  */
 function redirectToLoginIfNotAuthenticated() {
-    if (!checkAuth()) {
-        window.location.href = '/auth/login.html';
+    if (!authService.checkAuth()) {
+        window.location.href = '/domains/auth/pages/login.html';
         return false;
     }
     return true;
@@ -39,8 +41,6 @@ function setupLogoutButton() {
         });
     }
 }
-
-
 
 /**
  * Initialize the auto connection service

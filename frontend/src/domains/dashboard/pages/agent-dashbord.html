@@ -58,6 +58,7 @@
         };
     </script>
     <script type="module" src="../../auth/services/mockAutoConnexion.service.js"></script>
+    <script type="module" src="../../../shared/components/LogoutButton.js"></script>
     <script type="module" src="agent-dashbord.js"></script>
 
     <!-- Inter Font -->
@@ -94,7 +95,7 @@
                                 d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
-                    <a href="../../auth/pages/login.html" class="text-xl font-bold text-gray-800">EcoTrack</a>
+                    <a href="agent-dashbord.html" class="text-xl font-bold text-gray-800">EcoTrack</a>
                     <span
                         class="hidden sm:inline-block px-2 py-1 text-xs font-medium bg-navy-100 text-navy-700 rounded-full">
                         Plateforme Agent
@@ -134,6 +135,9 @@
                             class="w-8 h-8 rounded-full" />
                         <span class="hidden sm:block text-sm font-medium text-gray-700" id="userFirstname">Arthur</span>
                     </div>
+
+                    <!-- Logout Button -->
+                    <logout-button></logout-button>
                 </div>
             </div>
         </nav>

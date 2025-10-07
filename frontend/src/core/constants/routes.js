@@ -35,16 +35,27 @@ export const HTTP_METHODS = {
 export const FRONTEND_ROUTES = {
     AUTH: {
         LOGIN: '/domains/auth/pages/login.html',
+        LOGOUT: '/domains/auth/pages/logout.html',
         REGISTER: '/domains/auth/pages/register.html',
         FORGOT_PASSWORD: '/domains/auth/pages/forgot-password.html'
     },
     DASHBOARD: {
         ADMIN: '/domains/dashboard/pages/admin-dashbord.html',
-        AGENT: '/domains/dashboard/pages/agent-dashbord.html',
-        USER: '/domains/dashboard/pages/user-dashbord.html'
+        AGENT: '/domains/dashboard/pages/agent-dashboard.html',
+        USER: '/domains/dashboard/pages/user-dashboard.html'
+    },
+    REPORT: {
+        LIST: '/domains/report/pages/list/report_list.html',
+        CREATE: '/domains/report/pages/create/report_create.html'
+    },
+    PROFILE: {
+        USER: '/domains/profile/pages/user-profile.html'
     },
     ERRORS: {
-        NOT_FOUND: '/domains/errors/pages/404_page.html'
+        NOT_FOUND: '/domains/errors/pages/404_page.html',
+        FORBIDDEN: '/domains/errors/pages/434_page.html',
+        NOT_AUTHORIZED: '/domains/errors/pages/401_page.html',
+        
     }
 };
 

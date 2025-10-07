@@ -64,27 +64,90 @@
 </head>
 <body class="bg-gradient-to-br from-slate-900 to-slate-800 text-slate-100">
 
-<div class="container py-5">
-  <h1 class="mb-4 text-slate-100">Liste des signalements</h1>
-  <div id="alert" style="display:none"></div>
-  <div class="table-responsive">
-    <table id="reportsTable" class="w-full rounded-lg overflow-hidden bg-slate-800/30 border border-slate-700/50">
-      <thead class="bg-navy-800 border-b border-navy-700">
-      <tr>
-        <th class="px-4 py-3 text-left text-slate-300 font-medium">ID</th>
-        <th class="px-4 py-3 text-left text-slate-300 font-medium">Lieu</th>
-        <th class="px-4 py-3 text-left text-slate-300 font-medium">Description</th>
-        <th class="px-4 py-3 text-left text-slate-300 font-medium">Type de déchet</th>
-        <th class="px-4 py-3 text-left text-slate-300 font-medium">Date</th>
-        <th class="px-4 py-3 text-left text-slate-300 font-medium">Statut</th>
-      </tr>
-      </thead>
-      <tbody class="divide-y divide-slate-700/50">
-      <!-- Lignes ajoutées dynamiquement avec JS -->
-      </tbody>
-    </table>
-  </div>
-</div>
+    <!-- Navigation Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Left Section: Logo + Navigation -->
+                <div class="flex items-center space-x-8">
+                    <!-- Logo -->
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-navy-600 to-accent-700 rounded-xl flex items-center justify-center shadow-lg">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <a href="#" id="logo-link" class="text-xl font-bold text-slate-700">EcoTrack</a>
+                        <span class="hidden sm:inline-block px-2 py-1 text-xs font-medium bg-navy-100 text-navy-700 rounded-full">
+                            Signalements
+                        </span>
+                    </div>
+
+                    <!-- Navigation Links -->
+                    <div class="hidden md:flex items-center space-x-1">
+                        <a href="#" id="back-dashboard" class="px-4 py-2 text-gray-700 hover:text-accent-600 hover:bg-navy-50 rounded-lg font-medium transition-all">
+                            ← Retour page accueil
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Section -->
+                <div class="flex items-center space-x-3">
+                    <!-- User Profile -->
+                    <div class="flex items-center space-x-2 pl-3 border-l border-gray-200">
+                        <img src="https://ui-avatars.com/api/?name=User&background=10b981&color=fff" alt="Profile" class="w-8 h-8 rounded-full" />
+                        <span class="hidden sm:block text-sm font-medium text-emerald-400" id="userFirstname">Utilisateur</span>
+                    </div>
+
+                    <!-- Logout Button Component -->
+                    <logout-button></logout-button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-slate-100 mb-2">Liste des signalements</h1>
+            <p class="text-slate-400">Gérez et suivez tous les signalements urbains</p>
+        </div>
+
+        <div id="alert" style="display:none"></div>
+
+        <!-- Table Container -->
+        <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 overflow-hidden">
+            <table id="reportsTable" class="w-full">
+                <thead class="bg-slate-800/80 border-b border-slate-700/50">
+                    <tr>
+                        <th class="px-6 py-4 text-left text-slate-300 font-semibold text-sm uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-4 text-left text-slate-300 font-semibold text-sm uppercase tracking-wider">Lieu</th>
+                        <th class="px-6 py-4 text-left text-slate-300 font-semibold text-sm uppercase tracking-wider">Description</th>
+                        <th class="px-6 py-4 text-left text-slate-300 font-semibold text-sm uppercase tracking-wider">Type de déchet</th>
+                        <th class="px-6 py-4 text-left text-slate-300 font-semibold text-sm uppercase tracking-wider">Date</th>
+                        <th class="px-6 py-4 text-left text-slate-300 font-semibold text-sm uppercase tracking-wider">Statut</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-700/50">
+                    <!-- Lignes ajoutées dynamiquement avec JS -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+<!-- Auth Protection -->
+<script type="module">
+import { checkAuth } from '../../auth/services/authGuard.js';
+import { SessionService } from '../../auth/services/SessionService.js';
+import '../../../../shared/components/LogoutButton.js';
+
+// Vérifier l'authentification
+if (!checkAuth()) {
+    // L'utilisateur sera redirigé automatiquement vers login
+}
+
+// Le web component EcoNavigation gère automatiquement l'affichage de l'utilisateur et les liens
+</script>
 
 <script type="module" src="./report_list.js"></script>
 </body>

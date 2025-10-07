@@ -1,13 +1,20 @@
+import { GetAllReportsUseCase } from '../../usecases/GetAllReportsUseCase.js';
+
+const getAllReportsUseCase = new GetAllReportsUseCase();
+
 document.addEventListener("DOMContentLoaded", () => {
   fetchReports();
 });
 
 // Récupération signalements
-function fetchReports() {
-  fetch("/reports")
-    .then(response => response.json())
-    .then(renderReportsTable)
-    .catch(showError);
+async function fetchReports() {
+  const result = await getAllReportsUseCase.execute();
+
+  if (result.success) {
+    renderReportsTable(result.data);
+  } else {
+    showError(result.error);
+  }
 }
 
 // Générer tableau de signalements
@@ -28,44 +35,45 @@ function renderReportsTable(reports) {
 // Création une ligne tableau -> un signalement
 function createReportRow(report) {
   const tr = document.createElement("tr");
+  tr.className = "hover:bg-slate-700/30 transition-colors";
   tr.innerHTML = `
-    <td>${report.id}</td>
-    <td>${report.location || ""}</td>
-    <td>${report.description || ""}</td>
-    <td>${report.waste_type || ""}</td>
-    <td>${formatDate(report.creation_date)}</td>
-    <td>
-      <span class="badge bg-${getStatusColor(report.status)}">
-        ${report.status}
+    <td class="px-6 py-4 text-slate-300 font-medium">${report.id}</td>
+    <td class="px-6 py-4 text-slate-300">${report.location || ""}</td>
+    <td class="px-6 py-4 text-slate-300">${report.description || ""}</td>
+    <td class="px-6 py-4 text-slate-300">${report.waste_type || ""}</td>
+    <td class="px-6 py-4 text-slate-300">${report.formattedDate}</td>
+    <td class="px-6 py-4">
+      <span class="px-3 py-1 text-xs font-semibold rounded-full ${getStatusClasses(report.status)}">
+        ${report.statusLabel}
       </span>
     </td>
   `;
   return tr;
 }
 
-
-function formatDate(dateString) {
-  if (!dateString) return "";
-  return new Date(dateString).toLocaleDateString("fr-FR");
+function getStatusClasses(status) {
+  switch (status) {
+    case 'resolved':
+      return 'bg-primary-100 text-primary-800';
+    case 'in_progress':
+      return 'bg-accent-100 text-accent-800';
+    case 'pending':
+      return 'bg-slate-100 text-slate-800';
+    default:
+      return 'bg-slate-100 text-slate-800';
+  }
 }
 
-
-function getStatusColor(status) {
-  if (status === 'resolved') return 'success';
-  if (status === 'in_progress') return 'warning';
-  return 'secondary';
-}
-
-// Message d’info
+// Message d'info
 function showInfo(message) {
   const alert = document.getElementById("alert");
   alert.style.display = "block";
-  alert.innerHTML = `<div class='alert alert-info'>${message}</div>`;
+  alert.innerHTML = `<div class='bg-accent-100 border border-accent-400 text-accent-700 px-4 py-3 rounded mb-4'>${message}</div>`;
 }
 
-// Message d’erreur
-function showError() {
+// Message d'erreur
+function showError(message = "Erreur de chargement des signalements") {
   const alert = document.getElementById("alert");
   alert.style.display = "block";
-  alert.innerHTML = "<div class='alert alert-danger'>Erreur de chargement des signalements</div>";
+  alert.innerHTML = `<div class='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4'>${message}</div>`;
 }

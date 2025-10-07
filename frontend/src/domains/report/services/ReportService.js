@@ -58,49 +58,7 @@ export class ReportService {
                 return await response.json();
             }
 
-            throw new Error('Erreur lors de la création du signalement');
-        } catch (error) {
-            throw new Error(error.message || 'Erreur réseau');
-        }
-    }
-
-    async updateReport(id, reportData) {
-        try {
-            const url = buildUrlWithParams(API_ROUTES.REPORTS.UPDATE, id);
-            const response = await fetch(url, {
-                method: HTTP_METHODS.PUT,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
-                },
-                body: JSON.stringify(reportData)
-            });
-
-            if (response.ok) {
-                return await response.json();
-            }
-
-            throw new Error('Erreur lors de la mise à jour du signalement');
-        } catch (error) {
-            throw new Error(error.message || 'Erreur réseau');
-        }
-    }
-
-    async deleteReport(id) {
-        try {
-            const url = buildUrlWithParams(API_ROUTES.REPORTS.DELETE, id);
-            const response = await fetch(url, {
-                method: HTTP_METHODS.DELETE,
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
-                }
-            });
-
-            if (response.ok) {
-                return { success: true };
-            }
-
-            throw new Error('Erreur lors de la suppression du signalement');
+            throw new Error('Error pending of creation on report');
         } catch (error) {
             throw new Error(error.message || 'Erreur réseau');
         }

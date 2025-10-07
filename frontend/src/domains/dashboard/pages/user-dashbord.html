@@ -57,6 +57,7 @@
         };
     </script>
 <script type="module" src="../../auth/services/mockAutoConnexion.service.js"></script>
+    <script type="module" src="../../../shared/components/LogoutButton.js"></script>
 
 <!-- Inter Font -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -90,7 +91,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                     </svg>
                 </div>
-                <a href="../../auth/pages/login.html" class="text-xl font-bold text-gray-800">EcoTrack</a>
+                <a href="user-dashbord.html" class="text-xl font-bold text-gray-800">EcoTrack</a>
                 <span class="hidden sm:inline-block px-2 py-1 text-xs font-medium bg-navy-100 text-navy-700 rounded-full">
                     Plateforme Citoyenne
                 </span>
@@ -112,6 +113,9 @@
             class="w-8 h-8 rounded-full" />
         <span class="hidden sm:block text-sm font-medium text-gray-700" id="userFirstname">Alex</span>
         </div>
+
+                    <!-- Logout Button -->
+                    <logout-button></logout-button>
                 </div>
         </div>
         </nav>

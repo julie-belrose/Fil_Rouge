@@ -1,7 +1,17 @@
 import { LocalStorageRepository } from '../../../infrastructure/LocalStorageRepository.js';
-import { MOCK_AUTH } from '../../../../tests/mock/index.js';
+import { MOCK_AUTH, MOCK_ADMIN_REQUEST } from '../../../../tests/mock/index.js';
 
 const storageRepository = new LocalStorageRepository();
+
+// Fonction helper pour vérifier l'approbation admin
+function checkAdminRequestApproval(userId) {
+    const adminRequest = MOCK_ADMIN_REQUEST.find(request =>
+        request.related_user_id === userId &&
+        request.status === 'CONFIRMED' &&
+        new Date(request.expires_at) > new Date()
+    );
+    return adminRequest !== undefined;
+}
 
 // Service d'authentification simulé
 export const mockAuthService = {
@@ -20,7 +30,7 @@ export const mockAuthService = {
                 const finalRole = selectedRole || 'root';
                 const userWithRole = { ...authUser, role: finalRole };
 
-                const token = btoa(JSON.stringify({ id: authUser.id, email: authUser.email, role: finalRole, exp: Date.now() + 86400000 }));
+                const token = btoa(JSON.stringify({ id: authUser.id, email: authUser.email, role: finalRole, exp: Date.now() + 120000 }));
 
                 storageRepository.store('auth_token', token);
                 storageRepository.store('user', userWithRole);
@@ -40,8 +50,16 @@ export const mockAuthService = {
                 };
             }
 
-            // Générer un faux token
-            const token = btoa(JSON.stringify({ id: authUser.id, email: authUser.email, role: authUser.role, exp: Date.now() + 86400000 }));
+            // Vérifier l'approbation pour les admins (root n'a pas besoin d'approbation)
+            if (authUser.role === 'admin' && !checkAdminRequestApproval(authUser.id)) {
+                return {
+                    success: false,
+                    message: "Votre demande d'administration n'a pas encore été confirmée ou a expiré"
+                };
+            }
+
+            // Générer un faux token (2 minutes pour test)
+            const token = btoa(JSON.stringify({ id: authUser.id, email: authUser.email, role: authUser.role, exp: Date.now() + 120000 }));
 
             // Stocker le token et l'utilisateur
             storageRepository.store('auth_token', token);

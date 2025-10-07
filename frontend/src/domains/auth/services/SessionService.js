@@ -40,7 +40,7 @@ export class SessionService {
         // Récupérer les données spécifiques selon le rôle
         let userData = null;
         if (authUser.role === 'citizen') {
-            userData = MOCK_USERS.find(user => user.auth_id === authUser.id);
+            userData = MOCK_USERS.find(user => user.user_id === authUser.id);
         } else if (authUser.role === 'agent') {
             userData = MOCK_AGENTS.find(agent => agent.user_id === authUser.id);
         } else if (authUser.role === 'admin' || authUser.role === 'root') {

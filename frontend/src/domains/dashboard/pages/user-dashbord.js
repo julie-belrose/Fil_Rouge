@@ -1,8 +1,10 @@
 import { DashboardService } from '../services/DashboardService.js';
-import { checkAuth, checkRole } from '../../auth/services/authGuard.js';
+import { AuthService } from '../../auth/services/AuthService.js';
+
+const authService = new AuthService();
 
 // Vérifier l'authentification et le rôle citizen
-if (!checkAuth() || !checkRole('citizen')) {
+if (!authService.checkAuth() || !authService.checkRole('citizen')) {
     // L'utilisateur sera redirigé automatiquement
 } else {
     document.addEventListener('DOMContentLoaded', () => {

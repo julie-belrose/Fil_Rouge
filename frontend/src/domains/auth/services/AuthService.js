@@ -1,4 +1,4 @@
-import { API_ROUTES, HTTP_METHODS } from '#core-frontend/constants/routes.js';
+import { API_ROUTES, HTTP_METHODS, FRONTEND_ROUTES } from '#core-frontend/constants/routes.js';
 import { SessionService } from './SessionService.js';
 
 export class AuthService {
@@ -43,7 +43,7 @@ export class AuthService {
 
     logout() {
         this.sessionService.clearSession();
-        window.location.href = '/auth/login.html';
+        window.location.href = '/domains/auth/pages/login.html';
     }
 
     async register(userData) {
@@ -64,4 +64,23 @@ export class AuthService {
             };
         }
     }
+
+    checkAuth() {
+        if (!this.sessionService.isAuthenticated() || !this.sessionService.hasActiveSession()) {
+            window.location.href = FRONTEND_ROUTES.AUTH.LOGIN;
+            return false;
+        }
+        return true;
+    }
+
+    checkRole(requiredRole) {
+        const user = this.sessionService.getCurrentUser();
+        if (!user || user.role !== requiredRole) {
+            window.location.href = FRONTEND_ROUTES.AUTH.LOGIN;
+            return false;
+        }
+        return true;
+    }
+
+
 }
