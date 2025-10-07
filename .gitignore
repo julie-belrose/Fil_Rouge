@@ -64,3 +64,5 @@ yarn.lock
 # Production build
 build
 dist
+pnpm-lock.yaml
+package.json

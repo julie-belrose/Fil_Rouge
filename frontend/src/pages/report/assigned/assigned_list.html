@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mes signalements attribués</title>
+  <link rel="stylesheet" href="../../../styles/base/main.css">
+</head>
+<body>
+  <header class="main-header">
+    <div class="container">
+      <a href="/"><img src="/assets/logo.svg" alt="Fill_Rouge Logo" width="140"></a>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="/">Accueil</a></li>
+          <li><a href="../create/report_create.html">Signaler</a></li>
+          <li><a href="../../carte/carte.html">Carte</a></li>
+          <li><a href="../list/report_list.html">Tous les signalements</a></li>
+          <li><a class="active" href="./assigned_list.html">Mes signalements</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding: 1rem 0;">
+    <section class="reports-assigned">
+      <h1>Mes signalements attribués</h1>
+
+      <div class="filters" style="display:flex; gap:.75rem; align-items:center; margin: .75rem 0 1rem;">
+        <label>Statut :
+          <select id="statusFilter">
+            <option value="">Tous</option>
+            <option value="pending">En attente</option>
+            <option value="in_progress">En cours</option>
+            <option value="resolved">Résolu</option>
+            <option value="rejected">Rejeté</option>
+          </select>
+        </label>
+        <input id="searchInput" type="search" placeholder="Rechercher (titre, ref, adresse)..." />
+      </div>
+
+      <div class="table-responsive">
+        <table id="assignedTable" class="table">
+          <thead>
+            <tr>
+              <th>Ref</th>
+              <th>Titre</th>
+              <th>Statut</th>
+              <th>Adresse</th>
+              <th>Attribué le</th>
+            </tr>
+          </thead>
+          <tbody><!-- rempli par JS --></tbody>
+        </table>
+      </div>
+
+      <p id="assignedEmpty" style="display:none;">Aucun signalement pour l’instant.</p>
+    </section>
+  </main>
+
+  <footer class="main-footer">
+    <div class="container">
+      <p>&copy; 2025 Fil_Rouge</p>
+    </div>
+  </footer>
+
+  <script defer src="./assigned_list.js"></script>
+</body>
+</html>
