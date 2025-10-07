@@ -1,19 +1,23 @@
-import { mockAuthService } from './mockAuthService.js';
+import { SessionService } from './SessionService.js';
+import { FRONTEND_ROUTES } from '../../../core/constants/routes.js';
+
+const sessionService = new SessionService();
 
 export function checkAuth() {
-    if (!mockAuthService.isAuthenticated()) {
-        window.location.href = '/auth/login.html';
+    if (!sessionService.isAuthenticated() || !sessionService.hasActiveSession()) {
+        window.location.href = FRONTEND_ROUTES.AUTH.LOGIN;
         return false;
     }
     return true;
 }
 
 export function checkRole(requiredRole) {
-    const user = mockAuthService.getCurrentUser();
+    const user = sessionService.getCurrentUser();
     if (!user || user.role !== requiredRole) {
         alert('Accès non autorisé');
-        window.location.href = '/dashbord/user-dashbord.html';
+        window.location.href = FRONTEND_ROUTES.AUTH.LOGIN;
         return false;
     }
     return true;
 }
+

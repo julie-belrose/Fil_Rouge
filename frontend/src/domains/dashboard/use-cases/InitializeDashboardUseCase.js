@@ -20,7 +20,7 @@ export class InitializeDashboardUseCase {
     }
 
     async execute() {
-        const currentUser = this.sessionService.getCurrentUser();
+        const currentUser = this.sessionService.getCurrentUserWithProfile();
 
         if (!currentUser) {
             throw new Error('User not authenticated');

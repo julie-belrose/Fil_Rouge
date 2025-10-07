@@ -1,0 +1,91 @@
+### Fill Rouge API Tests - WebStorm HTTP Client
+
+### Variables
+@baseUrl = http://localhost:3000
+@apiUrl = {{baseUrl}}/api
+
+### Login - Citizen
+POST {{apiUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "demo123",
+  "role": "citizen"
+}
+
+> {%
+client.global.set("authToken", response.body.token);
+%}
+
+### Login - Agent
+POST {{apiUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "agent@example.com",
+  "password": "agent123",
+  "role": "agent"
+}
+
+### Login - Admin
+POST {{apiUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "admin123",
+  "role": "admin"
+}
+
+### Register
+POST {{apiUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "newuser@example.com",
+  "password": "password123",
+  "firstname": "Test",
+  "lastname": "User",
+  "userType": "citizen"
+}
+
+### Get Profile
+GET {{apiUrl}}/auth/profile
+Authorization: Bearer {{authToken}}
+
+### Get Reports
+GET {{apiUrl}}/reports
+Authorization: Bearer {{authToken}}
+
+### Create Report
+POST {{apiUrl}}/reports
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "title": "Dépôt sauvage",
+  "description": "Dépôt de déchets près du parc",
+  "location": "Place Bellecour, Lyon",
+  "type": "depot_illegal",
+  "priority": "high"
+}
+
+### Get Users
+GET {{apiUrl}}/users
+Authorization: Bearer {{authToken}}
+
+### Test Frontend
+GET {{baseUrl}}/domains/auth/pages/login.html
+
+### Test Static Files
+GET {{baseUrl}}/static/css/style.css
+
+### Test Infrastructure
+GET {{baseUrl}}/infrastructure/LocalStorageRepository.js
+
+### Test Mock Data
+GET {{baseUrl}}/tests/mock/index.js
+
+### Health Check
+GET {{baseUrl}}/

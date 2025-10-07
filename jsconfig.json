@@ -25,6 +25,9 @@
             ],
           "#services/*": [
             "src/services"
+          ],
+          "#styles/*": [
+            "src/style"
           ]
         }
     },
