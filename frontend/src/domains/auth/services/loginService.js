@@ -9,10 +9,10 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    const userType = document.getElementById('userType').value;
+    const role = document.getElementById('role').value;
 
-    if (!userType) {
-        showError('Please select a user type');
+    if (!role) {
+        showError('Veuillez sélectionner un rôle');
         return;
     }
 
@@ -23,21 +23,21 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     submitBtn.textContent = 'Connexion in progress...';
 
     try {
-        const result = await mockAuthService.login(email, password, userType);
+        const result = await mockAuthService.login(email, password, role);
 
         if (result.success) {
-            switch(userType) {
+            switch(role) {
                 case 'admin':
-                    window.location.href = '../dashbord/admin-dashbord.html';
+                    window.location.href = '/domains/dashboard/pages/admin-dashbord.html';
                     break;
                 case 'agent':
-                    window.location.href = '../dashbord/agent-dashbord.html';
+                    window.location.href = '/domains/dashboard/pages/agent-dashbord.html';
                     break;
                 case 'citizen':
-                    window.location.href = '../dashbord/user-dashbord.html';
+                    window.location.href = '/domains/dashboard/pages/user-dashbord.html';
                     break;
                 default:
-                    window.location.href = '../dashbord/user-dashbord.html';
+                    window.location.href = '/domains/dashboard/pages/user-dashbord.html';
             }
         } else {
             showError(result.message || 'Connection error');
@@ -66,19 +66,4 @@ function showError(message) {
     form.parentNode.insertBefore(errorDiv, form.nextSibling);
 
     errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-window.quickLogin = function(email, password) {
-    document.getElementById('email').value = email;
-    document.getElementById('password').value = password;
-
-    let userType = 'citizen';
-    if (email === 'admin@example.com') {
-        userType = 'admin';
-    } else if (email === 'agent@example.com') {
-        userType = 'agent';
-    }
-
-    document.getElementById('userType').value = userType;
-    document.getElementById('login-form').dispatchEvent(new Event('submit'));
 }

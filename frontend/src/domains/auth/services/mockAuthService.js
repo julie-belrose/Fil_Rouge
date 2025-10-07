@@ -1,5 +1,5 @@
-import { LocalStorageRepository } from '../infrastructure/LocalStorageRepository.js';
-import { ALL_MOCK_USERS } from '../../tests/mock/index.js';
+import { LocalStorageRepository } from '../../../infrastructure/LocalStorageRepository.js';
+import { MOCK_AUTH } from '../../../../tests/mock/index.js';
 
 const storageRepository = new LocalStorageRepository();
 
@@ -10,11 +10,30 @@ export const mockAuthService = {
         // Simuler un délai réseau
         await new Promise(resolve => setTimeout(resolve, 500));
 
-        const user = ALL_MOCK_USERS.find(u => u.email === email && u.password === password);
+        // Vérifier dans MOCK_AUTH pour l'authentification
+        const authUser = MOCK_AUTH.find(u => u.email === email && u.password === password);
 
-        if (user) {
-            // Vérifier si le rôle sélectionné correspond au rôle de l'utilisateur
-            if (selectedRole && user.role !== selectedRole) {
+        if (authUser) {
+            // Permettre au rôle root d'accéder à tous les autres rôles
+            if (authUser.role === 'root') {
+                // Si c'est root, utiliser le rôle sélectionné ou garder root
+                const finalRole = selectedRole || 'root';
+                const userWithRole = { ...authUser, role: finalRole };
+
+                const token = btoa(JSON.stringify({ id: authUser.id, email: authUser.email, role: finalRole, exp: Date.now() + 86400000 }));
+
+                storageRepository.store('auth_token', token);
+                storageRepository.store('user', userWithRole);
+
+                return {
+                    success: true,
+                    token,
+                    user: userWithRole
+                };
+            }
+
+            // Vérifier si le rôle sélectionné correspond au rôle de l'utilisateur pour les non-root
+            if (selectedRole && authUser.role !== selectedRole) {
                 return {
                     success: false,
                     message: "Type de compte incorrect pour cet utilisateur"
@@ -22,22 +41,22 @@ export const mockAuthService = {
             }
 
             // Générer un faux token
-            const token = btoa(JSON.stringify({ id: user.id, email: user.email, role: user.role, exp: Date.now() + 86400000 }));
+            const token = btoa(JSON.stringify({ id: authUser.id, email: authUser.email, role: authUser.role, exp: Date.now() + 86400000 }));
 
             // Stocker le token et l'utilisateur
             storageRepository.store('auth_token', token);
-            storageRepository.store('user', user);
+            storageRepository.store('user', authUser);
 
             return {
                 success: true,
                 token,
-                user
+                user: authUser
             };
         }
 
         return {
             success: false,
-            message: "Email ou mot de passe incorrect"
+            message: "Email or password incorrect"
         };
     },
 
@@ -45,7 +64,7 @@ export const mockAuthService = {
     logout() {
         storageRepository.remove('auth_token');
         storageRepository.remove('user');
-        window.location.href = '/auth/login.html';
+        window.location.href = '/domains/auth/pages/login.html';
     },
 
     // Vérifier si connecté
@@ -61,7 +80,6 @@ export const mockAuthService = {
         }
     },
 
-    // Obtenir l'utilisateur actuel
     getCurrentUser() {
         return storageRepository.get('user');
     }

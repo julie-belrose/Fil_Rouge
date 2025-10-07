@@ -34,12 +34,17 @@ export const HTTP_METHODS = {
 
 export const FRONTEND_ROUTES = {
     AUTH: {
-        LOGIN: '/auth/login.html'
+        LOGIN: '/domains/auth/pages/login.html',
+        REGISTER: '/domains/auth/pages/register.html',
+        FORGOT_PASSWORD: '/domains/auth/pages/forgot-password.html'
     },
     DASHBOARD: {
-        ADMIN: '/pages/dashbord/admin-dashbord.html',
-        AGENT: '/pages/dashbord/agent-dashbord.html',
-        USER: '/pages/dashbord/user-dashbord.html'
+        ADMIN: '/domains/dashboard/pages/admin-dashbord.html',
+        AGENT: '/domains/dashboard/pages/agent-dashbord.html',
+        USER: '/domains/dashboard/pages/user-dashbord.html'
+    },
+    ERRORS: {
+        NOT_FOUND: '/domains/errors/pages/404_page.html'
     }
 };
 

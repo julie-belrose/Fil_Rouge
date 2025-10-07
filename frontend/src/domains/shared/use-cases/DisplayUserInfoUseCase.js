@@ -18,12 +18,12 @@ export class DisplayUserInfoUseCase {
 
         return {
             displayData: {
-                firstname: user.firstname,
-                lastname: user.lastname,
-                fullName: `${user.firstname} ${user.lastname}`,
-                welcomeMessage: `Bienvenue ${user.firstname}`,
-                avatarUrl: `https://ui-avatars.com/api/?name=${user.firstname}+${user.lastname}&background=10b981&color=fff`,
-                initials: `${user.firstname.charAt(0)}${user.lastname.charAt(0)}`
+                firstname: user.first_name,
+                lastname: user.last_name,
+                fullName: `${user.first_name} ${user.last_name}`,
+                welcomeMessage: `Bienvenue ${user.first_name}`,
+                avatarUrl: `https://ui-avatars.com/api/?name=${user.first_name}+${user.last_name}&background=10b981&color=fff`,
+                initials: `${user.first_name.charAt(0)}${user.last_name.charAt(0)}`
             }
         };
     }
