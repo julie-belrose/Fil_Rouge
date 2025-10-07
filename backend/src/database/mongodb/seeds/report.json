@@ -1,4 +1,4 @@
-[
+db.activity_log.insertMany([
   {
     "_id": { "$oid": "66fb00000000000000000001" },
     "user_id": 101,
@@ -10,7 +10,8 @@
       { "status": "ouvert", "date": { "$date": "2025-10-06T07:45:00Z" }, "updated_by": 101 }
     ],
     "location": { "lat": 45.7342, "lng": 4.8289 },
-    "created_at": { "$date": "2025-10-06T07:45:00Z" }
+    "created_at": { "$date": "2025-10-06T07:45:00Z" },
+    "updated_at": { "$date": "2025-10-06T07:45:00Z" }
   },
   {
     "_id": { "$oid": "66fb00000000000000000002" },
@@ -24,7 +25,8 @@
       { "status": "en_cours", "date": { "$date": "2025-10-05T13:30:00Z" }, "updated_by": 202 }
     ],
     "location": { "lat": 45.7831, "lng": 4.8044 },
-    "created_at": { "$date": "2025-10-05T10:10:00Z" }
+    "created_at": { "$date": "2025-10-05T10:10:00Z" },
+    "updated_at": { "$date": "2025-10-05T13:30:00Z" }
   },
   {
     "_id": { "$oid": "66fb00000000000000000003" },
@@ -39,7 +41,8 @@
       { "status": "fermé", "date": { "$date": "2025-10-03T15:20:00Z" }, "updated_by": 203 }
     ],
     "location": { "lat": 45.7619, "lng": 4.8581 },
-    "created_at": { "$date": "2025-10-03T08:00:00Z" }
+    "created_at": { "$date": "2025-10-03T08:00:00Z" },
+    "updated_at": { "$date": "2025-10-03T15:20:00Z" }
   },
   {
     "_id": { "$oid": "66fb00000000000000000004" },
@@ -53,7 +56,8 @@
       { "status": "rejeté", "date": { "$date": "2025-10-04T10:00:00Z" }, "updated_by": 2, "reason": "Doublon" }
     ],
     "location": { "lat": 45.7777, "lng": 4.8279 },
-    "created_at": { "$date": "2025-10-04T09:10:00Z" }
+    "created_at": { "$date": "2025-10-04T09:10:00Z" },
+    "updated_at": { "$date": "2025-10-04T10:00:00Z" }
   },
   {
     "_id": { "$oid": "66fb00000000000000000005" },
@@ -67,7 +71,8 @@
       { "status": "en_cours", "date": { "$date": "2025-10-06T08:30:00Z" }, "updated_by": 205 }
     ],
     "location": { "lat": 45.7705, "lng": 4.8798 },
-    "created_at": { "$date": "2025-10-06T06:50:00Z" }
+    "created_at": { "$date": "2025-10-06T06:50:00Z" },
+    "updated_at": { "$date": "2025-10-06T08:30:00Z" }
   },
   {
     "_id": { "$oid": "66fb00000000000000000006" },
@@ -80,7 +85,8 @@
       { "status": "ouvert", "date": { "$date": "2025-10-07T05:40:00Z" }, "updated_by": 106 }
     ],
     "location": { "lat": 45.763, "lng": 4.9258 },
-    "created_at": { "$date": "2025-10-07T05:40:00Z" }
+    "created_at": { "$date": "2025-10-07T05:40:00Z" },
+    "updated_at": { "$date": "2025-10-07T05:40:00Z" }
   },
   {
     "_id": { "$oid": "66fb00000000000000000007" },
@@ -94,7 +100,8 @@
       { "status": "fermé", "date": { "$date": "2025-09-30T20:10:00Z" }, "updated_by": 207 }
     ],
     "location": { "lat": 45.708, "lng": 4.8729 },
-    "created_at": { "$date": "2025-09-30T18:00:00Z" }
+    "created_at": { "$date": "2025-09-30T18:00:00Z" },
+    "updated_at": { "$date": "2025-09-30T20:10:00Z" }
   },
   {
     "_id": { "$oid": "66fb00000000000000000008" },
@@ -108,7 +115,8 @@
       { "status": "en_cours", "date": { "$date": "2025-10-02T09:00:00Z" }, "updated_by": 208 }
     ],
     "location": { "lat": 45.734, "lng": 4.9135 },
-    "created_at": { "$date": "2025-10-02T07:10:00Z" }
+    "created_at": { "$date": "2025-10-02T07:10:00Z" },
+    "updated_at": { "$date": "2025-10-02T09:00:00Z" }
   },
   {
     "_id": { "$oid": "66fb00000000000000000009" },
@@ -121,7 +129,8 @@
       { "status": "ouvert", "date": { "$date": "2025-10-01T06:30:00Z" }, "updated_by": 109 }
     ],
     "location": { "lat": 45.775, "lng": 4.772 },
-    "created_at": { "$date": "2025-10-01T06:30:00Z" }
+    "created_at": { "$date": "2025-10-01T06:30:00Z" },
+    "updated_at": { "$date": "2025-10-01T06:30:00Z" }
   },
   {
     "_id": { "$oid": "66fb0000000000000000000a" },
@@ -135,6 +144,7 @@
       { "status": "requalifié", "date": { "$date": "2025-10-05T08:20:00Z" }, "updated_by": 5, "reason": "Basculé en encombrants" }
     ],
     "location": { "lat": 45.7608, "lng": 4.8589 },
-    "created_at": { "$date": "2025-10-05T07:55:00Z" }
+    "created_at": { "$date": "2025-10-05T07:55:00Z" },
+    "updated_at": { "$date": "2025-10-05T08:20:00Z" }
   }
-]
+]);
