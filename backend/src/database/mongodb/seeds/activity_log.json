@@ -1,0 +1,218 @@
+// 1) Création collection + validator
+db.createCollection("activity_log", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["action", "message", "actor", "created_at"],
+      properties: {
+        action: {
+          enum: [
+            "report.create","report.assign","report.take_over",
+            "report.attachment.add","report.status.change",
+            "report.reject","report.comment","notification.send",
+            "report.sla.breach","report.reassign","report.requalify",
+            "report.tag.add"
+          ]
+        },
+        message: { bsonType: "string" },
+        actor: {
+          bsonType: "object",
+          required: ["user_id", "role"],
+          properties: {
+            user_id: { bsonType: "int" },
+            role: { enum: ["citizen","agent","admin"] }
+          }
+        },
+        report_id: { bsonType: "objectId" },
+        recipient_user_id: { bsonType: "int" },
+        center_id: { bsonType: "int" },
+        team_id: { bsonType: "int" },
+        status: {
+          bsonType: "object",
+          properties: { prev: { bsonType: "string" }, next: { bsonType: "string" } }
+        },
+        category: {
+          bsonType: "object",
+          properties: { prev: { bsonType: "string" }, next: { bsonType: "string" } }
+        },
+        reason: { bsonType: "string" },
+        attachment: {
+          bsonType: "object",
+          properties: { path: { bsonType: "string" }, size_kb: { bsonType: "int" } }
+        },
+        location: {
+          bsonType: "object",
+          properties: {
+            type: { enum: ["Point"] },
+            coordinates: { bsonType: "array", minItems: 2, maxItems: 2, items: { bsonType: "double" } }
+          }
+        },
+        expected_before: { bsonType: "date" },
+        channel: { enum: ["push","email","sms","in_app"] },
+        created_at: { bsonType: "date" }
+      }
+    }
+  }
+});
+
+// 2) Index
+db.activity_log.createIndex({ action: 1, created_at: -1 });
+db.activity_log.createIndex({ "actor.user_id": 1, created_at: -1 });
+db.activity_log.createIndex({ report_id: 1, created_at: -1 });
+db.activity_log.createIndex({ recipient_user_id: 1, created_at: -1 });
+db.activity_log.createIndex({ location: "2dsphere" });
+
+// 3) Seed (15 documents)
+db.activity_log.insertMany([
+  {
+    _id: ObjectId("66fe00000000000000000001"),
+    action: "report.create",
+    message: "Création de signalement",
+    actor: { user_id: 31, role: "citizen" },
+    report_id: ObjectId("66fb00000000000000000001"),
+    center_id: 1, team_id: 301,
+    location: { type: "Point", coordinates: [4.8289, 45.7342] },
+    created_at: ISODate("2025-10-06T07:45:05Z")
+  },
+  {
+    _id: ObjectId("66fe00000000000000000002"),
+    action: "report.assign",
+    message: "Affectation d’un agent au signalement",
+    actor: { user_id: 2, role: "admin" },
+    report_id: ObjectId("66fb00000000000000000002"),
+    center_id: 2, team_id: 302,
+    created_at: ISODate("2025-10-05T11:05:00Z")
+  },
+  {
+    _id: ObjectId("66fe00000000000000000003"),
+    action: "report.take_over",
+    message: "Prise en charge du signalement",
+    actor: { user_id: 17, role: "agent" },
+    report_id: ObjectId("66fb00000000000000000002"),
+    center_id: 2, team_id: 302,
+    status: { prev: "ouvert", next: "en_cours" },
+    created_at: ISODate("2025-10-05T13:30:00Z")
+  },
+  {
+    _id: ObjectId("66fe00000000000000000004"),
+    action: "report.attachment.add",
+    message: "Ajout de pièce jointe (photo)",
+    actor: { user_id: 23, role: "agent" },
+    report_id: ObjectId("66fb00000000000000000003"),
+    center_id: 3, team_id: 303,
+    attachment: { path: "/uploads/2025/10/partdieu_003.jpg", size_kb: 820 },
+    created_at: ISODate("2025-10-03T11:05:00Z")
+  },
+  {
+    _id: ObjectId("66fe00000000000000000005"),
+    action: "report.status.change",
+    message: "Changement de statut du signalement",
+    actor: { user_id: 23, role: "agent" },
+    report_id: ObjectId("66fb00000000000000000003"),
+    center_id: 3, team_id: 303,
+    status: { prev: "en_cours", next: "fermé" },
+    created_at: ISODate("2025-10-03T15:20:00Z")
+  },
+  {
+    _id: ObjectId("66fe00000000000000000006"),
+    action: "report.reject",
+    message: "Signalement rejeté (doublon)",
+    actor: { user_id: 2, role: "admin" },
+    report_id: ObjectId("66fb00000000000000000004"),
+    center_id: 4, team_id: 304,
+    status: { prev: "ouvert", next: "rejeté" },
+    reason: "Doublon",
+    created_at: ISODate("2025-10-04T10:00:00Z")
+  },
+  {
+    _id: ObjectId("66fe00000000000000000007"),
+    action: "report.comment",
+    message: "Commentaire agent",
+    actor: { user_id: 21, role: "agent" },
+    report_id: ObjectId("66fb00000000000000000005"),
+    center_id: 6, team_id: 306,
+    created_at: ISODate("2025-10-06T08:35:00Z")
+  },
+  {
+    _id: ObjectId("66fe00000000000000000008"),
+    action: "notification.send",
+    message: "Notification: Prise en charge envoyée",
+    actor: { user_id: 2, role: "admin" },
+    report_id: ObjectId("66fb00000000000000000002"),
+    recipient_user_id: 102,
+    center_id: 2, team_id: 302,
+    channel: "push",
+    created_at: ISODate("2025-10-05T13:35:00Z")
+  },
+  {
+    _id: ObjectId("66fe00000000000000000009"),
+    action: "report.sla.breach",
+    message: "Dépassement du délai de traitement (SLA)",
+    actor: { user_id: 7, role: "admin" },
+    report_id: ObjectId("66fb00000000000000000006"),
+    center_id: 7, team_id: 307,
+    expected_before: ISODate("2025-10-07T08:00:00Z"),
+    created_at: ISODate("2025-10-07T09:10:00Z")
+  },
+  {
+    _id: ObjectId("66fe0000000000000000000a"),
+    action: "report.reassign",
+    message: "Réaffectation du signalement: charge élevée",
+    actor: { user_id: 11, role: "admin" },
+    report_id: ObjectId("66fb00000000000000000008"),
+    center_id: 9, team_id: 309,
+    reason: "Charge élevée",
+    created_at: ISODate("2025-10-02T08:55:00Z")
+  },
+  {
+    _id: ObjectId("66fe0000000000000000000b"),
+    action: "report.requalify",
+    message: "Requalification: encombrants",
+    actor: { user_id: 5, role: "admin" },
+    report_id: ObjectId("66fb0000000000000000000a"),
+    center_id: 3, team_id: 303,
+    category: { prev: "ordures ménagères", next: "encombrants" },
+    created_at: ISODate("2025-10-05T08:20:00Z")
+  },
+  {
+    _id: ObjectId("66fe0000000000000000000c"),
+    action: "report.tag.add",
+    message: "Tag ajouté: #marché",
+    actor: { user_id: 12, role: "admin" },
+    report_id: ObjectId("66fb00000000000000000001"),
+    center_id: 1, team_id: 301,
+    created_at: ISODate("2025-10-06T09:00:00Z")
+  },
+  {
+    _id: ObjectId("66fe0000000000000000000d"),
+    action: "report.status.change",
+    message: "Clôture après intervention",
+    actor: { user_id: 27, role: "agent" },
+    report_id: ObjectId("66fb00000000000000000007"),
+    center_id: 8, team_id: 307,
+    status: { prev: "ouvert", next: "fermé" },
+    attachment: { path: "/uploads/2025/09/venissieux_007.jpg", size_kb: 640 },
+    created_at: ISODate("2025-09-30T20:10:00Z")
+  },
+  {
+    _id: ObjectId("66fe0000000000000000000e"),
+    action: "report.reassign",
+    message: "Réaffectation: optimisation de tournée",
+    actor: { user_id: 11, role: "admin" },
+    report_id: ObjectId("66fb00000000000000000005"),
+    center_id: 6, team_id: 306,
+    reason: "Optimisation de tournée",
+    created_at: ISODate("2025-10-06T08:32:00Z")
+  },
+  {
+    _id: ObjectId("66fe0000000000000000000f"),
+    action: "notification.send",
+    message: "Rappel envoyé à l’agent",
+    actor: { user_id: 7, role: "admin" },
+    report_id: ObjectId("66fb00000000000000000006"),
+    recipient_user_id: 22,
+    center_id: 7, team_id: 307,
+    channel: "email",
+    created_at: ISODate("2025-10-07T09:15:00Z")
+  }
+]);
