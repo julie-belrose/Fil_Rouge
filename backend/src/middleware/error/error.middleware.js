@@ -1,5 +1,8 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 // Error handling middleware
-const errorHandler = (err, req, res, next) => {
+export const errorHandler = (err, req, res, next) => {
   // Log the error in development
   console.error('Error:', err.message);
 
@@ -11,5 +14,3 @@ const errorHandler = (err, req, res, next) => {
     ...(process.env.NODE_ENV !== 'production' && { stack: err.stack })
   });
 };
-
-module.exports = { errorHandler };

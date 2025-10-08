@@ -1,5 +1,6 @@
-const pool = require('../../../../config/database');
-const UserMapper = require('./user.mapper');
+import { getPool } from '#database/mysql/mysqlConnection.js';
+import { userMapper } from '#domains/user/user.mapper.js';
+import * as utilsMapper from '#utils/mapper.utils.js';
 
 /**
  * Handles database operations for users
@@ -11,9 +12,9 @@ class UserRepository {
      * @returns {Promise<Object>} Created user
      */
     async create(userData) {
-        const [result] = await pool.execute(
+        const [result] = await getPool().execute(
             'INSERT INTO users SET ?',
-            [UserMapper.toPersistence(userData)]
+            [userMapper.toPersistence(userData)]
         );
         return this.findById(result.insertId);
     }
@@ -24,11 +25,11 @@ class UserRepository {
      * @returns {Promise<Object|null>} Found user or null if not found
      */
     async findById(id) {
-        const [rows] = await pool.execute(
+        const [rows] = await getPool().execute(
             'SELECT * FROM users WHERE id = ?',
             [id]
         );
-        return UserMapper.toDomain(rows[0]);
+        return utilsMapper.toDTO(rows[0]);
     }
 
     /**
@@ -37,12 +38,21 @@ class UserRepository {
      * @returns {Promise<Object|null>} Found user or null if not found
      */
     async findByAuthId(authId) {
-        const [rows] = await pool.execute(
+        const [rows] = await getPool().execute(
             'SELECT * FROM users WHERE auth_id = ?',
             [authId]
         );
-        return UserMapper.toDomain(rows[0]);
+        return utilsMapper.toDTO(rows[0]);
+    }
+
+    /**
+     * Finds all users in the database
+     * @returns {Promise<Array<Object>>} Array of users
+     */
+    async findAll() {
+        const [rows] = await getPool().execute('SELECT * FROM users');
+        return rows.map(row => utilsMapper.toDTO(row));
     }
 }
 
-module.exports = new UserRepository();
+export const userRepository = new UserRepository();

@@ -1,7 +1,7 @@
 /**
  * Report entity factory function
  */
-const reportEntity = (data = {}) => {
+export const reportEntity = (data = {}) => {
     const now = new Date();
 
     return {
@@ -58,4 +58,4 @@ const reportEntity = (data = {}) => {
     };
 };
 
-module.exports = reportEntity;
+export default reportEntity;

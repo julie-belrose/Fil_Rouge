@@ -3,7 +3,7 @@
  * @param {Function} handler - async function (req, res) => result
  * @param {number} successStatusCode - optional success HTTP status
  */
-const handlerBody = (handler, successStatusCode = 200) => {
+export const handlerBody = (handler, successStatusCode = 200) => {
     return async (req, res) => {
         try {
             const result = await handler(req, res);
@@ -21,5 +21,3 @@ const handlerBody = (handler, successStatusCode = 200) => {
         }
     };
 };
-
-module.exports = handlerBody;

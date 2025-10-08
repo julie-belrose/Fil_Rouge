@@ -1,11 +1,11 @@
-const AdminRepository = require('./admin.repository');
-const AdminDataMapper = require('./admin.mapper');
+import { adminRepository } from '#domains/user/admin/admin.repository.js';
+import { toDTO, fromDTO } from '#utils/mapper.utils.js'; 
 
 /**
  * Service of management of admins
  * Contains the business logic related to admins
  */
-class AdminManagementService {
+class AdminService {
     /**
      * Creates a new admin
      * @param {Object} adminCreationData - The data of the admin to create
@@ -14,9 +14,9 @@ class AdminManagementService {
      */
     async registerNewAdmin(adminCreationData) {
         try {
-            const newAdmin = await AdminRepository.create(adminCreationData);
-            const domainAdmin = AdminDataMapper.convertToBusinessEntity(newAdmin);
-            return AdminDataMapper.convertToDataTransferObject(domainAdmin);
+            const newAdmin = await adminRepository.create(adminCreationData);
+            const domainAdmin = fromDTO(newAdmin, adminEntity);
+            return toDTO(domainAdmin);
         } catch (error) {
             throw new Error(`Error creating admin: ${error.message}`);
         }
@@ -29,10 +29,10 @@ class AdminManagementService {
      */
     async retrieveAllAdministrators() {
         try {
-            const admins = await AdminRepository.findAll();
+            const admins = await adminRepository.findAll();
             return admins.map(admin => {
-                const domainAdmin = AdminDataMapper.convertToBusinessEntity(admin);
-                return AdminDataMapper.convertToDataTransferObject(domainAdmin);
+                const domainAdmin = fromDTO(admin, adminEntity);
+                return toDTO(domainAdmin);
             });
         } catch (error) {
             throw new Error(`Error retrieving admins: ${error.message}`);
@@ -47,16 +47,16 @@ class AdminManagementService {
      */
     async fetchAdminById(adminId) {
         try {
-            const admin = await AdminRepository.findById(adminId);
+            const admin = await adminRepository.findById(adminId);
             if (!admin) {
                 throw new Error('Admin not found');
             }
-            const domainAdmin = AdminDataMapper.convertToBusinessEntity(admin);
-            return AdminDataMapper.convertToDataTransferObject(domainAdmin);
+            const domainAdmin = fromDTO(admin, adminEntity);
+            return toDTO(domainAdmin);
         } catch (error) {
             throw new Error(`Error retrieving admin: ${error.message}`);
         }
     }
 }
 
-module.exports = new AdminManagementService();
+export const adminService = new AdminService();
