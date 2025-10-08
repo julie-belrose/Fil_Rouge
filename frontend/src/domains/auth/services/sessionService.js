@@ -1,4 +1,4 @@
-import { LocalStorageRepository } from '../../../infrastructure/LocalStorageRepository.js';
+import { LocalStorageRepository } from '../../../infrastructure/localStorageRepository.js';
 import { MOCK_USERS, MOCK_AGENTS, MOCK_ADMINS } from '../../../../tests/mock/index.js';
 
 export class SessionService {

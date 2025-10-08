@@ -1,115 +1,78 @@
-import { mockAuthService } from './mockAuthService.js';
-import { SessionService } from './SessionService.js';
-import { FRONTEND_ROUTES } from '../../../core/constants/routes.js';
+import { AuthService } from '#domains-frontend/auth/services/authService.js';
+import { LoginUIManager } from '#domains-frontend/auth/services/loginUIManager.js';
+import {SessionService} from "#domains-frontend/auth/services/sessionService.js";
 
-const sessionService = new SessionService();
-
-function redirectToDashboard(role) {
-    switch(role) {
-        case 'admin':
-            window.location.href = FRONTEND_ROUTES.DASHBOARD.ADMIN;
-            break;
-        case 'agent':
-            window.location.href = FRONTEND_ROUTES.DASHBOARD.AGENT;
-            break;
-        case 'citizen':
-            window.location.href = FRONTEND_ROUTES.DASHBOARD.USER;
-            break;
-        default:
-            window.location.href = FRONTEND_ROUTES.AUTH.LOGIN;
-    }
-}
-
-// Fonction pour afficher le formulaire
-function showLoginForm() {
-    document.getElementById('loading-screen').style.display = 'none';
-    document.getElementById('login-container').style.display = 'block';
-}
-
-// Vérification de session au chargement
-console.error('[LOGIN] Loading loginService.js');
-console.error('[LOGIN] Checking authentication...', {
-    isAuthenticated: sessionService.isAuthenticated(),
-    hasActiveSession: sessionService.hasActiveSession()
-});
-
-if (sessionService.isAuthenticated() && sessionService.hasActiveSession()) {
-    console.error('[LOGIN] User has valid session - showing form');
-    // Si l'utilisateur a déjà une session valide, on affiche le formulaire
-    // Il peut choisir de se reconnecter ou d'aller ailleurs
-    showLoginForm();
-} else {
-    console.error('[LOGIN] No valid session - clearing and showing form');
-    // Si le token est expiré, nettoyer la session
-    sessionService.clearSession();
-    showLoginForm();
-}
-
-document.getElementById('login-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const role = document.getElementById('role').value;
-
-    if (!role) {
-        showError('Veuillez sélectionner un rôle');
-        return;
+export class LoginService {
+    constructor() {
+        this.authService = new AuthService();
+        this.loginUiManager = new LoginUIManager();
+        this.sessionService = new SessionService();
     }
 
-    // Afficher un loader
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Connexion in progress...';
-
-    try {
-        const result = await mockAuthService.login(email, password, role);
-
-        if (result.success) {
-            redirectToDashboard(role);
+    initializeLoginPage() {
+        if (this.sessionService.isAuthenticated() && this.sessionService.hasActiveSession()) {
+            this.loginUiManager.showLoginForm();
         } else {
-            showError(result.message || 'Connection error');
+            this.sessionService.clearSession();
+            this.loginUiManager.showLoginForm();
         }
-    } catch (error) {
-        console.error('Erreur:', error);
-        showError('Connection error');
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
+    };
+
+    /**
+     * Gère la soumission du formulaire de connexion
+     */
+    async handleLoginSubmit(email, password, role) {
+        this.initializeLoginPage();
+        this.authService.checkSelectRole();
+        const stateVal = this.changeTextButton();
+
+        try {
+            const result = await this.login(email, password, role);
+            this.getResultOfConnexion(result);
+        } catch (error) {
+            this.showError('Erreur de connexion');
+            return false;
+        } finally {
+            this.resetDisplayButton(stateVal);
+        }
     }
-});
 
-function showError(message) {
-    const existingMessage = document.getElementById('status-message');
-    if (existingMessage) {
-        existingMessage.remove();
+    registrerLoginForm(){
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+
+            if (!role) {
+                uiManager.showError('Veuillez sélectionner un rôle');
+                return;
+            }
+
+            uiManager.changeTextButton(submitBtn); // Changement de l'UI
+
+            try {
+                const result = await authService.login(email, password, role);
+
+                if (result.success) {
+                    uiManager.showSuccess('Connexion réussie !');
+                    authService.redirectToDashboard(role);
+                } else {
+                    uiManager.showError(result.message || 'Échec de la connexion.');
+                }
+
+            } catch (error) {
+                uiManager.showError('Erreur de connexion : Problème réseau.');
+            } finally {
+                uiManager.resetDisplayButton(submitBtn);
+            }
+        });
     }
 
-    const errorDiv = document.createElement('div');
-    errorDiv.id = 'status-message';
-    errorDiv.className = 'mt-4 p-3 bg-red-50 text-red-700 rounded-lg border border-red-200 text-sm';
-    errorDiv.textContent = message;
-
-    const form = document.getElementById('login-form');
-    form.parentNode.insertBefore(errorDiv, form.nextSibling);
-
-    errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-function showSuccess(message) {
-    const existingMessage = document.getElementById('status-message');
-    if (existingMessage) {
-        existingMessage.remove();
-    }
 
-    const successDiv = document.createElement('div');
-    successDiv.id = 'status-message';
-    successDiv.className = 'mt-4 p-3 bg-green-50 text-green-700 rounded-lg border border-green-200 text-sm';
-    successDiv.textContent = message;
 
-    const form = document.getElementById('login-form');
-    form.parentNode.insertBefore(successDiv, form.nextSibling);
 
-    successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}

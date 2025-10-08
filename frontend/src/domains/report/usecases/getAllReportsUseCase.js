@@ -1,4 +1,4 @@
-import { ReportService } from '../services/ReportService.js';
+import { ReportService } from '../services/reportService.js';
 import { MOCK_REPORTS } from '../../../../tests/mock/index.js';
 
 export class GetAllReportsUseCase {
@@ -9,10 +9,8 @@ export class GetAllReportsUseCase {
     async execute() {
         try {
             // TODO: Remplacer par l'appel réel quand le backend sera prêt
-            // const response = await this.reportService.getAllReports();
+            //const response = await this.reportService.getAllReports();
 
-            // Utiliser les données mock pour l'instant
-            await new Promise(resolve => setTimeout(resolve, 300)); // Simuler un délai réseau
             const reports = MOCK_REPORTS;
 
             return {

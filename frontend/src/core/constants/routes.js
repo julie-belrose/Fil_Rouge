@@ -53,9 +53,8 @@ export const FRONTEND_ROUTES = {
     },
     ERRORS: {
         NOT_FOUND: '/domains/errors/pages/404_page.html',
-        FORBIDDEN: '/domains/errors/pages/434_page.html',
-        NOT_AUTHORIZED: '/domains/errors/pages/401_page.html',
-        
+        FORBIDDEN: '/domains/errors/pages/403_page.html',
+        NOT_AUTHORIZED: '/domains/errors/pages/401_page.html'
     }
 };
 

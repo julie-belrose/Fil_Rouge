@@ -1,5 +1,5 @@
 import { mockAuthService } from './mockAuthService.js';
-import { AuthService } from './AuthService.js';
+import { AuthService } from './authService.js';
 
 const authService = new AuthService();
 

@@ -1,4 +1,4 @@
-import { LocalStorageRepository } from '../../../infrastructure/LocalStorageRepository.js';
+import { LocalStorageRepository } from '../../../infrastructure/localStorageRepository.js';
 import { MOCK_AUTH, MOCK_ADMIN_REQUEST } from '../../../../tests/mock/index.js';
 
 const storageRepository = new LocalStorageRepository();
@@ -26,8 +26,8 @@ export const mockAuthService = {
         if (authUser) {
             // Permettre au rôle root d'accéder à tous les autres rôles
             if (authUser.role === 'root') {
-                // Si c'est root, utiliser le rôle sélectionné ou garder root
-                const finalRole = selectedRole || 'root';
+                // Si c'est root, utiliser le rôle sélectionné ou admin par défaut
+                const finalRole = selectedRole || 'admin';
                 const userWithRole = { ...authUser, role: finalRole };
 
                 const token = btoa(JSON.stringify({ id: authUser.id, email: authUser.email, role: finalRole, exp: Date.now() + 120000 }));

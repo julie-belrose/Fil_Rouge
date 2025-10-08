@@ -13,7 +13,7 @@
  * NOTE: This service will be replaced by a React hook (useProfile)
  * when migrating to React. The use cases will remain unchanged.
  */
-import { InitializeDashboardUseCase } from '../../dashboard/use-cases/InitializeDashboardUseCase.js';
+import { InitializeDashboardUseCase } from '../../dashboard/use-cases/initializeDashboardUseCase.js';
 
 export class ProfileService {
     constructor() {

@@ -25,6 +25,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "commit": "node_modules/.bin/cz",
+    "dev": "concurrently \"pnpm run dev:back\" \"pnpm run dev:front\"",
     "dev:back": "nodemon backend/src/app.js",
     "dev:front": "vite",
     "build:front": "vite build",
@@ -56,6 +57,7 @@
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.14",
     "commitizen": "^4.3.1",
+    "concurrently": "^9.2.1",
     "cz-conventional-changelog": "^3.3.0",
     "tailwindcss": "^4.1.14",
     "vite": "^7.1.5"

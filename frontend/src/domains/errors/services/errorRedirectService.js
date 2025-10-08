@@ -1,4 +1,4 @@
-import {API_ROUTES, HTTP_METHODS} from "#core/constants/routes.js";
+import {FRONTEND_ROUTES, HTTP_METHODS} from "#core/constants/routes.js";
 
 export class ErrorRedirectService {
     /**
@@ -6,10 +6,8 @@ export class ErrorRedirectService {
      * @param {number} statusCode statut code error HTTP
      */
     redirectToErrorPage(statusCode) {
-        // Optionnel : vous pouvez gérer différents codes ici
         switch (statusCode) {
             case 404:
-                // C'est l'action correcte : changer l'URL du navigateur.
                 window.location.href = FRONTEND_ROUTES.ERRORS.NOT_FOUND;
                 break;
             case 403:

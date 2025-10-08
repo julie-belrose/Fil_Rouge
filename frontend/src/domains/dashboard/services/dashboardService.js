@@ -13,7 +13,7 @@
  * NOTE: This service will be replaced by a React hook (useDashboard)
  * when migrating to React. The use cases will remain unchanged.
  */
-import { InitializeDashboardUseCase } from '../use-cases/InitializeDashboardUseCase.js';
+import { InitializeDashboardUseCase } from '../use-cases/initializeDashboardUseCase.js';
 
 export class DashboardService {
     constructor() {

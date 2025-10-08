@@ -1,4 +1,4 @@
-import { ProfileService } from '../services/ProfileService.js';
+import { ProfileService } from '../services/profileService.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const profileService = new ProfileService();

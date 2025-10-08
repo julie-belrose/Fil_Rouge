@@ -103,6 +103,14 @@
         </div>
     </div>
 
-    <script type="module" src="../services/logoutService.js"></script>
+    <script type="module">
+        import { NavigationService } from '../../../shared/services/navigationService.js';
+
+        // Auto redirect avec countdown
+        NavigationService.autoRedirectToLogin(5000);
+
+        // Manual redirect
+        NavigationService.setupManualRedirect();
+    </script>
 </body>
 </html>

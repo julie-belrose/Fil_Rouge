@@ -1,5 +1,5 @@
 import { API_ROUTES, HTTP_METHODS, FRONTEND_ROUTES } from '#core-frontend/constants/routes.js';
-import { SessionService } from './SessionService.js';
+import { SessionService } from './sessionService.js';
 
 export class AuthService {
     constructor() {
@@ -8,59 +8,45 @@ export class AuthService {
 
     async login(email, password, selectedRole = null) {
         try {
-            const response = await fetch(API_ROUTES.AUTH.LOGIN, {
+            const data = await apiClient(API_ROUTES.AUTH.LOGIN, {
                 method: HTTP_METHODS.POST,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 body: JSON.stringify({ email, password, selectedRole })
             });
 
-            const data = await response.json();
-
-            if (response.ok && data.success) {
-                // Stocker la session via SessionService
+            if (data.success) {
                 this.sessionService.storeSession(data.token, data.user);
-
-                return {
-                    success: true,
-                    token: data.token,
-                    user: data.user
-                };
             }
 
             return {
-                success: false,
-                message: data.message || 'Erreur de connexion'
+                success: data.success,
+                message: data.message || (data.success ? null : 'Error of connexion'),
+                token: data.token,
+                user: data.user
             };
         } catch (error) {
             return {
                 success: false,
-                message: 'Erreur réseau'
+                message: error.message || 'Error network or connexion'
             };
         }
     }
 
     logout() {
         this.sessionService.clearSession();
-        window.location.href = '/domains/auth/pages/login.html';
+        window.location.href = FRONTEND_ROUTES.AUTH.LOGIN;
     }
 
     async register(userData) {
         try {
-            const response = await fetch(API_ROUTES.AUTH.REGISTER, {
+            return await apiClient(API_ROUTES.AUTH.REGISTER, {
                 method: HTTP_METHODS.POST,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 body: JSON.stringify(userData)
             });
 
-            return await response.json();
         } catch (error) {
             return {
                 success: false,
-                message: 'Erreur réseau'
+                message: error.message || 'Error network'
             };
         }
     }
@@ -82,5 +68,23 @@ export class AuthService {
         return true;
     }
 
+    /**
+     * Redirige vers le dashboard approprié selon le rôle
+     */
+    redirectToDashboard(role) {
+        switch(role) {
+            case 'admin':
+                window.location.href = FRONTEND_ROUTES.DASHBOARD.ADMIN;
+                break;
+            case 'agent':
+                window.location.href = FRONTEND_ROUTES.DASHBOARD.AGENT;
+                break;
+            case 'citizen':
+                window.location.href = FRONTEND_ROUTES.DASHBOARD.USER;
+                break;
+            default:
+                window.location.href = FRONTEND_ROUTES.AUTH.LOGIN;
+        }
+    }
 
 }

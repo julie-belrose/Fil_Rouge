@@ -1,5 +1,5 @@
-import { IStorageRepository } from '../domains/shared/IStorageRepository.js';
-import { TokenMonitorService } from '../shared/services/TokenMonitorService.js';
+import { IStorageRepository } from '#domains-frontend/shared/iStorageRepository.js';
+import { TokenMonitorService } from '../shared/services/tokenMonitorService.js';
 
 export class LocalStorageRepository extends IStorageRepository {
     store(key, data) {

@@ -10,7 +10,7 @@
  * - Delegates user info formatting to DisplayUserInfoUseCase
  * - Returns dashboard-specific data
  */
-import { SessionService } from '../../auth/services/SessionService.js';
+import { SessionService } from '../../auth/services/sessionService.js';
 import { DisplayUserInfoUseCase } from '../../shared/use-cases/DisplayUserInfoUseCase.js';
 
 export class InitializeDashboardUseCase {

@@ -1,4 +1,4 @@
-import { GetAllReportsUseCase } from '../../usecases/GetAllReportsUseCase.js';
+import { GetAllReportsUseCase } from '../../usecases/getAllReportsUseCase.js';
 
 const getAllReportsUseCase = new GetAllReportsUseCase();
 

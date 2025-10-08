@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Erreur 404 - Page Introuvable</title>
+    <title>Erreur 403 - Accès Interdit</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // J'ai inclus votre configuration Tailwind complète ici pour la cohérence
         tailwind.config = {
             theme: {
                 extend: {
@@ -30,28 +29,33 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-gray-50 flex items-center justify-center px-4">
+<body class="min-h-screen bg-gradient-to-br from-orange-50 via-white to-gray-50 flex items-center justify-center px-4">
 <div class="max-w-xl w-full">
     <div class="bg-white rounded-3xl shadow-2xl p-10 text-center border border-gray-100">
 
         <div class="relative mb-6">
-            <p class="text-[8rem] font-extrabold text-navy-400 opacity-20 leading-none">404</p>
+            <p class="text-[8rem] font-extrabold text-orange-400 opacity-20 leading-none">403</p>
         </div>
 
-        <h1 class="text-3xl font-bold text-gray-900 mb-2">Oups ! Page Introuvable</h1>
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">Accès Interdit</h1>
 
         <p class="text-gray-600 mb-8 max-w-sm mx-auto">
-            Désolé, mais la page que vous recherchez n'existe pas, a été déplacée ou n'est plus disponible.
+            Vous n'avez pas les permissions nécessaires pour accéder à cette ressource. Contactez votre administrateur si nécessaire.
         </p>
 
         <div class="space-y-4">
-            <button id="goHome"
-               class="inline-block px-8 py-3 bg-gradient-to-r from-navy-500 to-navy-600 text-white rounded-lg font-semibold hover:from-navy-600 hover:to-navy-700 transition-all transform hover:scale-[1.02] shadow-lg shadow-navy-200/50 cursor-pointer">
-                Retourner à l'Accueil
+            <button id="goBack"
+               class="inline-block px-8 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all transform hover:scale-[1.02] shadow-lg shadow-orange-200/50 cursor-pointer">
+                Retour
+            </button>
+
+            <button id="loginBtn"
+               class="inline-block px-8 py-3 bg-gradient-to-r from-navy-500 to-navy-600 text-white rounded-lg font-semibold hover:from-navy-600 hover:to-navy-700 transition-all transform hover:scale-[1.02] shadow-lg shadow-navy-200/50 cursor-pointer ml-4">
+                Se reconnecter
             </button>
 
             <p class="text-sm text-gray-500 pt-2">
-                Si le problème persiste, veuillez nous contacter.
+                Si vous pensez qu'il s'agit d'une erreur, contactez le support technique.
             </p>
         </div>
     </div>
@@ -69,7 +73,11 @@
 <script type="module">
     import { NavigationService } from '../../../shared/services/navigationService.js';
 
-    document.getElementById('goHome').addEventListener('click', () => {
+    document.getElementById('goBack').addEventListener('click', () => {
+        window.history.back();
+    });
+
+    document.getElementById('loginBtn').addEventListener('click', () => {
         NavigationService.redirectToLogin();
     });
 </script>

@@ -1,5 +1,5 @@
-import { DashboardService } from '../services/DashboardService.js';
-import { AuthService } from '../../auth/services/AuthService.js';
+import { DashboardService } from '../services/dashboardService.js';
+import { AuthService } from '../../auth/services/authService.js';
 
 const authService = new AuthService();
 

@@ -1,7 +1,7 @@
-import { SessionService } from '../../domains/auth/services/SessionService.js';
+import { SessionService } from '#domains-frontend/auth/services/sessionService.js';
 import { FRONTEND_ROUTES } from '../../core/constants/routes.js';
-import { iconService } from '../services/IconService.js';
-import { TokenMonitorService } from '../services/TokenMonitorService.js';
+import { iconService } from '../services/iconService.js';
+import { TokenMonitorService } from '../services/tokenMonitorService.js';
 
 export class LogoutButton extends HTMLElement {
     constructor() {

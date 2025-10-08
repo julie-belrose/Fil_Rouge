@@ -1,4 +1,4 @@
-import { SessionService } from '../../domains/auth/services/SessionService.js';
+import { SessionService } from '#domains-frontend/auth/services/sessionService.js';
 
 export class TokenMonitorService {
     constructor() {
