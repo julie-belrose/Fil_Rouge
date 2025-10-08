@@ -135,20 +135,6 @@
         </div>
     </main>
 
-<!-- Auth Protection -->
-<script type="module">
-import { checkAuth } from '../../auth/services/authGuard.js';
-import { SessionService } from '../../auth/services/SessionService.js';
-import '../../../../shared/components/logoutButton.js';
-
-// Vérifier l'authentification
-if (!checkAuth()) {
-    // L'utilisateur sera redirigé automatiquement vers login
-}
-
-// Le web component EcoNavigation gère automatiquement l'affichage de l'utilisateur et les liens
-</script>
-
 <script type="module" src="./report_list.js"></script>
 </body>
 </html>

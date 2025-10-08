@@ -1,5 +1,5 @@
-import { ReportService } from '../services/reportService.js';
-import { MOCK_REPORTS } from '../../../../tests/mock/index.js';
+import { ReportService } from '#report-frontend/services/reportService.js';
+import { MOCK_REPORTS } from '#tests-frontend/mock/index.js';
 
 export class GetAllReportsUseCase {
     constructor() {

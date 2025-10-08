@@ -15,20 +15,38 @@
                 "src/constants/*"
             ],
             "#components/*": [
-                "src/components/*"
+                "src/shared/components/*"
+              ],
+              "#domains-frontend/*": [
+                "src/domains/*"
+              ],
+              "#styles/*": [
+                "src/styles/*"
+              ],
+              "#public/*": [
+                "src/public/*"
+              ],
+              "#shared-frontend/*": [
+                "src/shared/*"
+              ],
+              "#dashboard/*": [
+                "src/domains/dashboard/*"
+              ],
+              "#errors-frontend/*": [
+                "src/domains/errors/*"
             ],
-            "#views/*": [
-                "src/views/*"
+              "#profile/*": [
+                "src/domains/profile/*"
             ],
-            "#utils-frontend/*": [
-                "src/utils/*"
+              "#report-frontend/*": [
+                "src/domains/report/*"
             ],
-          "#services/*": [
-            "src/services"
-          ],
-          "#domains-frontend/*": [
-            "src/domains"
-          ]
+              "#tests-frontend/*": [
+                "tests/*"
+            ],
+              "#mock-frontend/*": [
+                "src/tests/mock/*"
+            ]
         }
     },
     "exclude": [

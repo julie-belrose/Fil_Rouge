@@ -1,14 +1,6 @@
-import { DashboardService } from '../services/dashboardService.js';
-import { AuthService } from '../../auth/services/authService.js';
+import { DataUserService } from '#shared-frontend/services/dataUserService.js';
 
-const authService = new AuthService();
-
-// Vérifier l'authentification et le rôle citizen
-if (!authService.checkAuth() || !authService.checkRole('citizen')) {
-    // L'utilisateur sera redirigé automatiquement
-} else {
-    document.addEventListener('DOMContentLoaded', () => {
-        const dashboardService = new DashboardService();
-        dashboardService.initializeUserDashboard();
-    });
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const dashboardService = new DataUserService();
+    dashboardService.initializeUserDashboard();
+});

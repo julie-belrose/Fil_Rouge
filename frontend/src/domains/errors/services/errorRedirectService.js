@@ -1,4 +1,4 @@
-import {FRONTEND_ROUTES, HTTP_METHODS} from "#core/constants/routes.js";
+import {FRONTEND_ROUTES, HTTP_METHODS} from "#core-frontend/constants/routes.js";
 
 export class ErrorRedirectService {
     /**
