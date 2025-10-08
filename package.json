@@ -1,6 +1,6 @@
 {
   "name": "fil-rouge",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Gestion des déchets - HTML/CSS/JS avec Express.js",
   "main": "app.js",
   "type": "module",
