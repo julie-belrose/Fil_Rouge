@@ -1,0 +1,122 @@
+[
+  {
+    "_id": { "$oid": "66fa00000000000000000001" },
+    "center_id": 1,
+    "name": "Centre Gerland",
+    "zone_covered": "Lyon 7e (Gerland–Jean Macé)",
+    "location": { "lat": 45.7336, "lng": 4.8283 },
+    "collection_calendar": [
+      { "weekday": "Lun", "slots": ["06:00-10:00", "18:00-22:00"] },
+      { "weekday": "Jeu", "slots": ["06:00-10:00"] }
+    ],
+    "notes": "Flux OM + Tri sélectif"
+  },
+  {
+    "_id": { "$oid": "66fa00000000000000000002" },
+    "center_id": 2,
+    "name": "Centre Vaise",
+    "zone_covered": "Lyon 9e (Vaise–Gorge de Loup)",
+    "location": { "lat": 45.7803, "lng": 4.8026 },
+    "collection_calendar": [
+      { "weekday": "Mar", "slots": ["05:30-09:30"] },
+      { "weekday": "Ven", "slots": ["05:30-09:30"] }
+    ],
+    "notes": "Renfort marché vendredi"
+  },
+  {
+    "_id": { "$oid": "66fa00000000000000000003" },
+    "center_id": 3,
+    "name": "Centre Part-Dieu",
+    "zone_covered": "Lyon 3e (Part-Dieu–Préfecture)",
+    "location": { "lat": 45.7616, "lng": 4.8587 },
+    "collection_calendar": [
+      { "weekday": "Lun", "slots": ["20:00-23:00"] },
+      { "weekday": "Mer", "slots": ["20:00-23:00"] }
+    ],
+    "notes": "Collecte nocturne zone tertiaire"
+  },
+  {
+    "_id": { "$oid": "66fa00000000000000000004" },
+    "center_id": 4,
+    "name": "Centre Croix-Rousse",
+    "zone_covered": "Lyon 1er & 4e (Pentes–Plateau)",
+    "location": { "lat": 45.7765, "lng": 4.8271 },
+    "collection_calendar": [
+      { "weekday": "Mar", "slots": ["06:00-10:00"] },
+      { "weekday": "Jeu", "slots": ["06:00-10:00"] }
+    ],
+    "notes": "Voies étroites, petit gabarit"
+  },
+  {
+    "_id": { "$oid": "66fa00000000000000000005" },
+    "center_id": 5,
+    "name": "Centre Confluence",
+    "zone_covered": "Lyon 2e (Perrache–Confluence)",
+    "location": { "lat": 45.7415, "lng": 4.8156 },
+    "collection_calendar": [
+      { "weekday": "Mer", "slots": ["19:00-22:30"] },
+      { "weekday": "Sam", "slots": ["07:00-11:00"] }
+    ],
+    "notes": "Zone commerciale + événements"
+  },
+  {
+    "_id": { "$oid": "66fa00000000000000000006" },
+    "center_id": 6,
+    "name": "Centre Villeurbanne Gratte-Ciel",
+    "zone_covered": "Villeurbanne (Gratte-Ciel–Flachet)",
+    "location": { "lat": 45.7709, "lng": 4.8796 },
+    "collection_calendar": [
+      { "weekday": "Lun", "slots": ["06:00-10:00"] },
+      { "weekday": "Ven", "slots": ["06:00-10:00"] }
+    ],
+    "notes": "Bacs enterrés pilotes"
+  },
+  {
+    "_id": { "$oid": "66fa00000000000000000007" },
+    "center_id": 7,
+    "name": "Centre Vaulx-en-Velin",
+    "zone_covered": "Vaulx-en-Velin (Centre–La Soie)",
+    "location": { "lat": 45.761, "lng": 4.925 },
+    "collection_calendar": [
+      { "weekday": "Mar", "slots": ["06:00-10:00"] },
+      { "weekday": "Jeu", "slots": ["06:00-10:00"] }
+    ],
+    "notes": "Tournées renforcées quartiers denses"
+  },
+  {
+    "_id": { "$oid": "66fa00000000000000000008" },
+    "center_id": 8,
+    "name": "Centre Vénissieux",
+    "zone_covered": "Vénissieux (Minguettes–Parilly)",
+    "location": { "lat": 45.704, "lng": 4.872 },
+    "collection_calendar": [
+      { "weekday": "Mer", "slots": ["05:30-09:30"] },
+      { "weekday": "Sam", "slots": ["05:30-09:30"] }
+    ],
+    "notes": "Point de transfert inclus"
+  },
+  {
+    "_id": { "$oid": "66fa00000000000000000009" },
+    "center_id": 9,
+    "name": "Centre Bron",
+    "zone_covered": "Bron (Terraillon–Fort)",
+    "location": { "lat": 45.733, "lng": 4.913 },
+    "collection_calendar": [
+      { "weekday": "Lun", "slots": ["06:00-10:00"] },
+      { "weekday": "Jeu", "slots": ["06:00-10:00"] }
+    ],
+    "notes": "Proximité hôpital : horaires adaptés"
+  },
+  {
+    "_id": { "$oid": "66fa0000000000000000000a" },
+    "center_id": 10,
+    "name": "Centre Ouest Lyonnais",
+    "zone_covered": "Tassin–Écully–Charbonnières",
+    "location": { "lat": 45.773, "lng": 4.769 },
+    "collection_calendar": [
+      { "weekday": "Mar", "slots": ["06:00-10:00"] },
+      { "weekday": "Ven", "slots": ["06:00-10:00"] }
+    ],
+    "notes": "Relief vallonné, circuits optimisés"
+  }
+]

@@ -1,0 +1,150 @@
+db.activity_log.insertMany([
+  {
+    "_id": { "$oid": "66fb00000000000000000001" },
+    "user_id": 101,
+    "agent_id": 201,
+    "assigned_by": 1,
+    "assigned_team": { "id": 301, "name": "Équipe Gerland A", "center_id": 1 },
+    "status": "ouvert",
+    "status_history": [
+      { "status": "ouvert", "date": { "$date": "2025-10-06T07:45:00Z" }, "updated_by": 101 }
+    ],
+    "location": { "lat": 45.7342, "lng": 4.8289 },
+    "created_at": { "$date": "2025-10-06T07:45:00Z" },
+    "updated_at": { "$date": "2025-10-06T07:45:00Z" }
+  },
+  {
+    "_id": { "$oid": "66fb00000000000000000002" },
+    "user_id": 102,
+    "agent_id": 202,
+    "assigned_by": 1,
+    "assigned_team": { "id": 302, "name": "Équipe Vaise B", "center_id": 2 },
+    "status": "en_cours",
+    "status_history": [
+      { "status": "ouvert", "date": { "$date": "2025-10-05T10:10:00Z" }, "updated_by": 102 },
+      { "status": "en_cours", "date": { "$date": "2025-10-05T13:30:00Z" }, "updated_by": 202 }
+    ],
+    "location": { "lat": 45.7831, "lng": 4.8044 },
+    "created_at": { "$date": "2025-10-05T10:10:00Z" },
+    "updated_at": { "$date": "2025-10-05T13:30:00Z" }
+  },
+  {
+    "_id": { "$oid": "66fb00000000000000000003" },
+    "user_id": 103,
+    "agent_id": 203,
+    "assigned_by": 2,
+    "assigned_team": { "id": 303, "name": "Équipe Part-Dieu C", "center_id": 3 },
+    "status": "fermé",
+    "status_history": [
+      { "status": "ouvert", "date": { "$date": "2025-10-03T08:00:00Z" }, "updated_by": 103 },
+      { "status": "en_cours", "date": { "$date": "2025-10-03T11:00:00Z" }, "updated_by": 203 },
+      { "status": "fermé", "date": { "$date": "2025-10-03T15:20:00Z" }, "updated_by": 203 }
+    ],
+    "location": { "lat": 45.7619, "lng": 4.8581 },
+    "created_at": { "$date": "2025-10-03T08:00:00Z" },
+    "updated_at": { "$date": "2025-10-03T15:20:00Z" }
+  },
+  {
+    "_id": { "$oid": "66fb00000000000000000004" },
+    "user_id": 104,
+    "agent_id": 204,
+    "assigned_by": 2,
+    "assigned_team": { "id": 304, "name": "Équipe Croix-Rousse D", "center_id": 4 },
+    "status": "rejeté",
+    "status_history": [
+      { "status": "ouvert", "date": { "$date": "2025-10-04T09:10:00Z" }, "updated_by": 104 },
+      { "status": "rejeté", "date": { "$date": "2025-10-04T10:00:00Z" }, "updated_by": 2, "reason": "Doublon" }
+    ],
+    "location": { "lat": 45.7777, "lng": 4.8279 },
+    "created_at": { "$date": "2025-10-04T09:10:00Z" },
+    "updated_at": { "$date": "2025-10-04T10:00:00Z" }
+  },
+  {
+    "_id": { "$oid": "66fb00000000000000000005" },
+    "user_id": 105,
+    "agent_id": 205,
+    "assigned_by": 3,
+    "assigned_team": { "id": 305, "name": "Villeurbanne E", "center_id": 6 },
+    "status": "en_cours",
+    "status_history": [
+      { "status": "ouvert", "date": { "$date": "2025-10-06T06:50:00Z" }, "updated_by": 105 },
+      { "status": "en_cours", "date": { "$date": "2025-10-06T08:30:00Z" }, "updated_by": 205 }
+    ],
+    "location": { "lat": 45.7705, "lng": 4.8798 },
+    "created_at": { "$date": "2025-10-06T06:50:00Z" },
+    "updated_at": { "$date": "2025-10-06T08:30:00Z" }
+  },
+  {
+    "_id": { "$oid": "66fb00000000000000000006" },
+    "user_id": 106,
+    "agent_id": 206,
+    "assigned_by": 3,
+    "assigned_team": { "id": 306, "name": "Vaulx F", "center_id": 7 },
+    "status": "ouvert",
+    "status_history": [
+      { "status": "ouvert", "date": { "$date": "2025-10-07T05:40:00Z" }, "updated_by": 106 }
+    ],
+    "location": { "lat": 45.763, "lng": 4.9258 },
+    "created_at": { "$date": "2025-10-07T05:40:00Z" },
+    "updated_at": { "$date": "2025-10-07T05:40:00Z" }
+  },
+  {
+    "_id": { "$oid": "66fb00000000000000000007" },
+    "user_id": 107,
+    "agent_id": 207,
+    "assigned_by": 4,
+    "assigned_team": { "id": 307, "name": "Vénissieux G", "center_id": 8 },
+    "status": "fermé",
+    "status_history": [
+      { "status": "ouvert", "date": { "$date": "2025-09-30T18:00:00Z" }, "updated_by": 107 },
+      { "status": "fermé", "date": { "$date": "2025-09-30T20:10:00Z" }, "updated_by": 207 }
+    ],
+    "location": { "lat": 45.708, "lng": 4.8729 },
+    "created_at": { "$date": "2025-09-30T18:00:00Z" },
+    "updated_at": { "$date": "2025-09-30T20:10:00Z" }
+  },
+  {
+    "_id": { "$oid": "66fb00000000000000000008" },
+    "user_id": 108,
+    "agent_id": 208,
+    "assigned_by": 4,
+    "assigned_team": { "id": 308, "name": "Bron H", "center_id": 9 },
+    "status": "en_cours",
+    "status_history": [
+      { "status": "ouvert", "date": { "$date": "2025-10-02T07:10:00Z" }, "updated_by": 108 },
+      { "status": "en_cours", "date": { "$date": "2025-10-02T09:00:00Z" }, "updated_by": 208 }
+    ],
+    "location": { "lat": 45.734, "lng": 4.9135 },
+    "created_at": { "$date": "2025-10-02T07:10:00Z" },
+    "updated_at": { "$date": "2025-10-02T09:00:00Z" }
+  },
+  {
+    "_id": { "$oid": "66fb00000000000000000009" },
+    "user_id": 109,
+    "agent_id": 209,
+    "assigned_by": 5,
+    "assigned_team": { "id": 309, "name": "Ouest Lyonnais I", "center_id": 10 },
+    "status": "ouvert",
+    "status_history": [
+      { "status": "ouvert", "date": { "$date": "2025-10-01T06:30:00Z" }, "updated_by": 109 }
+    ],
+    "location": { "lat": 45.775, "lng": 4.772 },
+    "created_at": { "$date": "2025-10-01T06:30:00Z" },
+    "updated_at": { "$date": "2025-10-01T06:30:00Z" }
+  },
+  {
+    "_id": { "$oid": "66fb0000000000000000000a" },
+    "user_id": 110,
+    "agent_id": 210,
+    "assigned_by": 5,
+    "assigned_team": { "id": 310, "name": "Part-Dieu J", "center_id": 3 },
+    "status": "requalifié",
+    "status_history": [
+      { "status": "ouvert", "date": { "$date": "2025-10-05T07:55:00Z" }, "updated_by": 110 },
+      { "status": "requalifié", "date": { "$date": "2025-10-05T08:20:00Z" }, "updated_by": 5, "reason": "Basculé en encombrants" }
+    ],
+    "location": { "lat": 45.7608, "lng": 4.8589 },
+    "created_at": { "$date": "2025-10-05T07:55:00Z" },
+    "updated_at": { "$date": "2025-10-05T08:20:00Z" }
+  }
+]);

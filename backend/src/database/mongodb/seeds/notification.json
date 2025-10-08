@@ -1,0 +1,102 @@
+[
+  {
+    "_id": { "$oid": "66fd10000000000000000001" },
+    "user_id": 32,
+    "title": "Prise en charge",
+    "content": "Votre signalement est en cours par l’Équipe Vaise B.",
+    "target_type": "report",
+    "target_id": { "$oid": "66fb00000000000000000002" },
+    "read": false,
+    "created_at": { "$date": "2025-10-05T13:35:00Z" }
+  },
+  {
+    "_id": { "$oid": "66fd10000000000000000002" },
+    "user_id": 17,
+    "title": "Nouvelle affectation",
+    "content": "Un signalement vous a été assigné (Vaise B).",
+    "target_type": "report",
+    "target_id": { "$oid": "66fb00000000000000000002" },
+    "read": false,
+    "created_at": { "$date": "2025-10-05T11:05:00Z" }
+  },
+  {
+    "_id": { "$oid": "66fd10000000000000000003" },
+    "user_id": 5,
+    "title": "Alerte SLA",
+    "content": "SLA dépassé pour le signalement #00006 (Vaulx).",
+    "target_type": "report",
+    "target_id": { "$oid": "66fb00000000000000000006" },
+    "read": false,
+    "created_at": { "$date": "2025-10-07T09:10:00Z" }
+  },
+  {
+    "_id": { "$oid": "66fd10000000000000000004" },
+    "user_id": 16,
+    "title": "Brief d’équipe",
+    "content": "Rendez-vous 06:15 au Centre Gerland (tournée A).",
+    "target_type": null,
+    "target_id": null,
+    "read": true,
+    "created_at": { "$date": "2025-10-06T05:30:00Z" }
+  },
+  {
+    "_id": { "$oid": "66fd10000000000000000005" },
+    "user_id": 31,
+    "title": "Confirmation",
+    "content": "Votre signalement a bien été reçu (Gerland A).",
+    "target_type": "report",
+    "target_id": { "$oid": "66fb00000000000000000001" },
+    "read": true,
+    "created_at": { "$date": "2025-10-06T07:46:00Z" }
+  },
+  {
+    "_id": { "$oid": "66fd10000000000000000006" },
+    "user_id": 23,
+    "title": "Photo requise",
+    "content": "Ajoutez une photo après intervention (Part-Dieu C).",
+    "target_type": "report",
+    "target_id": { "$oid": "66fb00000000000000000003" },
+    "read": false,
+    "created_at": { "$date": "2025-10-03T11:02:00Z" }
+  },
+  {
+    "_id": { "$oid": "66fd10000000000000000007" },
+    "user_id": 34,
+    "title": "Signalement rejeté",
+    "content": "Votre signalement a été rejeté (doublon).",
+    "target_type": "report",
+    "target_id": { "$oid": "66fb00000000000000000004" },
+    "read": true,
+    "created_at": { "$date": "2025-10-04T10:02:00Z" }
+  },
+  {
+    "_id": { "$oid": "66fd10000000000000000008" },
+    "user_id": 29,
+    "title": "Changement d’équipe",
+    "content": "Réaffectation du report vers l’équipe 309 (Bron).",
+    "target_type": "report",
+    "target_id": { "$oid": "66fb00000000000000000008" },
+    "read": false,
+    "created_at": { "$date": "2025-10-02T08:55:30Z" }
+  },
+  {
+    "_id": { "$oid": "66fd10000000000000000009" },
+    "user_id": 33,
+    "title": "Clôture",
+    "content": "Votre signalement a été clôturé. Merci de votre vigilance.",
+    "target_type": "report",
+    "target_id": { "$oid": "66fb00000000000000000003" },
+    "read": false,
+    "created_at": { "$date": "2025-10-03T15:25:00Z" }
+  },
+  {
+    "_id": { "$oid": "66fd1000000000000000000a" },
+    "user_id": 27,
+    "title": "Rappel EPI",
+    "content": "Port des EPI obligatoire – voirie vallonnée (Ouest).",
+    "target_type": null,
+    "target_id": null,
+    "read": true,
+    "created_at": { "$date": "2025-10-01T06:00:00Z" }
+  }
+]
