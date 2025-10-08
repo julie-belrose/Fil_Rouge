@@ -33,7 +33,7 @@ export const registerMiddlewares = (app, express) => {
         // Exclure les fichiers statiques et les routes d'API
         if (req.path.startsWith('/api/') ||
             req.path.startsWith('/assets/') ||
-            req.path.startsWith('/domains/auth/') ||
+           // req.path.startsWith('/domains/auth/') ||
             req.path.startsWith('/static/') ||
             req.path.startsWith('/public/') ||
             req.path.startsWith('/infrastructure/') ||

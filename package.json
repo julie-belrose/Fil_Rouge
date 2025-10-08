@@ -20,7 +20,7 @@
     "#api/*": "./frontend/src/core/api/*",
     "#components/*": "./frontend/src/components/*",
     "#pages/*": "./frontend/src/pages/*",
-    "#shared-frontend/*": "./frontend/src/shared/*",
+    "#shared-frontend/*": "./frontend/src/domains/shared/*",
     "#tests-frontend/*": "./frontend/tests/*",
     "#mock-frontend/*": "./frontend/src/tests/mock/*",
     "#dashboard/*": "./frontend/src/domains/dashboard/*",

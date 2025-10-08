@@ -1,7 +1,12 @@
-const reportRepository = require('./repository/report.repository');
-const ReportMapper = require('./mapper/report.mapper');
+import { reportRepository } from '#domains/report/report.repository.js';
+import { toDTO } from '#utils/mapper.utils.js'; 
 
 class ReportService {
+
+    async getReport(id) {
+        const report = await reportRepository.findById(id);
+        return report ? toDTO(report) : null;
+    }
     /**
     * Creates a new report in the system
     * @param {Object} reportData - The report data to create
@@ -17,7 +22,7 @@ class ReportService {
     async createReport(reportData) {
         try {
             const newReport = await reportRepository.create(reportData);
-            return ReportMapper.toDTO(newReport);
+            return toDTO(newReport);
         } catch (error) {
             console.error('Failed to create report:', error);
             throw new Error(`Failed to create report: ${error.message}`);
@@ -36,6 +41,8 @@ class ReportService {
         //todo
     }
 
+
+
 }
 
-module.exports = new ReportService();
+export const reportService = new ReportService();

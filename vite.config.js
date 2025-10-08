@@ -22,14 +22,14 @@ export default defineConfig({
       '#api': path.resolve(__dirname, 'frontend/src/core/api'),
 
       // Base for all in src/domains (domains)
-      '#domains-frontend': path.resolve(__dirname, 'frontend/src/domains'),
+      '#domains-frontend/*': path.resolve(__dirname, 'frontend/src/domains'),
       '#dashboard': path.resolve(__dirname, 'frontend/src/domains/dashboard'),
       '#errors-frontend': path.resolve(__dirname, 'frontend/src/domains/errors'),
       '#profile': path.resolve(__dirname, 'frontend/src/domains/profile'),
       '#report-frontend': path.resolve(__dirname, 'frontend/src/domains/report'),
 
       // Base for all in src/shared (Composants, services generics)
-      '#shared-frontend': path.resolve(__dirname, 'frontend/src/shared'),
+      '#shared-frontend/*': path.resolve(__dirname, 'frontend/src/shared'),
       '#components': path.resolve(__dirname, 'frontend/src/shared/components'),
 
       // Dock utilitary
@@ -53,8 +53,8 @@ export default defineConfig({
       '/api': 'http://localhost:3000'
     }
   },
-  optimizeDeps: {
-    // todo delete debore push
-    force: true,
-  }
+  // optimizeDeps: {
+  //   // todo delete debore push
+  //   force: true,
+  // }
 })

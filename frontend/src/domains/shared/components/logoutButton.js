@@ -1,4 +1,5 @@
-import { IconService } from '#shared-frontend/services/iconService.js';
+import { iconService } from '#domains-frontend/shared/services/iconService.js';
+import {FRONTEND_ROUTES} from "#constants/routes.js";
 
 export class LogoutButton extends HTMLElement {
     constructor() {
@@ -11,7 +12,7 @@ export class LogoutButton extends HTMLElement {
      */
     // noinspection JSUnusedGlobalSymbols
     async connectedCallback() {
-        await IconService.loadSprite();
+        await iconService.loadSprite();
 
         this.innerHTML = `
             <button class="flex items-center space-x-2 px-3 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all group" title="Se déconnecter">
@@ -25,7 +26,7 @@ export class LogoutButton extends HTMLElement {
 
     handleLogout() {
         if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
-            window.location.href = '/';
+            window.location.href = FRONTEND_ROUTES.DASHBOARD.USER; //Temporary
         }
     }
 }

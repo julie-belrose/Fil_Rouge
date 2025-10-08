@@ -1,6 +1,6 @@
-const { createSchema, updateSchema } = require('./notification.schema');
-const notificationEntity = require('./notification.entity');
-const validateAndTransform = require('../utils/parseDTO');
+import { createSchema, updateSchema } from '#domains/notification/notification.schema.js';
+import { notificationEntity } from '#domains/notification/notification.entity.js';
+import { validateAndTransform } from '#utils/parseDTO.js';
 
 /**
  * Validates and transforms notification creation data
@@ -8,7 +8,7 @@ const validateAndTransform = require('../utils/parseDTO');
  * @returns {Object} Validated and transformed notification data
  * @throws {Error} If validation fails
  */
-const createNotificationDto = (data) => {
+export const createNotificationDTO = (data) => {
     validateAndTransform(data, createSchema, notificationEntity);
 };
 
@@ -18,8 +18,16 @@ const createNotificationDto = (data) => {
  * @returns {Object} Validated and transformed notification data
  * @throws {Error} If validation fails
  */
-const updateNotificationDto = (data) => {
+export const updateNotificationDTO = (data) => {
     validateAndTransform(data, updateSchema, notificationEntity);
 };
 
-module.exports = { createNotificationDto, updateNotificationDto };
+/**
+ * Validates and transforms notification deletion data
+ * @param {Object} data - Raw input data
+ * @returns {Object} Validated and transformed notification data
+ * @throws {Error} If validation fails
+ */
+export const deleteNotificationDTO = (data) => {
+    validateAndTransform(data, deleteSchema, notificationEntity);
+};

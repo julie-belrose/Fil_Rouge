@@ -1,38 +1,80 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
+        "baseUrl": "./",
         "paths": {
+            "#backend/*": [
+                "backend/src/*"
+            ],
+            "#config/*": [
+                "backend/src/config/*"
+            ],
+            "#utils/*": [
+                "backend/src/utils/*"
+            ],
+            "#scripts/*": [
+                "backend/src/scripts/*"
+            ],
+            "#middleware/*": [
+              "backend/src/middleware/*"
+            ],
+            "#domains/*": [
+                "backend/src/domains/*"
+            ],
+            "#database/*": [
+                "backend/src/database/*"
+            ],
+            "#loader/*": [
+                "backend/src/loader/*"
+            ],
             "#frontend/*": [
-                "src/*"
+              "src/*"
             ],
             "#core/*": [
-                "src/core/*"
+              "src/core/*"
             ],
             "#api/*": [
-                "src/core/api/*"
+              "src/core/api/*"
             ],
             "#constants/*": [
-                "src/constants/*"
+              "src/constants/*"
             ],
             "#components/*": [
-                "src/components/*"
+              "src/shared/components/*"
             ],
-            "#views/*": [
-                "src/views/*"
+            "#domains-frontend/*": [
+              "src/domains/*"
             ],
-            "#utils-frontend/*": [
-                "src/utils/*"
+            "#styles/*": [
+              "src/styles/*"
             ],
-          "#services/*": [
-            "src/services"
-          ],
-          "#styles/*": [
-            "src/style"
-          ]
+            "#public/*": [
+              "src/public/*"
+            ],
+            "#shared-frontend/*": [
+              "src/domains/shared/*"
+            ],
+            "#dashboard/*": [
+              "src/domains/dashboard/*"
+            ],
+            "#errors-frontend/*": [
+              "src/domains/errors/*"
+            ],
+            "#profile/*": [
+              "src/domains/profile/*"
+            ],
+            "#report-frontend/*": [
+              "src/domains/report/*"
+            ],
+            "#tests-frontend/*": [
+              "tests/*"
+            ],
+            "#mock-frontend/*": [
+              "src/tests/mock/*"
+            ]
         }
     },
     "exclude": [
-        "node_modules",
-        "dist"
+      "./node_modules",
+      "dist"
     ]
 }

@@ -1,5 +1,3 @@
-const badgeEntity = require('./badge.entity');
-
 class BadgeMapper {
     static toPersistence(badge) {
         return {
@@ -12,4 +10,4 @@ class BadgeMapper {
     }
 }
 
-module.exports = BadgeMapper;
+export const badgeMapper = new BadgeMapper();

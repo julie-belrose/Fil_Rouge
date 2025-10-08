@@ -1,5 +1,5 @@
-const utilsMapper = require('../utils/mapperUtils');
-const mongoUtils = require('../utils/mongoUtils');
+import * as utilsMapper from '#utils/mapper.utils.js';
+import * as mongoUtils from '#utils/mongo.utils.js';
 
 /**
  * Handles database operations for reports
@@ -46,8 +46,8 @@ class ReportRepository {
      * @returns {Promise<Array>} Array of reports
      */
     async findByUserId(userId, { limit = 10, skip = 0 } = {}) {
-        const collection = await this.getCollection();
-        return mongoUtils.findByUserId(collection, userId, { limit, skip }, utilsMapper.toDTO);
+        const col = await this.getCollection();
+        return mongoUtils.findMany(col, { user_id: userId }, { limit, skip }, utilsMapper.toDTO);
     }
 
     /**
@@ -73,4 +73,4 @@ class ReportRepository {
 
 }
 
-module.exports = new ReportRepository();
+export const reportRepository = new ReportRepository();

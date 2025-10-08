@@ -1,31 +1,22 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 /**
- * Joi validation schemas for user operations
+ * Schema for creating a new user
+ * @type {Joi.ObjectSchema}
  */
-module.exports = {
-    /**
-     * Schema for creating a new user
-     * @type {Joi.ObjectSchema}
-     */
-    createSchema: Joi.object({
-        auth_id: Joi.number().integer().required(),
-        pseudo: Joi.string().allow(null, '').optional(),
-        first_name: Joi.string().allow(null, '').optional(),
-        last_name: Joi.string().allow(null, '').optional(),
-        district: Joi.string().allow(null, '').optional(),
-        loyalty_points: Joi.number().integer().default(0)
-    }),
+export const createSchema = Joi.object({
+    auth_id: Joi.number().integer().required(),
+    pseudo: Joi.string().allow(null, '').optional(),
+    district: Joi.string().allow(null, '').optional(),
+    loyalty_points: Joi.number().integer().default(0)
+});
 
-    /**
-     * Schema for updating an existing user
-     * @type {Joi.ObjectSchema}
-     */
-    updateSchema: Joi.object({
-        pseudo: Joi.string().allow(null, '').optional(),
-        first_name: Joi.string().allow(null, '').optional(),
-        last_name: Joi.string().allow(null, '').optional(),
-        district: Joi.string().allow(null, '').optional(),
-        loyalty_points: Joi.number().integer()
-    }).min(1) // Au moins un champ requis pour la mise à jour
-};
+/**
+ * Schema for updating an existing user
+ * @type {Joi.ObjectSchema}
+ */
+export const updateSchema = Joi.object({
+    pseudo: Joi.string().allow(null, '').optional(),
+    district: Joi.string().allow(null, '').optional(),
+    loyalty_points: Joi.number().integer()
+}).min(1); // At least one field required for update

@@ -1,11 +1,10 @@
-const userRepository = require('./user.repository');
-const UserMapper = require('./user.mapper');
-
+import { userRepository } from '#domains/user/user.repository.js';
+import * as utilsMapper from '#utils/mapper.utils.js'; 
 /**
  * Handles user business logic
  */
 class UserService {
-    /**
+    /*
      * Creates a new user with validation
      * @param {Object} userData - User data to create
      * @returns {Promise<Object>} Created user DTO
@@ -21,23 +20,30 @@ class UserService {
 
             // Create new user
             const newUser = await userRepository.create(userData);
-            return UserMapper.toDTO(newUser);
+            return utilsMapper.toDTO(newUser);
         } catch (error) {
             console.error('User creation failed:', error);
             throw new Error(`Failed to create user: ${error.message}`);
         }
     }
 
-    async updateUser(userData) {
+    async updateUser(id, userData) {
         //todo
     }
 
-    async deleteUser(userData) {
+    async deleteUser(id) {
         //todo
     }
 
     async getUsers() {
-        //todo
+        try {
+            const users = await userRepository.findAll();
+            console.log('get all users', users);
+            return users.map(user => utilsMapper.toDTO(user));
+        } catch (error) {
+            console.error('Failed to get users:', error);
+            throw new Error(`Failed to get users: ${error.message}`);
+        }
     }
 
     async getUserById(id) {
@@ -45,4 +51,4 @@ class UserService {
     }
 }
 
-module.exports = new UserService();
+export const userService = new UserService();

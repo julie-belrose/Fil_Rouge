@@ -1,5 +1,3 @@
-const authEntity = require('./auth.entity');
-
 class AuthMapper {
     /**
      * Convert the entity to persistence format
@@ -15,4 +13,4 @@ class AuthMapper {
     }
 }
 
-module.exports = AuthMapper;
+export const authMapper = new AuthMapper();

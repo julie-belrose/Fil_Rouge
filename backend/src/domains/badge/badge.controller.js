@@ -1,17 +1,17 @@
-const { createBadgeDto, updateBadgeDto, deleteBadgeDto } = require('./badge.dto');
-const badgeEntity = require('./badge.entity');
-const BadgeService = require('./badge.service');
-const handlerRequest = require('../utils/handlerRequest');
-const handlerBody = require('../utils/handlerBody');
+import * as badgeDto from '#domains/badge/badge.dto.js';
+import { badgeEntity } from '#domains/badge/badge.entity.js';
+import { badgeService } from '#domains/badge/badge.service.js';
+import handlerRequest from '#utils/handlerRequest.js';
+import { handlerBody } from '#utils/handlerBody.js';
 
 // Get all badges
-const getBadges = handlerBody(async (req, res) => {
-    return await BadgeService.getBadges();
+export const getBadges = handlerBody(async (req, res) => {
+    return await badgeService.getBadges();
 });
 
 // Get single badge
-const getBadge = handlerBody(async (req, res) => {
-    const badge = await BadgeService.getBadgeByUserId(req.params.id);
+export const getBadge = handlerBody(async (req, res) => {
+    const badge = await badgeService.getBadgeByUserId(req.params.id);
     return badge;
 });
 
@@ -20,27 +20,19 @@ const getBadge = handlerBody(async (req, res) => {
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-const createBadge = handlerRequest(createBadgeDto, badgeEntity, async (badge) => {
-    const newBadge = await BadgeService.createBadge(badge);
+export const createBadge = handlerRequest(badgeDto.createBadgeDTO, badgeEntity, async (badge) => {
+    const newBadge = await badgeService.createBadge(badge);
     return newBadge;
 });
 
 // Update badge
-const updateBadge = handlerRequest(updateBadgeDto, badgeEntity, async (badge) => {
-    const updatedBadge = await BadgeService.updateBadge(badge);
+export const updateBadge = handlerRequest(badgeDto.updateBadgeDTO, badgeEntity, async (badge) => {
+    const updatedBadge = await badgeService.updateBadge(badge);
     return updatedBadge;
 });
 
 // Delete badge
-const deleteBadge = handlerRequest(deleteBadgeDto, badgeEntity, async (badge) => {
-    const deletedBadge = await BadgeService.deleteBadge(badge);
+export const deleteBadge = handlerRequest(badgeDto.deleteBadgeDTO, badgeEntity, async (badge) => {
+    const deletedBadge = await badgeService.deleteBadge(badge);
     return deletedBadge;
 });
-
-module.exports = {
-    getBadges,
-    getBadge,
-    createBadge,
-    updateBadge,
-    deleteBadge
-};

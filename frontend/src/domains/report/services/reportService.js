@@ -1,5 +1,5 @@
 import { API_ROUTES, HTTP_METHODS } from '#core-frontend/constants/routes.js';
-import { buildUrlWithParams } from '#shared-frontend/routeHelper.js';
+import { buildUrlWithParams } from '#shared-frontend/helpers/routeHelper.js';
 import {apiClient} from "#api/apiClient.js";
 
 export class ReportService {

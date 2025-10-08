@@ -1,3 +1,6 @@
+import {MOCK_USERS} from "#tests-frontend/mock/index.js";
+import {DisplayInfoUserUseCase} from "#shared-frontend/use-cases/displayInfoUserUseCase.js"
+
 /**
  * Use Case: Initialize User Dashboard
  *
@@ -10,12 +13,9 @@
  * - Delegates user info formatting to DisplayUserInfoUseCase
  * - Returns dashboard-specific data
  */
-import { DisplayUserInfoUseCase } from '#shared-frontend/use-cases/displayUserInfoUseCase.js';
-import {MOCK_USERS} from "#tests-frontend/mock/index.js";
-
-export class InitializeDataUserUseCase {
+export class InitializeDashboardDataUserUseCase {
     constructor() {
-        this.displayUserInfoUseCase = new DisplayUserInfoUseCase();
+        this.displayInfoUserUseCase = new DisplayInfoUserUseCase();
     }
 
     async execute() {
@@ -24,7 +24,7 @@ export class InitializeDataUserUseCase {
         //currentUser = MOCK_AGENTS.find(agent => agent.user_id);
         //currentUser = MOCK_ADMINS.find(admin => admin.user_id);
 
-        const { displayData } = this.displayUserInfoUseCase.execute(currentUser);
+        const { displayData } = this.displayInfoUserUseCase.execute(currentUser);
 
         return {
             user: currentUser,
