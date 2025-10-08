@@ -1,0 +1,70 @@
+# Node
+node_modules/
+dist/
+build/
+.cache/
+*.tsbuildinfo
+
+# Logs & debug
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.log
+logs
+*.log
+yarn-error.log*
+
+# Environment variables
+.env
+!.env.example
+.env.*
+!.env.example.*
+.env.*.local
+.env.local
+.env.dev
+.env.test
+.env.prod
+.env.dev.local
+.env.test.local
+.env.prod.local
+
+# JetBrains IDEs (WebStorm, PhpStorm, etc.)
+.idea/
+*.iml
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+.vscode-test
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+
+# Docker (optional)
+docker-compose.override.yml
+*.local.yml
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Lock files (should be committed)
+package-lock.json
+yarn.lock
+
+# Production build
+build
+dist
